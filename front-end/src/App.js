@@ -9,6 +9,10 @@ import About from './components/About/About'
 import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
+import Login from './components/Login/Login'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Secret from './components/Secret/Secret';
+ 
 
 function App() {
   return (
@@ -33,6 +37,9 @@ function App() {
     <Route path="/Profile">
       <Profile />
     </Route>
+    <PrivateRoute path="/Secret">
+      <Secret />
+    </PrivateRoute>
     <Route path="/TestChat">
       <TestChat />
     </Route>
@@ -41,6 +48,9 @@ function App() {
     </Route>
     <Route path="/Registration">
       <Registration />
+    </Route>
+    <Route path="/Login">
+      <Login />
     </Route>
   </Switch>
 </Router>

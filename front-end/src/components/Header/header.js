@@ -18,6 +18,9 @@ function Header() {
       <span>
       <Link to="/Registration">Registation </Link>
       </span>
+      <span>
+      <Link to="/Login">Login </Link>
+      </span>
     </div>
     </>
   )
