@@ -4,12 +4,11 @@ import {Redirect, Route} from 'react-router-dom';
 function PrivateRoute({children, ...rest}) {
   return <Route {...rest}  >
     {
-      isAuthenticated
-        ? children
-        : <Redirect to="/login" /> 
+      // isAuthenticated
+      //   ? children
+      //   : 
+        <Redirect to="/login" /> 
     }
-
-
   </Route>
 }
 
