@@ -27,7 +27,24 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- <noscript>You need to enable JavaScript to run this app.</noscript> -->
+    <!-- ____________________________________________________________________________ -->
+    <!-- <script>
+      const ws = new WebSocket('ws://localhost:3000');      
+      ws.addEventListener('open', () => {
+        console.log('>>>>opened');
+        ws.send('PRIVET');
+      });
+      ws.addEventListener('message', ({data}) => {
+        console.log(data);
+      });
+      // setInterval(ws.send.bind(ws, 'PRIVET'), 1000);
+      setInterval(() => {
+        ws.send('PRIVET');
+      }, 1000);
+    </script> -->
+    <!-- ____________________________________________________________________________ -->
     <div id="root"></div>
     <!--
       This HTML file is a template.
