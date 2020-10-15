@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
-    
+  const dispatch = useDispatch();
   const history = useHistory();
   const [inputs, setInputs] = useState({
     nameEmail: '',
@@ -23,8 +24,14 @@ function Login() {
       }),
     });
     if (resp.status === 200) {
+      dispatch({
+        type: "AUTHENTICATED_SUCCESSFULLY",
+      })
       return history.push('./secret')
     }
+    dispatch({
+      type: "AUTHENTICATED_UNSUCCESSFULLY",
+    })
     return setError('Try again')
   }
 
