@@ -1,13 +1,13 @@
 import express from 'express';
 import session from 'express-session';
-import sessionFileStore from 'session-file-store';
 import './misc/env.js';
 import './misc/db.js';
 import authRouter from './routes/auth.js';
 import userMiddleware from './middlewares/user.js';
 import notFoundMiddleware from './middlewares/notfound.js';
 import errorMiddleware from './middlewares/error.js';
-import MongoDB from 'connect-mongodb-session'
+import MongoDB from 'connect-mongodb-session';
+import ws from 'ws'
 
 const logger = console;
 const app = express();
@@ -16,6 +16,28 @@ const store = new MongoDBStore({
   uri: process.env.DB_URL,
   collection: 'sessions'
 });
+
+const port = process.env.PORT ?? 3000;
+const httpServer = app.listen(port, () => {
+  logger.log('Сервер запущен. Порт:', port);
+});
+
+const wsServer = new ws.Server({
+  server: httpServer,
+});
+
+wsServer.on('connection', (client) => {
+  client.on('message', (message) => {
+  console.log('>>>>message', message);
+  const obj = JSON.parse(message);
+  wsServer.clients.forEach((client) => {
+    clien.send(newMessage);
+  })  
+}
+)
+})
+
+
 
 // Запоминаем название куки для сессий
 app.set('session cookie name', 'sid');
@@ -43,7 +65,3 @@ app.use(authRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-const port = process.env.PORT ?? 3000;
-app.listen(port, () => {
-  logger.log('Сервер запущен. Порт:', port);
-});
