@@ -3,9 +3,6 @@ import session from 'express-session';
 import './misc/env.js';
 import './misc/db.js';
 import authRouter from './routes/auth.js';
-import userMiddleware from './middlewares/user.js';
-import notFoundMiddleware from './middlewares/notfound.js';
-import errorMiddleware from './middlewares/error.js';
 import MongoDB from 'connect-mongodb-session';
 import ws from 'ws'
 
@@ -58,10 +55,5 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
   },
 }));
-app.use(userMiddleware);
+
 app.use(authRouter);
-
-
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
-
