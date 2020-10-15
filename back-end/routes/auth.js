@@ -2,16 +2,8 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
 
-const logger = console;
 const router = express.Router();
 
-/**
- * Завершает запрос с ошибкой аутентификации
- * @param {object} res Ответ express
- */
-function failAuth(res) {
-  return res.status(401).end();
-}
 
 /**
  * Подготавливает пользователя для записи в сессию
@@ -21,61 +13,80 @@ function failAuth(res) {
 function serializeUser(user) {
   return {
     id: user.id,
-    username: user.username,    
+    username: user.name,    
   };
 }
 
+router.route('/').get((req, res) => {
+  res.send('rabotaet')
+})
+
 router
   .route('/signin')
-  // Страница аутентификации пользователя
-  .get((req, res) => res.render('signin', { isSignin: true }))
-  // Аутентификация пользователя
   .post(async (req, res) => {
-    const { username, password, role } = req.body;
+    const { nameEmail, password } = req.body;
     try {
-      // Пытаемся сначала найти пользователя в БД
-      const user = await User.findOne({
-        username,
-        role,
-      }).exec();
-      if (!user) {
-        return failAuth(res);
+      const userByName = await User.findOne({ name: nameEmail }).exec();
+      if (!userByName) {
+        try {
+          const userByEmail = await User.findOne({ email: nameEmail }).exec();
+          if (!userByEmail) {
+            return res.json({ err: 'No such user' });
+          } else {
+            const isValidPassword = await bcrypt.compare(password, userByEmail.password);
+            if (!isValidPassword) {
+              return res.json({ err: 'Invalid password' });
+            }
+            req.session.user = serializeUser(user);
+            return res.json({ authenticated: true});
+          }
+        } catch (error) {
+          return res.json({ err: 'Data base error, plase try again' });
+        }
+      } else {
+        const isValidPassword = await bcrypt.compare(password, userByName.password);
+        if (!isValidPassword) {
+          return res.json({ err: 'Invalid password' });
+        }
+        req.session.user = serializeUser(user);
+        return res.json({ authenticated: true });
       }
-      // Сравниваем хэш в БД с хэшем введённого пароля
-      const isValidPassword = await bcrypt.compare(password, user.password);
-      if (!isValidPassword) {
-        return failAuth(res);
-      }
-      req.session.user = serializeUser(user);
-    } catch (err) {
-      logger.error(err);
-      return failAuth(res);
+    } catch (error) {
+      return res.json({ err: 'Data base error, plase try again' });
     }
-    return res.end();
   });
 
 router
   .route('/signup')
-  // Страница регистрации пользователя
-  .get((req, res) => res.render('signup', { isSignup: true }))
-  // Регистрация пользователя
   .post(async (req, res) => {
-    const { username, password, email } = req.body;
+    const { name, password, email } = req.body;
     try {
-      // Мы не храним пароль в БД, только его хэш
-      const saltRounds = Number(process.env.SALT_ROUNDS ?? 10);
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      const user = await User.create({
-        username,
-        password: hashedPassword,
-        email,        
-      });
-      req.session.user = serializeUser(user);
-    } catch (err) {
-      logger.error(err);
-      return failAuth(res);
+      const userByName = await User.findOne({ name }).exec();
+      if (userByName) {
+        return res.json({ err: 'This name is already taken' });
+      } else {
+        try {
+          const userByEmail = await User.findOne({ email }).exec();
+          if (userByEmail) {
+            return res.json({ err: 'This email is already taken' });
+          } else {
+            const saltRounds = Number(process.env.SALT_ROUNDS ?? 10);
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const user = await User.create({
+                  name,
+                  password: hashedPassword,
+                  email,        
+                });
+            req.session.user = serializeUser(user);
+            return res.json({ authenticated: true });
+          }
+        } catch (error) {
+          return res.json({ err: 'Data base error, plase try again' });
+        }
+      }
+    } catch (error) {
+      return res.json({ err: 'Data base error, plase try again' });
     }
-    return res.end();
   });
 
 router.get('/signout', (req, res, next) => {
@@ -84,7 +95,7 @@ router.get('/signout', (req, res, next) => {
       return next(err);
     }
     res.clearCookie(req.app.get('session cookie name'));
-    return res.redirect('/');
+    return res.json({ authenticated: false });
   });
 });
 
