@@ -12,9 +12,12 @@ import Registration from './components/Registration/Registration'
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
+import Logout from './components/Logout/Logout';
+import { useSelector } from 'react-redux';
  
 
 function App() {
+  const isAuthenticated = useSelector(state => state.isAuthenticated)
   return (
     <>
 <Router>
@@ -51,6 +54,9 @@ function App() {
     </Route>
     <Route path="/Login">
       <Login />
+    </Route>
+    <Route path="/Logout">
+      <Logout />
     </Route>
   </Switch>
 </Router>

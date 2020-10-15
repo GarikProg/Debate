@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import "./header.scss"
 
 function Header() {
+  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
   return (
     <>
     <div className="header">
@@ -19,7 +22,8 @@ function Header() {
       <Link to="/Registration">Registation </Link>
       </span>
       <span>
-      <Link to="/Login">Login </Link>
+      {!isAuthenticated && <Link to="/Login">Login </Link>}
+      {isAuthenticated && <Link to="/Logout">Logout </Link>}
       </span>
     </div>
     </>
