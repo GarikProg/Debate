@@ -6,7 +6,6 @@ import App from './App';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const preloadedState = window.localStorage.getItem('state') || '{"isAuthenticated: false"}';
-
 const store = createStore(
   (state, action) => {
     switch(action.type){
@@ -23,7 +22,7 @@ const store = createStore(
     }
 
   },
-  JSON.parse(preloadedState),
+  preloadedState,
   composeWithDevTools()
 
 );
