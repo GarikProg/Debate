@@ -1,10 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import MainPage from '../src/components/MainPage'
-import LocalThread from '../src/components/localThread'
-import GlobalThread from '../src/components/globalThread'
+import LocalThread from './components/LocalThread'
+import GlobalThread from './components/GlobalThread'
 import Profile from '../src/components/Profile'
-import TestChat from '../src/components/TestChat'
 
 function App() {
   return (
@@ -19,18 +18,15 @@ function App() {
     <Route path="/MainPage">
       <MainPage />
     </Route>
-    <Route path="/LocalThread">
+    <Route path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread">
+    <Route path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
     <Route path="/Profile">
       <Profile />
-    </Route>
-    <Route path="/TestChat">
-      <TestChat />
-    </Route>
+    </Route>    
   </Switch>
 </Router>
     </>

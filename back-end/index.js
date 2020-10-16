@@ -26,11 +26,10 @@ const httpServer = app.listen(port, () => {
 });
 
 io.on("connection", (socket) => {
-  console.log("connection open");
-  socket.broadcast.emit("broadcast", "hello from socket")
-  client.on("message", (data) => {
+  console.log("connection open");  
+  socket.on("message", (data) => {
     console.log(data);
-    io.broadcast.emit("broadcast", data);
+    io.emit("broadcast", data);
   });
 });
 

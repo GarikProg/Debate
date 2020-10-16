@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import openSocket from 'socket.io-client'
 
-function TestChat() {
+function GlobalThread() {
   const [socket, setSocket] = useState()
   const [input, setInput] = useState('')
   const [outPut, setOutput] = useState([])
@@ -46,5 +46,5 @@ function TestChat() {
   </>)
 }
 
-export default TestChat
+export default GlobalThread
 
