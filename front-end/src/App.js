@@ -1,6 +1,6 @@
 import React from 'react';
-
-import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -17,7 +17,9 @@ import Logout from './components/Logout/Logout';
 import { useSelector } from 'react-redux';
 
 function App() {
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
+  const isAuthorized = useSelector(state => state.isAuthorized);
+  
   return (
     <>
 <Router>
@@ -51,10 +53,10 @@ function App() {
       <About />
     </Route>
     <Route path="/Registration">
-      <Registration />
+    { isAuthorized ? <Redirect to='MainPage'/> : <Registration /> }
     </Route>
     <Route path="/Login">
-      <Login />
+      { isAuthorized ? <Redirect to='MainPage'/> : <Login /> }
     </Route>
     <Route path="/Logout">
       <Logout />

@@ -4,38 +4,26 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import App from './App';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
+import { reducer } from './redux/reducer';
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './redux/saga/rootSaga'
 
-const preloadedState = window.localStorage.getItem('state') || '{"isAuthenticated: false"}';
-const store = createStore(
-  (state, action) => {
-    switch(action.type){
-      case "AUTHENTICATED_SUCCESSFULLY":
-        return {
-          isAuthenticated: true
-        };
-      case "LOGOUT":
-        return {
-          isAuthenticated: false
-        }; 
-      default:
-        return state;
-    }
+const sagaMidlleware = createSagaMiddleware();
 
-  },
-  preloadedState,
-  composeWithDevTools()
+const defaultValue = { isAuthorized: false, user: { name: null, id: null }, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
 
-);
+const store = createStore(reducer, defaultValue, composeWithDevTools(applyMiddleware(sagaMidlleware)));
 
-store.subscribe(()=>{
-  const state = store.getState();
-  window.localStorage.setItem('state', JSON.stringify(state))
-})
+sagaMidlleware.run(rootSaga);
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
