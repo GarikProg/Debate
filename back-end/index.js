@@ -1,3 +1,4 @@
+
 import express from "express";
 import session from "express-session";
 import "./misc/env.js";
@@ -11,6 +12,7 @@ import ws from "ws";
 import cors from "cors";
 import ioSocket from "socket.io";
 const io = ioSocket();
+
 
 const logger = console;
 const app = express();
@@ -44,23 +46,20 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
-    name: app.get("session cookie name"),
-    secret: process.env.SESSION_SECRET,
-    store: store,
-    // Если true, сохраняет сессию, даже если она не поменялась
-    resave: false,
-    // Если false, куки появляются только при установке req.session
-    saveUninitialized: true,
-    cookie: {
-      // В продакшне нужно "secure: true" для HTTPS
-      secure: process.env.NODE_ENV === "production",
-    },
-  })
-);
-app.use(userMiddleware);
+
+app.use(session({
+  name: app.get('session cookie name'),
+  secret: process.env.SESSION_SECRET,
+  store: store,
+  // Если true, сохраняет сессию, даже если она не поменялась
+  resave: false,
+  // Если false, куки появляются только при установке req.session
+  saveUninitialized: true,
+  cookie: {
+    // В продакшне нужно "secure: true" для HTTPS
+    secure: process.env.NODE_ENV === 'production',
+  },
+}));
+
 app.use(authRouter);
 
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
