@@ -4,7 +4,8 @@ import './misc/env.js';
 import './misc/db.js';
 import authRouter from './routes/auth.js';
 import MongoDB from 'connect-mongodb-session';
-import ws from 'ws'
+import ws from 'ws';
+// import cors from 'cors';
 
 const logger = console;
 const app = express();
@@ -13,6 +14,30 @@ const store = new MongoDBStore({
   uri: process.env.DB_URL,
   collection: 'sessions'
 });
+
+// Запоминаем название куки для сессий
+app.set('session cookie name', 'sid');
+app.set('trust proxy', 1);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+// app.use(cors)
+app.use(session({
+  name: app.get('session cookie name'),
+  secret: process.env.SESSION_SECRET,
+  store: store,
+  // Если true, сохраняет сессию, даже если она не поменялась
+  resave: false,
+  // Если false, куки появляются только при установке req.session
+  saveUninitialized: true,
+  cookie: {
+    // В продакшне нужно "secure: true" для HTTPS
+    // secure: process.env.NODE_ENV === 'production',
+    secure: false
+  },
+}));
+
+app.use(authRouter);
 
 const port = process.env.PORT ?? 3000;
 const httpServer = app.listen(port, () => {
@@ -25,35 +50,11 @@ const wsServer = new ws.Server({
 
 wsServer.on('connection', (client) => {
   client.on('message', (message) => {
-  console.log('>>>>message', message);
-  const obj = JSON.parse(message);
-  wsServer.clients.forEach((client) => {
-    clien.send(newMessage);
-  })  
-}
-)
+    console.log('>>>>message', message);
+    const obj = JSON.parse(message);
+    wsServer.clients.forEach((client) => {
+      clien.send(newMessage);
+    })
+  }
+  )
 })
-
-
-
-// Запоминаем название куки для сессий
-app.set('session cookie name', 'sid');
-
-app.set('trust proxy', 1);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  name: app.get('session cookie name'),
-  secret: process.env.SESSION_SECRET,
-  store: store,
-  // Если true, сохраняет сессию, даже если она не поменялась
-  resave: false,
-  // Если false, куки появляются только при установке req.session
-  saveUninitialized: true,
-  cookie: {
-    // В продакшне нужно "secure: true" для HTTPS
-    secure: process.env.NODE_ENV === 'production',
-  },
-}));
-
-app.use(authRouter);
