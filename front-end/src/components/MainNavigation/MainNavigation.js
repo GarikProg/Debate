@@ -9,7 +9,7 @@ function MainNavigation() {
   const [index2, set2] = useState(1)
 
   const pages = [
-    ({ style }) => <animated.div style={{...style}}>
+    ({ style }) => <animated.div className="threadOne" style={{...style}}>
     <h1>Local</h1>
     <div className="threadNameOne">
     <h3 className="threadNameOneHeader">Thread name goes here</h3>
@@ -29,7 +29,7 @@ function MainNavigation() {
     <Link to="/LocalThread">Explore more </Link>
     </button>
     </animated.div>,
-     ({ style }) => <animated.div style={{...style}}>
+     ({ style }) => <animated.div className="threadTwo" style={{...style}}>
        <h1>Global</h1>
        <div className="threadNameOne">
     <h3 className="threadNameOneHeader">Thread name goes here</h3>

@@ -15,7 +15,6 @@ import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
-import { useSelector } from 'react-redux';
 
 function App() {
 
