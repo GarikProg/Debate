@@ -1,55 +1,33 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { checkSignIn } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Login() {
-    
-  const history = useHistory();
-  const [inputs, setInputs] = useState({
-    nameEmail: '',
-    password: '',
-  })
-  const [error, setError] = useState(false)
 
-  async function handleSubmit (e) {
-    e.preventDefault();
-    const resp = await fetch("/api/login", {        // <= ?????
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        nameEmail,
-        password,
-      }),
-    });
-    if (resp.status === 200) {
-      return history.push('./secret')
-    }
-    return setError('Try again')
-  }
+  const dispatch = useDispatch();
 
-  function handleChange  ({target: {name, value}}) {
-    setInputs({
-      ...inputs,
-      [name]: value
-    })
-  }
-  const {nameEmail, password} = inputs;
+  const [nameEmail, setNameEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const nameEmailError = useSelector(state => state.loginNameEmailError);
+  const passwordError = useSelector(state => state.loginPasswordError);
+
+
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
       <label>
-        NameEmail:
-      <input name="nameEmail" type="text" required onChange={handleChange} value={nameEmail}/>Enter ur nickname or email
+        Name or Email:
+      <input name="nameEmail" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
+      {nameEmail && <span>{nameEmailError}</span>}
       </label>
       <br></br>
       <label>
         Password:
-      <input name="password" type="password" required onChange={handleChange} value={password}/>Enter ur password
+      <input type="password" name='password' required onChange={(e) => setPassword(e.target.value)}/>
+      {passwordError && <span>{passwordError}</span>}
       </label>
-      <div><button type="submit">Login</button></div>
-    </form>
+      <div><button onClick={() => dispatch(checkSignIn({ nameEmail, password }))}>Login</button></div>
     </>
   )
 }
