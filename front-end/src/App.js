@@ -9,7 +9,7 @@ import About from './components/About/About'
 import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
-import { useTransition, animated } from 'react-spring'
+import { useTransition, animated } from 'react-spring';
 
 function App() {
     return (<>
@@ -21,7 +21,7 @@ function App() {
   <Link to="/Profile">Profile </Link>
   <Link to="/TestChat">Chat Igorya</Link> */}
   <Switch>
-    <Route path="/MainPage">
+    <Route path="/Home">
       <MainPage />
     </Route>
     <Route path="/LocalThread">
