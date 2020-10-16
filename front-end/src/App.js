@@ -13,13 +13,13 @@ import Registration from './components/Registration/Registration'
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
- 
+import Logout from './components/Logout/Logout';
+import { useSelector } from 'react-redux';
 
 function App() {
 
   const isAuthorized = useSelector(state => state.isAuthorized);
-
-
+  
   return (
     <>
 <Router>
@@ -33,14 +33,15 @@ function App() {
     <Route path="/MainPage">
       <MainPage />
     </Route>
-    <Route path="/LocalThread">
+    <Route path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread">
+    <Route path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
     <Route path="/Profile">
       <Profile />
+
     </Route>
     <PrivateRoute path="/Secret">
       <Secret />
@@ -57,6 +58,10 @@ function App() {
     <Route path="/Login">
       { isAuthorized ? <Redirect to='MainPage'/> : <Login /> }
     </Route>
+    <Route path="/Logout">
+      <Logout />
+    </Route>
+
   </Switch>
 </Router>
 <Footer />

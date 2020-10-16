@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import App from './App';
-
+import {composeWithDevTools} from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
@@ -16,6 +18,7 @@ const defaultValue = { isAuthorized: false, user: { name: null, id: null }, logi
 const store = createStore(reducer, defaultValue, composeWithDevTools(applyMiddleware(sagaMidlleware)));
 
 sagaMidlleware.run(rootSaga);
+
 
 ReactDOM.render(
   <React.StrictMode>
