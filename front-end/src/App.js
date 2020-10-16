@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -10,9 +11,18 @@ import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
 import { useTransition, animated } from 'react-spring';
+import Login from './components/Login/Login'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Secret from './components/Secret/Secret';
+import Logout from './components/Logout/Logout';
+import { useSelector } from 'react-redux';
 
 function App() {
-    return (<>
+
+  const isAuthorized = useSelector(state => state.isAuthorized);
+  
+  return (
+    <>
 <Router>
     <Header />
   {/* <Link to="/MainPage">Main Page </Link>
@@ -24,15 +34,19 @@ function App() {
     <Route path="/Home">
       <MainPage />
     </Route>
-    <Route path="/LocalThread">
+    <Route path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread">
+    <Route path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
     <Route path="/Profile">
       <Profile />
+
     </Route>
+    <PrivateRoute path="/Secret">
+      <Secret />
+    </PrivateRoute>
     <Route path="/TestChat">
       <TestChat />
     </Route>
@@ -40,8 +54,15 @@ function App() {
       <About />
     </Route>
     <Route path="/Registration">
-      <Registration />
+    { isAuthorized ? <Redirect to='MainPage'/> : <Registration /> }
     </Route>
+    <Route path="/Login">
+      { isAuthorized ? <Redirect to='MainPage'/> : <Login /> }
+    </Route>
+    <Route path="/Logout">
+      <Logout />
+    </Route>
+
   </Switch>
 </Router>
 <Footer />
