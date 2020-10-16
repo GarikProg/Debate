@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
@@ -14,7 +15,6 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import { useSelector } from 'react-redux';
- 
 
 function App() {
   const isAuthenticated = useSelector(state => state.isAuthenticated)
@@ -31,14 +31,15 @@ function App() {
     <Route path="/MainPage">
       <MainPage />
     </Route>
-    <Route path="/LocalThread">
+    <Route path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread">
+    <Route path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
     <Route path="/Profile">
       <Profile />
+
     </Route>
     <PrivateRoute path="/Secret">
       <Secret />
@@ -58,6 +59,7 @@ function App() {
     <Route path="/Logout">
       <Logout />
     </Route>
+
   </Switch>
 </Router>
 <Footer />
