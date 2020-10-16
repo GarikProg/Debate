@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -9,10 +9,10 @@ import About from './components/About/About'
 import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
+import { useTransition, animated } from 'react-spring'
 
 function App() {
-  return (
-    <>
+    return (<>
 <Router>
     <Header />
   {/* <Link to="/MainPage">Main Page </Link>
