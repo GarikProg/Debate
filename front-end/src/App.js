@@ -16,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
+import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import { useSelector } from 'react-redux';
 
 function App() {
@@ -33,13 +34,16 @@ function App() {
     <Route path="/Home">
       <MainPage />
     </Route>
-    <Route path="/LocalThread/:id">
+    <Route exact path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread/:id">
+    <Route exact path="/GlobalThread/">
+      <GlobalThreadAll />
+    </Route>
+    <Route exact path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
-    <Route path="/Profile">
+    <Route exact path="/Profile">
       <Profile />
     </Route>
     <PrivateRoute path="/Secret">

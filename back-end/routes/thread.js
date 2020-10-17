@@ -3,14 +3,15 @@ import Thread from '../models/thread.js'
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.route('/')
+.post(async (req, res) => {
   
   const { theme, description, sideOne, sideTwo} = req.body;
 console.log("<<<<<<<<<", req.body);
   const creator = 'user' //req.session.id
   const createdAt =  Date.now()
   try {
-    Thread.create({
+    await Thread.create({
       // creator,
       theme,
       description,
@@ -22,6 +23,11 @@ console.log("<<<<<<<<<", req.body);
   } catch (error) {
     res.json(error)
   }
+})
+.get(async (req, res) => {
+  console.log('lllllll');
+  const threads = await Thread.find();
+  res.json({threads}) 
 })
 
 export default router;
