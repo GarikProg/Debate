@@ -19,7 +19,6 @@ function About() {
     const headlineSecond = headlineFirst.nextSibling;
     const headlineThird = headlineSecond.nextSibling;
 
-
     TweenMax.to(app, 0, {css: {visibility: 'visible'}})
 
 
