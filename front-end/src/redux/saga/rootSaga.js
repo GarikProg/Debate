@@ -5,7 +5,7 @@ import { CHECK_REGISTER, CHECK_SIGN_IN, LOADING_CHECK, LOGOUT } from '../actionT
 function* checkForSignIn(action) {
   const { nameEmail, password } = action.data;
   try {
-    const responce = yield fetch('/signin', {
+    const responce = yield fetch('http://localhost:3001/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ function* checkForSignIn(action) {
 function* checkForRegister(action) {
   const { name, email, password } = action.data
   try {
-    const responce = yield fetch('/signup', {
+    const responce = yield fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -45,6 +45,7 @@ function* checkForRegister(action) {
       mode: 'cors'
     });
     const data = yield responce.json();
+    console.log(data)
     if (data.authenticated) {
       yield put(sendAuthenticatedFromReduxToSaga(data.user));
     } else if (data.err === 'Data base error, plase try again') {
@@ -61,7 +62,7 @@ function* checkForRegister(action) {
 
 function* loadingCheck() {
   try {
-    const responce = yield fetch('/loading', {
+    const responce = yield fetch('http://localhost:3001/loading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -77,7 +78,7 @@ function* loadingCheck() {
 
 function* logOut() {
   try {
-    const responce = yield fetch('/logout', {
+    const responce = yield fetch('http://localhost:3001/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
