@@ -4,12 +4,6 @@ import User from '../models/user.js';
 
 const router = express.Router();
 
-
-/**
- * Подготавливает пользователя для записи в сессию
- * Мы не хотим хранить пароль в сессии, поэтому извлекаем только нужные данные
- * @param {object} user Объект пользователя из БД
- */
 function serializeUser(user) {
   return {
     id: user.id,
@@ -57,7 +51,7 @@ router
           return res.json({ authenticated: false, err: 'Invalid password' });
         } else {
           req.session.user = serializeUser(userByName);
-          return res.json({ authenticated: true });
+          return res.json({ authenticated: true, user: req.session.user });
         }
       }
     } catch (error) {
@@ -103,7 +97,7 @@ router.route('/logout').post((req, res) => {
     if (err) {
       return res.json({ err: 'Session destroy error' })
     }
-    res.clearCookie(req.app.get('session cookie name'));
+    res.clearCookie(req.app.get("session cookie name"), { path: '/' });
     return res.json({ authenticated: false });
   });
 });

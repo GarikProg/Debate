@@ -18,13 +18,12 @@ import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
-import { useSelector } from 'react-redux';
 import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
 import CreateDebate from './components/CreateDebate/CreateDebate'
 
 function App() {
 
-  const isAuthorized = useSelector(state => state.isAuthorized);
+  // const isAuthorized = useSelector(state => state.isAuthorized);
 
   const dispatch = useDispatch()
 

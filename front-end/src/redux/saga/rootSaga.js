@@ -64,7 +64,7 @@ function* loadingCheck() {
     const responce = yield fetch('/loading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
-      mode: 'cors'
+      mode: 'cors',
     });
     const data = yield responce.json()
     if (data.authenticated) {
@@ -77,10 +77,10 @@ function* loadingCheck() {
 
 function* logOut() {
   try {
-    const responce = yield fetch('http://localhost:3001/logout', {
+    const responce = yield fetch('/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
-      mode: 'cors'
+      mode: 'cors',
     });
     const data = yield responce.json()
     if (!data.authenticated) {
@@ -90,9 +90,9 @@ function* logOut() {
     }
   } catch (error) {
     console.log('Error while Loggining Out fetch', error)
-
   }
 }
+
 
 export default function* watcher() {
   yield takeEvery(CHECK_REGISTER, checkForRegister);
