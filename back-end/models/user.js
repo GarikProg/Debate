@@ -40,5 +40,5 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.model(process.env.USER, UserSchema);
+export default mongoose.model(process.env.DB_USER, UserSchema);
 

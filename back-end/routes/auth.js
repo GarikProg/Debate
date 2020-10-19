@@ -4,12 +4,6 @@ import User from '../models/user.js';
 
 const router = express.Router();
 
-
-/**
- * Подготавливает пользователя для записи в сессию
- * Мы не хотим хранить пароль в сессии, поэтому извлекаем только нужные данные
- * @param {object} user Объект пользователя из БД
- */
 function serializeUser(user) {
   return {
     id: user.id,
@@ -19,7 +13,15 @@ function serializeUser(user) {
 
 router.route('/').get((req, res) => {
   res.send('rabotaet')
-})
+});
+
+router.route('/loading').post((req, res) => {
+  if (req.session.user) {
+    return res.json({ authenticated: true, user: req.session.user });
+  } else {
+    return res.json({ authenticated: false });
+  }
+});
 
 router
   .route('/signin')
@@ -31,28 +33,29 @@ router
         try {
           const userByEmail = await User.findOne({ email: nameEmail }).exec();
           if (!userByEmail) {
-            return res.json({ err: 'No such user' });
+            return res.json({ authenticated: false, err: 'No such user' });
           } else {
             const isValidPassword = await bcrypt.compare(password, userByEmail.password);
             if (!isValidPassword) {
-              return res.json({ err: 'Invalid password' });
+              return res.json({ authenticated: false, err: 'Invalid password' });
             }
-            req.session.user = serializeUser(user);
-            return res.json({ authenticated: true});
+            req.session.user = serializeUser(userByEmail);
+            return res.json({ authenticated: true, user: req.session.user });
           }
         } catch (error) {
-          return res.json({ err: 'Data base error, plase try again' });
+          return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       } else {
         const isValidPassword = await bcrypt.compare(password, userByName.password);
         if (!isValidPassword) {
-          return res.json({ err: 'Invalid password' });
+          return res.json({ authenticated: false, err: 'Invalid password' });
+        } else {
+          req.session.user = serializeUser(userByName);
+          return res.json({ authenticated: true, user: req.session.user });
         }
-        req.session.user = serializeUser(user);
-        return res.json({ authenticated: true });
       }
     } catch (error) {
-      return res.json({ err: 'Data base error, plase try again' });
+      return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
   });
 
@@ -63,12 +66,12 @@ router
     try {
       const userByName = await User.findOne({ name }).exec();
       if (userByName) {
-        return res.json({ err: 'This name is already taken' });
+        return res.json({ authenticated: false, err: 'This name is already taken' });
       } else {
         try {
           const userByEmail = await User.findOne({ email }).exec();
           if (userByEmail) {
-            return res.json({ err: 'This email is already taken' });
+            return res.json({ authenticated: false, err: 'This email is already taken' });
           } else {
             const saltRounds = Number(process.env.SALT_ROUNDS ?? 10);
             const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -78,23 +81,23 @@ router
                   email,        
                 });
             req.session.user = serializeUser(user);
-            return res.json({ authenticated: true });
+            return res.json({ authenticated: true, user: req.session.user });
           }
         } catch (error) {
-          return res.json({ err: 'Data base error, plase try again' });
+          return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       }
     } catch (error) {
-      return res.json({ err: 'Data base error, plase try again' });
+      return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
   });
 
-router.get('/signout', (req, res, next) => {
+router.route('/logout').post((req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return next(err);
+      return res.json({ err: 'Session destroy error' })
     }
-    res.clearCookie(req.app.get('session cookie name'));
+    res.clearCookie(req.app.get("session cookie name"), { path: '/' });
     return res.json({ authenticated: false });
   });
 });

@@ -1,5 +1,6 @@
 import express from 'express'
 import Thread from '../models/thread.js'
+import Comments from '../models/comment.js'
 
 const router = express.Router();
 
@@ -24,11 +25,20 @@ console.log("<<<<<<<<<", req.body);
     res.json(error)
   }
 })
-.get(async (req, res) => {
-  console.log('lllllll');
+
+.get(async (req, res) => {  
   const threads = await Thread.find();
   res.json({threads}) 
 })
+
+
+router.route('/:id')
+.get(async (req, res) => {  
+  const thread = await Thread.findById(req.params.id);
+  const comments = await Comments.find({commentLocation: req.params.id}) 
+  res.json({thread, comments}) 
+})
+
 
 export default router;
 
