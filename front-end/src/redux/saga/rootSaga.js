@@ -77,7 +77,7 @@ function* loadingCheck() {
 
 function* logOut() {
   try {
-    const responce = yield fetch('http://localhost:3001/logout', {
+    const responce = yield fetch('/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors'

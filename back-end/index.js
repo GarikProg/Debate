@@ -4,11 +4,11 @@ import './misc/env.js';
 import './misc/db.js';
 import authRouter from './routes/auth.js';
 import MongoDB from 'connect-mongodb-session';
-import ws from 'ws';
 import threadRouter from './routes/thread.js'
 import cors from "cors";
 import ioSocket from "socket.io";
 const io = ioSocket();
+import Comments from './models/comment.js'
 
 const logger = console;
 const app = express();
@@ -20,8 +20,9 @@ const store = new MongoDBStore({
 
 io.on("connection", (socket) => {
     socket.join(socket.handshake.query.id) 
-  socket.on("message", (data) => {      
-    io.to(data.id).emit('broadcast', data.input);
+  socket.on("message", async (data) => { 
+
+    io.to(data.id).emit('broadcast', data);
   });
 });
 
@@ -59,17 +60,4 @@ const httpServer = app.listen(port, () => {
   logger.log('Сервер запущен. Порт:', port);
 });
 
-const wsServer = new ws.Server({
-  server: httpServer,
-});
 
-wsServer.on('connection', (client) => {
-  client.on('message', (message) => {
-    console.log('>>>>message', message);
-    const obj = JSON.parse(message);
-    wsServer.clients.forEach((client) => {
-      clien.send(newMessage);
-    })
-  }
-  )
-});
