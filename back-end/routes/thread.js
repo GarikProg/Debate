@@ -24,11 +24,19 @@ console.log("<<<<<<<<<", req.body);
     res.json(error)
   }
 })
-.get(async (req, res) => {
-  console.log('lllllll');
+
+.get(async (req, res) => {  
   const threads = await Thread.find();
   res.json({threads}) 
 })
+
+
+router.route('/:id')
+.get(async (req, res) => {  
+  const thread = await Thread.findById(req.params.id);
+  res.json({thread}) 
+})
+
 
 export default router;
 

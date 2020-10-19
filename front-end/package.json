@@ -1,6 +1,5 @@
 {
-  "name": "debate",
-  "proxy": "http://localhost:3001",
+  "name": "debate",  
   "version": "0.1.0",
   "private": true,
   "dependencies": {

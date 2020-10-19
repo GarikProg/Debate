@@ -11,7 +11,6 @@ import About from './components/About/About'
 import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
-import { useTransition, animated } from 'react-spring';
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
