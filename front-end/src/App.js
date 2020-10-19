@@ -1,6 +1,7 @@
-import React from 'react';
-
-import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { loadingCheck } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -20,16 +21,19 @@ import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import { useSelector } from 'react-redux';
 
 function App() {
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
+  const isAuthorized = useSelector(state => state.isAuthorized);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadingCheck())
+  }, [])
+
   return (
     <>
 <Router>
     <Header />
-  {/* <Link to="/MainPage">Main Page </Link>
-  <Link to="/LocalThread">Local Thread </Link>
-  <Link to="/GlobalThread">Global Thread </Link>
-  <Link to="/Profile">Profile </Link>
-  <Link to="/TestChat">Chat Igorya</Link> */}
   <Switch>
     <Route path="/Home">
       <MainPage />

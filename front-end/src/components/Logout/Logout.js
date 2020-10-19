@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom';
+import { logout } from '../../redux/actions'
 
 function Logout() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  useEffect(()=>{
-    (async ()=>{
-      await fetch('/api/logout');
-      dispatch({
-        type: "LOGOUT"
-      });
-      history.push('/')
-    })();
 
-  },[])
+  const dispatch = useDispatch();
+
   return (
-    'logging out'
+    <div>
+      <button onClick={() => dispatch(logout())}>Logout</button>
+    </div>
   )
 }
 
