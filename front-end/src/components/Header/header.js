@@ -23,8 +23,11 @@ function Header() {
       <Link className="regLinkStyle" to="/Registration">Registration </Link>
       </button>
       <span>
-      {!isAuthenticated && <Link to="/Login">Login </Link>}
+      {!isAuthenticated && <Link to="/Login">Login </Link>}      
       {isAuthenticated && <Link to="/Logout">Logout </Link>}
+      </span>
+      <span>
+      {!isAuthenticated && <Link to="/createThread">Create Thread </Link>}      
       </span>
     </div>
     </>

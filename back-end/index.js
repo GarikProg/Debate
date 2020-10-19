@@ -1,9 +1,9 @@
-
 import express from "express";
 import session from "express-session";
 import "./misc/env.js";
 import "./misc/db.js";
 import authRouter from "./routes/auth.js";
+import threadRouter from './routes/thread.js'
 import MongoDB from "connect-mongodb-session";
 import cors from "cors";
 import ioSocket from "socket.io";
@@ -24,10 +24,9 @@ const httpServer = app.listen(port, () => {
 });
 
 io.on("connection", (socket) => {
-  console.log("connection open");  
-  socket.on("message", (data) => {
-    console.log(data);
-    io.emit("broadcast", data);
+    socket.join(socket.handshake.query.id) 
+  socket.on("message", (data) => {      
+    io.to(data.id).emit('broadcast', data.input);
   });
 });
 
@@ -58,4 +57,5 @@ app.use(session({
 }));
 
 app.use(authRouter);
+app.use('/thread', threadRouter)
 
