@@ -18,6 +18,8 @@ import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
+import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
+import CreateDebate from './components/CreateDebate/CreateDebate'
 
 function App() {
 
@@ -39,6 +41,9 @@ function App() {
     </Route>
     <Route exact path="/LocalThread/:id">
       <LocalThread />
+    </Route>
+    <Route exact path="/LocalThread/">
+      <GlobalDebateAll />
     </Route>
     <Route exact path="/GlobalThread/">
       <GlobalThreadAll />
@@ -69,6 +74,9 @@ function App() {
     </Route>
     <Route path="/createThread">
       <CreateThread />
+    </Route>
+    <Route path="/createDebate">
+      <CreateDebate />
     </Route>
 
   </Switch>
