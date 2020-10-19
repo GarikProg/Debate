@@ -43,7 +43,7 @@ app.use(session({
   // Если true, сохраняет сессию, даже если она не поменялась
   resave: false,
   // Если false, куки появляются только при установке req.session
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     // В продакшне нужно "secure: true" для HTTPS
     // secure: process.env.NODE_ENV === 'production',
