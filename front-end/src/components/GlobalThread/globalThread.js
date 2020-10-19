@@ -5,23 +5,25 @@ import {useSelector} from 'react-redux'
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
-  const [input, setInput] = useState("");
+  const [text, setText] = useState("");
   const [outPut, setOutput] = useState([]);
   const [side, setSide] = useState("");
   const [thread, setThread] = useState({});
   
   const { id } = useParams();
 
-  const nickName = 'Dabate king'//useSelector(state => state.data.nickName)
+  const nickName = 'Igor'//useSelector(state => state.nickName)
 
   useEffect(() => {
     (async () => {
       const response = await fetch(`http://localhost:3001/thread/${id}`);
       const resp = await response.json();
       setThread(resp.thread);
+      setOutput(resp.comments);
     })();
   }, []);
 
+  
   useEffect(() => {
     const socket = openSocket("http://localhost:8000", {
       query: {
@@ -42,7 +44,9 @@ function GlobalThread() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.send({ input, id, side, nickName});
+    const nickName = 'Debate King'
+    const creator = '5f8968b4654ab30793ca8f6e'
+    socket.send({ text, id, side, nickName, creator});
   };
 
   return (
@@ -63,7 +67,7 @@ function GlobalThread() {
       </div>
       <form onSubmit={(e) => handleSubmit(e)} id="messageForm">
         <input
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           type="text"
           name="message"
           id="message"
@@ -73,7 +77,9 @@ function GlobalThread() {
 
       {outPut &&
         outPut.map((el) => {
-          return <h5><span>{el.input}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> </h5>;
+          return (<h5><span>{el.text}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> </h5>
+            );
+
         })}
     </>
   );
