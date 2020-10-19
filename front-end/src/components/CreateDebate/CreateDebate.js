@@ -1,10 +1,7 @@
 import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
-import {Link} from "react-router-dom"
 
-export default function CreateThread() {
+export default function CreateDebate() {
   const [formData, setFormData] = useState();
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
 
   const handleInput = (e) => {
     e.persist();
@@ -30,17 +27,13 @@ export default function CreateThread() {
 
 
   return (
-    <>
     <div>
       <form onSubmit={(e) => handleSubmit(e)} action="">
         <div><input onChange={(e) => handleInput(e)} required name="theme" placeholder="theme" type="text"/></div>
         <div><textarea onChange={(e) => handleInput(e)} required name="description" placeholder="description" type="text"/></div>
-        <div><input onChange={(e) => handleInput(e)} required name="sideOne" placeholder="sideOne" type="text"/></div>
-        <div><input onChange={(e) => handleInput(e)} required name="sideTwo" placeholder="sideTwo" type="text"/></div>
+        <div><input onChange={(e) => handleInput(e)} required name="opponent" placeholder="opponent" type="text"/></div>
         <button>Create thread</button>
       </form>
     </div>
-    
-  </>
   )
 }

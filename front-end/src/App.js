@@ -18,6 +18,8 @@ import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import { useSelector } from 'react-redux';
+import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
+import CreateDebate from './components/CreateDebate/CreateDebate'
 
 function App() {
   const isAuthenticated = useSelector(state => state.isAuthenticated)
@@ -36,6 +38,9 @@ function App() {
     </Route>
     <Route exact path="/LocalThread/:id">
       <LocalThread />
+    </Route>
+    <Route exact path="/LocalThread/">
+      <GlobalDebateAll />
     </Route>
     <Route exact path="/GlobalThread/">
       <GlobalThreadAll />
@@ -66,6 +71,9 @@ function App() {
     </Route>
     <Route path="/createThread">
       <CreateThread />
+    </Route>
+    <Route path="/createDebate">
+      <CreateDebate />
     </Route>
 
   </Switch>
