@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import "./header.scss";
 
 function Header() {
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
+  const isAuthorized = useSelector(state => state.isAuthorized);
 
   return (
     <>
@@ -23,11 +24,11 @@ function Header() {
       <Link className="regLinkStyle" to="/Registration">Registration </Link>
       </button>
       <span>
-      {!isAuthenticated && <Link to="/Login">Login </Link>}      
-      {isAuthenticated && <Link to="/Logout">Logout </Link>}
+      {!isAuthorized && <Link to="/Login">Login </Link>}
+      {isAuthorized && <Link to="/Logout">Logout </Link>}
       </span>
       <span>
-      {!isAuthenticated && <Link to="/createThread">Create Thread </Link>}      
+      {!isAuthorized && <Link to="/createThread">Create Thread </Link>}      
       </span>
     </div>
     </>

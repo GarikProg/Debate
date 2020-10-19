@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { reducer } from './redux/reducer';
@@ -15,6 +16,7 @@ const defaultValue = { isAuthorized: false, user: { name: null, id: null }, logi
 const store = createStore(reducer, defaultValue, composeWithDevTools(applyMiddleware(sagaMidlleware)));
 
 sagaMidlleware.run(rootSaga);
+
 
 
 ReactDOM.render(

@@ -1,6 +1,7 @@
-import React from 'react';
-
-import {BrowserRouter as Router, Route, Switch, useLocation, Link} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { loadingCheck } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -16,30 +17,42 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
+import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import { useSelector } from 'react-redux';
+import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
+import CreateDebate from './components/CreateDebate/CreateDebate'
 
 function App() {
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
+  const isAuthorized = useSelector(state => state.isAuthorized);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadingCheck())
+  }, [])
+
   return (
     <>
 <Router>
     <Header />
-  {/* <Link to="/MainPage">Main Page </Link>
-  <Link to="/LocalThread">Local Thread </Link>
-  <Link to="/GlobalThread">Global Thread </Link>
-  <Link to="/Profile">Profile </Link>
-  <Link to="/TestChat">Chat Igorya</Link> */}
   <Switch>
     <Route path="/Home">
       <MainPage />
     </Route>
-    <Route path="/LocalThread/:id">
+    <Route exact path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread/:id">
+    <Route exact path="/LocalThread/">
+      <GlobalDebateAll />
+    </Route>
+    <Route exact path="/GlobalThread/">
+      <GlobalThreadAll />
+    </Route>
+    <Route exact path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
-    <Route path="/Profile">
+    <Route exact path="/Profile">
       <Profile />
     </Route>
     <PrivateRoute path="/Secret">
@@ -62,6 +75,9 @@ function App() {
     </Route>
     <Route path="/createThread">
       <CreateThread />
+    </Route>
+    <Route path="/createDebate">
+      <CreateDebate />
     </Route>
 
   </Switch>
