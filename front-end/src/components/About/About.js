@@ -27,8 +27,8 @@ function About() {
       y: 44,
       x: 22,
       ease:Power3.easeOut,
-      delay: .1
-    }, .20, 'Start')
+      delay: .10
+    }, .25, 'Start')
   }, [tl])
   
   return (
@@ -51,7 +51,7 @@ function About() {
               </h1>
     <div className="main">
     <button className="aboutBtn">
-    <Link className="aboutPageLinkStyle" to="/MainPage">
+    <Link className="aboutPageLinkStyle" to="/Home">
       <span className="firstSpan"></span>
       <span className="secondSpan"></span>
       <span className="thirdSpan"></span>

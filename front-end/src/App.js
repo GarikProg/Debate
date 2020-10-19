@@ -11,10 +11,14 @@ import About from './components/About/About'
 import Header from './components/Header/header'
 import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
+import { useTransition, animated } from 'react-spring';
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
+import CreateThread from './components/CreateThread/CreateThread';
+import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
+import { useSelector } from 'react-redux';
 
 function App() {
 
@@ -25,24 +29,26 @@ function App() {
   useEffect(() => {
     dispatch(loadingCheck())
   }, [])
-  
+
   return (
     <>
 <Router>
     <Header />
   <Switch>
-    <Route path="/MainPage">
+    <Route path="/Home">
       <MainPage />
     </Route>
-    <Route path="/LocalThread/:id">
+    <Route exact path="/LocalThread/:id">
       <LocalThread />
     </Route>
-    <Route path="/GlobalThread/:id">
+    <Route exact path="/GlobalThread/">
+      <GlobalThreadAll />
+    </Route>
+    <Route exact path="/GlobalThread/:id">
       <GlobalThread />
     </Route>
-    <Route path="/Profile">
+    <Route exact path="/Profile">
       <Profile />
-
     </Route>
     <PrivateRoute path="/Secret">
       <Secret />
@@ -54,13 +60,16 @@ function App() {
       <About />
     </Route>
     <Route path="/Registration">
-    { isAuthorized ? <Redirect to='MainPage'/> : <Registration /> }
+      <Registration />
     </Route>
     <Route path="/Login">
-      { isAuthorized ? <Redirect to='MainPage'/> : <Login /> }
+      <Login />
     </Route>
     <Route path="/Logout">
       <Logout />
+    </Route>
+    <Route path="/createThread">
+      <CreateThread />
     </Route>
 
   </Switch>

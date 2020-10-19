@@ -5,6 +5,7 @@ import './misc/db.js';
 import authRouter from './routes/auth.js';
 import MongoDB from 'connect-mongodb-session';
 import ws from 'ws';
+import threadRouter from './routes/thread.js'
 import cors from "cors";
 import ioSocket from "socket.io";
 const io = ioSocket();
@@ -18,10 +19,9 @@ const store = new MongoDBStore({
 });
 
 io.on("connection", (socket) => {
-  console.log("connection open");  
-  socket.on("message", (data) => {
-    console.log(data);
-    io.emit("broadcast", data);
+    socket.join(socket.handshake.query.id) 
+  socket.on("message", (data) => {      
+    io.to(data.id).emit('broadcast', data.input);
   });
 });
 
@@ -52,6 +52,7 @@ app.use(session({
 }));
 
 app.use(authRouter);
+app.use('/thread', threadRouter)
 
 const port = process.env.PORT ?? 3001;
 const httpServer = app.listen(port, () => {
