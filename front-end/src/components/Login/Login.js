@@ -12,8 +12,6 @@ function Login() {
   const nameEmailError = useSelector(state => state.loginNameEmailError);
   const passwordError = useSelector(state => state.loginPasswordError);
 
-
-
   return (
     <>
       <label>

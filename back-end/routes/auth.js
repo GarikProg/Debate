@@ -19,7 +19,15 @@ function serializeUser(user) {
 
 router.route('/').get((req, res) => {
   res.send('rabotaet')
-})
+});
+
+router.route('/loading').post((req, res) => {
+  if (req.session.user) {
+    return res.json({ authenticated: true, user: req.session.user });
+  } else {
+    return res.json({ authenticated: false });
+  }
+});
 
 router
   .route('/signin')
@@ -90,10 +98,10 @@ router
     }
   });
 
-router.get('/signout', (req, res, next) => {
+router.route('/logout').post((req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return next(err);
+      return res.json({ err: 'Session destroy error' })
     }
     res.clearCookie(req.app.get('session cookie name'));
     return res.json({ authenticated: false });

@@ -5,23 +5,37 @@ import './misc/db.js';
 import authRouter from './routes/auth.js';
 import MongoDB from 'connect-mongodb-session';
 import ws from 'ws';
-// import cors from 'cors';
+import cors from "cors";
+import ioSocket from "socket.io";
+const io = ioSocket();
 
 const logger = console;
 const app = express();
 const MongoDBStore = MongoDB(session);
 const store = new MongoDBStore({
   uri: process.env.DB_URL,
-  collection: 'sessions'
+  collection: "sessions",
 });
 
-// Запоминаем название куки для сессий
-app.set('session cookie name', 'sid');
-app.set('trust proxy', 1);
+io.on("connection", (socket) => {
+  console.log("connection open");  
+  socket.on("message", (data) => {
+    console.log(data);
+    io.emit("broadcast", data);
+  });
+});
 
-app.use(express.urlencoded({ extended: true }));
+
+io.listen(process.env.PORT_SOCKET);
+console.log("listening on port ", process.env.PORT_SOCKET);
+
+// Запоминаем название куки для сессий
+app.set("session cookie name", "sid");
+app.set("trust proxy", 1);
 app.use(express.json());
-// app.use(cors)
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
   name: app.get('session cookie name'),
   secret: process.env.SESSION_SECRET,
@@ -39,7 +53,7 @@ app.use(session({
 
 app.use(authRouter);
 
-const port = process.env.PORT ?? 3000;
+const port = process.env.PORT ?? 3001;
 const httpServer = app.listen(port, () => {
   logger.log('Сервер запущен. Порт:', port);
 });
@@ -57,4 +71,4 @@ wsServer.on('connection', (client) => {
     })
   }
   )
-})
+});
