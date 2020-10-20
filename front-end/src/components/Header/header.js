@@ -1,38 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import "./header.scss";
+import { withRouter, Link } from 'react-router-dom';
+import SecondLayer from '../secondLayer/secondLayer'
 
-function Header() {
+const Header = ({ history }) => {
+
+  const [state, setState] = useState({
+    initial: false,
+    clicked: null,
+    menuName: "Menu"
+  })
+
+  const [disabled, setDisabled] = useState(false)
+
+  useEffect(() => {
+    history.listen(() => {
+      setState({clicked: false, menuName:"Menu"})
+    })
+  })
+
+  const handleMenu = () => {
+    disableMenu();
+    if(state.initial === false) {
+      setState({
+        initial: null,
+        clicked: true,
+        menuName: "Close"
+      })         
+      } else if (state.clicked === true) {
+        setState({
+          clicked: !state.clicked,
+          menuName: "Menu"
+        })
+      } else if (state.clicked === false) {
+        setState({
+          clicked: !state.clicked,
+          menuName: "Close"
+        })
+      }
+    }
+  
+  const disableMenu = () => {
+    setDisabled(!disabled)
+    setTimeout(() => {
+      setDisabled(false)
+    }, 1200
+    )
+  }
 
   const isAuthorized = useSelector(state => state.isAuthorized);
-
+  
   return (
-    <>
-    <div className="header">
-      <button className="mainPageStyle">
-      <Link className="mainLinkStyle" to="/Home">
-      <h1 className="neon" data-text="U">DE<span className="flicker-slow">B</span>A<span className="flicker-fast">T</span>ES</h1></Link>
-      </button>
-      <button className="aboutStyle">
-      <Link className="aboutLinkStyle" to="/About">About </Link>
-      </button>
-      {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/Profile">Profile </Link></button> : <button className="registrationStyle"><Link className="regLinkStyle" to="/Auth">Authentication </Link></button>}
-      <span>
-      {isAuthorized && <Link to="/Logout">Logout </Link>}
-      </span>
-      <span>
-      {isAuthorized && <Link to="/createThread">Create Thread </Link>}      
-      </span>
-    </div>
-    </>
+    <header>
+      <div className="container">
+        <div className="wrapper">
+          <div className="inner-header">
+            <div className="logo">
+            <button className="mainPageStyle">
+               <Link className="mainLinkStyle" to="/Home">
+                  <h1 className="neon" data-text="U">DE<span className="flicker-slow">B</span>A<span className="flicker-fast">T</span>ES</h1></Link>
+          </button>
+            </div>
+            <div className="menu">
+              <button className="profileStyle" disabled={disabled} onClick={handleMenu}>
+              <Link className="profileLinkStyle">
+                Menu
+                </Link>
+              </button>
+              {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/Profile">Profile </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
+              <button>
+              {isAuthorized && <Link className="profileLinkStyle" to="/Logout">Logout </Link>}
+             </button>
+             <button>
+              {isAuthorized && <Link Link className="profileStyleLink" to="/createThread">Create Thread </Link>}      
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SecondLayer state={state}/>
+    </header>
   )
 }
-
-export default Header
-
-
-{/* <span> */}
-{/* {!isAuthorized && <Link to="/Login">Login </Link>} */}
-{/* {isAuthorized && <Link to="/Logout">Logout </Link>}
-</span> */}
+export default withRouter(Header)
