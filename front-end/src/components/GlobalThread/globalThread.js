@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import { useParams } from "react-router-dom";
 import {useSelector} from 'react-redux'
+import Comment from '../Comment/Comment'
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -12,7 +13,8 @@ function GlobalThread() {
   
   const { id } = useParams();
 
-  const nickName = 'Igor'//useSelector(state => state.nickName)
+  const nickName = useSelector(state => state.user.username)//useSelector(state => state.nickName)
+  const creator = useSelector(state => state.user.id)
 
   useEffect(() => {
     (async () => {
@@ -43,11 +45,13 @@ function GlobalThread() {
   }, [socket]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const nickName = 'Debate King'
-    const creator = '5f8968b4654ab30793ca8f6e'
+    e.preventDefault();    
     socket.send({ text, id, side, nickName, creator});
   };
+
+const punch = (comment, user) => {
+
+}
 
   return (
     <>
@@ -77,9 +81,10 @@ function GlobalThread() {
 
       {outPut &&
         outPut.map((el) => {
-          return (<h5><span>{el.text}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> </h5>
-            );
-
+          // return (<h5><span>{el.text}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> <input type="checkbox" name="like" id=""/></h5>
+          //   );
+return <Comment key={el.id} id={el.id} text={el.text} side={el.side} nickName={el.nickName} punch={punch}/>
+        
         })}
     </>
   );
