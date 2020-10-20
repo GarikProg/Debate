@@ -10,6 +10,7 @@ import ioSocket from "socket.io";
 const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
+import Threads from './models/thread.js'
 
 const logger = console;
 const app = express();
@@ -26,13 +27,16 @@ io.on("connection", (socket) => {
       console.log(data);
     const { text, creator,  id, side, nickName} = data;
     try {
-      await Comments.create({
+      const comment = await Comments.create({
         creator,
         text,
         commentLocation: id,
         side,
         nickName,
       });
+      const threads = await Threads.findById(id)
+      threads.comments.push(comment._id)
+      await threads.save();
       io.to(data.id).emit("broadcast", data);
     } catch (error) {
       console.log(error);
@@ -42,13 +46,13 @@ io.on("connection", (socket) => {
     console.log(data);
     const { comment_id, creator} = data;
     try {
-      await Likes.create({
+      const like = await Likes.create({
         creator,
         comment: comment_id,        
       });
-      const comm = await Comments.findOne({_id: comment_id})
-      comm.likes.push(creator)
-      await comm.save();
+      const comment = await Comments.findById(comment_id)
+      comment.likes.push(like._id)
+      await comment.save();
       // await Comments.updateOne(
       //   {_id: comment_id},
       //   {$push: {likes: creator}}

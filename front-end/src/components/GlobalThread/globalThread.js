@@ -13,7 +13,7 @@ function GlobalThread() {
 
   const { id } = useParams();
 
-  const nickName = useSelector((state) => state.user.username); //useSelector(state => state.nickName)
+  const nickName = useSelector((state) => state.user.username); 
   const creator = useSelector((state) => state.user.id);
 
   useEffect(() => {
