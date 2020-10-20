@@ -4,46 +4,36 @@ import Comments from '../models/comment.js'
 
 const router = express.Router();
 
-router.route('/')
-.post(async (req, res) => {
-  
-  const { theme, description, sideOne, sideTwo} = req.body;
-console.log("<<<<<<<<<", req.body);
-  const creator = 'user' //req.session.id
-  const createdAt =  Date.now()
-  try {
-    await Thread.create({
-      // creator,
-      theme,
-      description,
-      sideOne,
-      sideTwo,
-      createdAt,
-    })
-    res.end()
-  } catch (error) {
-    res.json(error)
-  }
+router
+  .route('/createnew')
+  .post(async (req, res) => {
+    try {
+      await Thread.create(req.body)
+      res.end();
+    } catch (error) {
+      res.json(error);
+    }
 })
 
-.get(async (req, res) => {  
-  const threads = await Thread.find();
-  res.json({threads}) 
-})
+router
+  .route('/loadall')
+  .post(async (req, res) => {
+    try {
+      const threads = await Thread.find({}).populate('comments').populate('threadWinner').populate('creator').exec();
+      console.log(threads);
+      res.json({ loadedThreads: true, threads });
+    } catch (error) {
+      return res.json({ loadedThreads: false, err: 'Data base error, plase try again' });
+    }
+});
 
-
-router.route('/:id')
-.get(async (req, res) => {  
-  const thread = await Thread.findById(req.params.id);
-  const comments = await Comments.find({commentLocation: req.params.id}) 
-  res.json({thread, comments}) 
+router
+  .route('/:id')
+  .get(async (req, res) => {  
+    const thread = await Thread.findById(req.params.id).populate('comments').populate('threadWinner').populate('creator').exec();
+    const comments = await Comments.find({commentLocation: req.params.id});
+    res.json({thread, comments});
 })
 
 
 export default router;
-
-
-
-
-
-

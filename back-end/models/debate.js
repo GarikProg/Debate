@@ -3,11 +3,11 @@ import mongoose from 'mongoose'
 const DebateSchema = new mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   participant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -18,7 +18,7 @@ const DebateSchema = new mongoose.Schema({
   closedAt: Date,
   debateWinner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   votes: [{
     type: mongoose.Schema.Types.ObjectId,

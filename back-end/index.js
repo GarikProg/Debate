@@ -3,6 +3,7 @@ import session from "express-session";
 import "./misc/env.js";
 import "./misc/db.js";
 import authRouter from "./routes/auth.js";
+import debateRouter from './routes/debate.js'
 import MongoDB from "connect-mongodb-session";
 import threadRouter from "./routes/thread.js";
 import cors from "cors";
@@ -65,7 +66,8 @@ app.use(
 );
 
 app.use(authRouter);
-app.use("/thread", threadRouter);
+app.use('/debate',debateRouter);
+app.use('/thread', threadRouter);
 
 const port = process.env.PORT ?? 3001;
 const httpServer = app.listen(port, () => {

@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 import "./MainNavigation.scss"
 
 
 function MainNavigation() {
+
   const [index, set] = useState(0)
   const [index2, set2] = useState(1)
 
@@ -81,9 +82,9 @@ function MainNavigation() {
       </div>
       <div className="simple-trans-main2">
        {transitions2.map(({ item, props, key }) => {
-         console.log(item)
+        //  console.log(item)
         const Page = pages[item]
-        console.log(Page )
+        // console.log(Page )
         return <Page key={key} style={props} />
       })}
       </div>
