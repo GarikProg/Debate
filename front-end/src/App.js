@@ -18,10 +18,13 @@ import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
 import CreateDebate from './components/CreateDebate/CreateDebate'
+import Auth from './components/Auth/Auth';
 
 function App() {
 
-  const dispatch = useDispatch();
+  const isAuthorized = useSelector(state => state.isAuthorized);
+
+  const dispatch = useDispatch()
   
   useEffect(() => {
     dispatch(loadingSessionCheck());
@@ -36,6 +39,9 @@ function App() {
   <Switch>
     <Route path="/Home">
       <MainPage />
+    </Route>
+    <Route exact path="/Auth">
+      <Auth />
     </Route>
     <Route exact path="/LocalThread/:id">
       <LocalThread />
@@ -58,12 +64,9 @@ function App() {
     <Route path="/About">
       <About />
     </Route>
-    <Route path="/Registration">
-      <Registration />
-    </Route>
-    <Route path="/Login">
-      <Login />
-    </Route>
+    {/* <Route path="/Registration">
+      {isAuthorized ? <Redirect to='/Home'/> : <Registration />}
+    </Route> */}
     <Route path="/Logout">
       <Logout />
     </Route>
