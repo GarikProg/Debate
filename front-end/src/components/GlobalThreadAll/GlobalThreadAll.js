@@ -3,15 +3,8 @@ import {Link} from "react-router-dom"
 import {useSelector} from 'react-redux'
 
 export default function GlobalThreadAll() {
-  // const [threads, setThreads] = useState([]);
+  
   const isAuthorized = useSelector(state => state.isAuthorized)  
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await fetch("http://localhost:3001/thread");
-  //     const resp = await response.json();      
-  //     setThreads(resp.threads);
-  //   })();
-  // }, []);
 
   const threads = useSelector(state => state.appThreads)
 
