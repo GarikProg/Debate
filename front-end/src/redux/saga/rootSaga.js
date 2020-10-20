@@ -1,12 +1,14 @@
 import { put, takeEvery } from "redux-saga/effects";
+
 import { sendAuthenticatedFromSagaToRedux, dataBaseErrorFromSagaToRedux, registerEmailErrorFromSagaToRedux, registerNameErrorFromSagaToRedux, loginNameEmailErrorFromSagaToRedux, loginPasswordErrorFromSagaToRedux, logoutFromSagaToRedux, loadThreadsFromSagaToRedux, loadDebatesFromSagaToRedux } from '../actions';
+
 import { CHECK_REGISTER, CHECK_SIGN_IN, LOADING_CHECK, LOGOUT, LOAD_THREADS, LOAD_DEBATES, CREATE_NEW_THREAD, CREATE_NEW_DEBATE } from '../actionTypes';
 
-// +
+// ++
 function* checkForSignIn(action) {
   const { nameEmail, password } = action.data;
   try {
-    const responce = yield fetch('/signin', {
+    const responce = yield fetch('http://localhost:3001/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,11 +34,11 @@ function* checkForSignIn(action) {
   }
 }
 
-// +
+// ++
 function* checkForRegister(action) {
   const { name, email, password } = action.data
   try {
-    const responce = yield fetch('/signup', {
+    const responce = yield fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -62,10 +64,10 @@ function* checkForRegister(action) {
   }
 }
 
-// +
+// ++
 function* loadingCheck() {
   try {
-    const responce = yield fetch('/loading', {
+    const responce = yield fetch('http://localhost:3001/loading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -73,6 +75,8 @@ function* loadingCheck() {
     const data = yield responce.json()
     if (data.authenticated) {
       yield put(sendAuthenticatedFromSagaToRedux(data.user));
+    } else {
+      yield put(dataBaseErrorFromSagaToRedux(data.err));
     }
   } catch (error) {
     console.log('Error while Loading fetch', error);
@@ -82,7 +86,7 @@ function* loadingCheck() {
 // ++
 function* logOut() {
   try {
-    const responce = yield fetch('/logout', {
+    const responce = yield fetch('http://localhost:3001/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -101,7 +105,7 @@ function* logOut() {
 // ++
 function* loadThreads() {
   try {
-    const responce = yield fetch('/thread/loadall', {
+    const responce = yield fetch('http://localhost:3001/thread/loadall', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -113,15 +117,15 @@ function* loadThreads() {
   }
 }
 
+// ++
 function* loadDebates() {
   try {
-    const responce = yield fetch('/debate/loadall', {
+    const responce = yield fetch('http://localhost:3001/debate/loadall', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
     });
     const data = yield responce.json();
-    console.log(data);
     yield put(loadDebatesFromSagaToRedux(data.debates));
   } catch (error) {
     console.log('Error while Loading threads fetch', error);
@@ -130,12 +134,19 @@ function* loadDebates() {
 
 function* createNewThread(action) {
   try {
-    const responce = yield fetch('/thread/createnew', {
+    const responce = yield fetch('http://localhost:3001/thread/createnew', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
       body: JSON.stringify(action.data)
     });
+    const data = responce.json();
+    console.log(data)
+    if (data.successfulThreadCrate) {
+
+    } else {
+      yield put(dataBaseErrorFromSagaToRedux(data.err));
+    }
   } catch (error) {
     console.log('Error while creating new thread fetch', error);
   }
