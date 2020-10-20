@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { checkRegister } from '../../redux/actions'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Registration() {
   
@@ -9,6 +9,9 @@ function Registration() {
   const [password, setPassword] = useState(null)
 
   const dispatch = useDispatch()
+
+  const nameError = useSelector(state => state.registerNameError);
+  const emailError = useSelector(state => state.registerEmailError);
 
   return (
     <>

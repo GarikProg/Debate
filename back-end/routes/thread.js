@@ -7,11 +7,21 @@ const router = express.Router();
 router
   .route('/createnew')
   .post(async (req, res) => {
+    const { theme, sideTwo, sideOne, description, creator } = req.body;
+    const date = Date.now();
     try {
-      await Thread.create(req.body)
-      res.end();
+      const thread = await Thread.create({
+        creator,
+        theme,
+        description,
+        sideOne,
+        sideTwo,
+        createdAt: date,
+        updatedAt: date,
+      })
+      res.json({ successfulThreadCrate: true, thread });
     } catch (error) {
-      res.json(error);
+      res.json({ successfulThreadCrate: false, err: 'Data base error, plase try again' });
     }
 })
 
@@ -20,7 +30,6 @@ router
   .post(async (req, res) => {
     try {
       const threads = await Thread.find({}).populate('comments').populate('threadWinner').populate('creator').exec();
-      console.log(threads);
       res.json({ loadedThreads: true, threads });
     } catch (error) {
       return res.json({ loadedThreads: false, err: 'Data base error, plase try again' });

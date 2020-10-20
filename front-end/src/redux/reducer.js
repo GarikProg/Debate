@@ -3,17 +3,17 @@ import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDU
 function compare(one, two) {
   let firtsToCompare;
   let secondToCompare;
-  if (one.createdAt > one.updatedAt) {
+  if (one.createdAt >= one.updatedAt) {
     firtsToCompare = one.createdAt
   } else {
     firtsToCompare = one.updatedAt
   }
-  if (two.createdAt > two.updatedAt) {
+  if (two.createdAt >= two.updatedAt) {
     secondToCompare = two.createdAt
   } else {
     secondToCompare = two.updatedAt
   }
-
+  
   let comparison = 0;
   if (firtsToCompare > secondToCompare) {
     comparison = -1;
@@ -22,6 +22,20 @@ function compare(one, two) {
   }
 
   return comparison;
+}
+
+const sorted = (data) => {
+  let result = [];
+  if (data.length > 4) {
+    for (let i = 0; i < 4; i++) {
+      result.push(data[i]);
+    }
+  } else {
+    for (let i = 0; i < data.length; i++) {
+      result.push(data[i]);
+    }
+  }
+  return result
 }
 
 
@@ -45,17 +59,7 @@ export const reducer = (state, action) => {
     case LOAD_THREADS_FROM_SAGA_TO_REDUX:
       const threadsClone = action.data.threads.slice()
       threadsClone.sort(compare);
-      let resultForMain = [];
-      if (threadsClone.length > 4) {
-        for (let i = 0; i < 4; i++) {
-          resultForMain.push(threadsClone[i]);
-        }
-      } else {
-        for (let i = 0; i < threadsClone.length; i++) {
-          resultForMain.push(threadsClone[i]);
-        }
-      }
-      return {...state, appThreads: action.data.threads, mainThreads: resultForMain};
+      return {...state, appThreads: action.data.threads, mainThreads: sorted(threadsClone) };
     default:
       return state;
   }
