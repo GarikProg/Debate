@@ -57,7 +57,7 @@ router
     } catch (error) {
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
-  });
+});
 
 router
   .route('/signup')
@@ -90,16 +90,18 @@ router
     } catch (error) {
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
-  });
+});
 
-router.route('/logout').post((req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.json({ err: 'Session destroy error' })
-    }
-    res.clearCookie(req.app.get("session cookie name"), { path: '/' });
-    return res.json({ authenticated: false });
-  });
+router
+  .route('/logout')
+  .post((req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.json({ err: 'Session destroy error' })
+      }
+      res.clearCookie(req.app.get("session cookie name"), { path: '/' });
+      return res.json({ authenticated: false });
+    });
 });
 
 export default router;

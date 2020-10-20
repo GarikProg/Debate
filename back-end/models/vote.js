@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const VoteSchema = new mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   debate: {
     type: mongoose.Schema.Types.ObjectId,
@@ -11,7 +11,7 @@ const VoteSchema = new mongoose.Schema({
   },
   voteFor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
 });
 

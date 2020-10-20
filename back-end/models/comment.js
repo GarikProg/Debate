@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const CommentSchema = new mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   text: String,
   likes: [
@@ -12,10 +12,7 @@ const CommentSchema = new mongoose.Schema({
       ref: process.env.LIKE,
     },
   ],
-  commentLocation: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.THREAD,
-  },
+  commentLocation: mongoose.Schema.Types.ObjectId,
   isDebate: Boolean,
   side: String,
   nickName: String,

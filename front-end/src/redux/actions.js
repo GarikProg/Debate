@@ -1,34 +1,58 @@
-import { CHECK_SIGN_IN, SEND_AUTHENTICATED_FROM_REDUX_TO_SAGA, CHECK_REGISTER, DATABASE_ERROR_FROM_REDUX_TO_SAGA, REGISTER_EMAIL_ERROR_FROM_REDUX_TO_SAGA, REGISTER_NAME_ERROR_FROM_REDUX_TO_SAGA, LOGIN_PASSWORD_ERROR_FROM_REDUX_TO_SAGA, LOGIN_NAME_EMAIL_ERROR_FROM_REDUX_TO_SAGA, LOADING_CHECK, CLEAR_REDUX_ERRORS, LOGOUT, LOGOUT_FROM_REDUX_TO_SAGA } from './actionTypes'
+import { CHECK_SIGN_IN, SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, CHECK_REGISTER, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOADING_CHECK, LOGOUT, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD, CREATE_NEW_DEBATE } from './actionTypes';
 
+// Проверка на активную сессию при загрузке страницы ++
+const loadingSessionCheck = () => ({ type: LOADING_CHECK });
+
+// Проверка на успешность входа и регистрации ++
 const checkSignIn = (data) => ({ type: CHECK_SIGN_IN, data });
 const checkRegister = (data) => ({ type: CHECK_REGISTER, data });
-const loadingCheck = () => ({ type: LOADING_CHECK });
+const sendAuthenticatedFromSagaToRedux = (user) => ({ type: SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, user});
 
-const clearRuduxErrors = () => ({ type: CLEAR_REDUX_ERRORS });
-
+// Выход ++
 const logout = () => ({ type: LOGOUT });
-const logoutFromReduxToSaga = () => ({ type: LOGOUT_FROM_REDUX_TO_SAGA })
+const logoutFromSagaToRedux = () => ({ type: LOGOUT_FROM_SAGA_TO_REDUX });
 
-const sendAuthenticatedFromReduxToSaga = (user) => ({ type: SEND_AUTHENTICATED_FROM_REDUX_TO_SAGA, user})
+// Ошибки сервера ++
+const dataBaseErrorFromSagaToRedux = (error) => ({ type: DATABASE_ERROR_FROM_SAGA_TO_REDUX, error });
 
-const dataBaseErrorFromReduxToSaga = (error) => ({ type: DATABASE_ERROR_FROM_REDUX_TO_SAGA, error });
+// Ошибки при регистрации
+const registerEmailErrorFromSagaToRedux = (error) => ({ type: REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, error });
+const registerNameErrorFromSagaToRedux = (error) => ({ type: REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, error});
 
-const registerEmailErrorFromReduxToSaga = (error) => ({ type: REGISTER_EMAIL_ERROR_FROM_REDUX_TO_SAGA, error });
-const registerNameErrorFromReduxToSaga = (error) => ({ type: REGISTER_NAME_ERROR_FROM_REDUX_TO_SAGA, error});
+// Ошибки при аутентификации
+const loginNameEmailErrorFromSagaToRedux = (error) => ({ type: LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, error });
+const loginPasswordErrorFromSagaToRedux = (error) => ({ type: LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, error });
 
-const loginNameEmailErrorFromReduxToSaga = (error) => ({ type: LOGIN_NAME_EMAIL_ERROR_FROM_REDUX_TO_SAGA, error });
-const loginPasswordErrorFromReduxToSaga = (error) => ({ type: LOGIN_PASSWORD_ERROR_FROM_REDUX_TO_SAGA, error });
+// Загрузка глобальных тредов ++
+const loadThreads = () => ({ type: LOAD_THREADS })
+const loadThreadsFromSagaToRedux = (data) => ({ type: LOAD_THREADS_FROM_SAGA_TO_REDUX, data });
+
+// Загрузка дебатов ++
+const loadDebates = () => ({ type: LOAD_DEBATES });
+const loadDebatesFromSagaToRedux = (data) => ({ type: LOAD_DEBATES_FROM_SAGA_TO_REDUX, data });
+
+// Создание нового треда ++
+const createNewThread = (data) => ({ type: CREATE_NEW_THREAD, data });
+
+// Создание нового дебата ++
+const createNewDebate = (data) => ({ type: CREATE_NEW_DEBATE });
 
 export {
   checkSignIn,
-  sendAuthenticatedFromReduxToSaga,
+  sendAuthenticatedFromSagaToRedux,
   checkRegister,
-  dataBaseErrorFromReduxToSaga,
-  registerEmailErrorFromReduxToSaga,
-  registerNameErrorFromReduxToSaga,
-  loginNameEmailErrorFromReduxToSaga,
-  loginPasswordErrorFromReduxToSaga,
-  loadingCheck,
+  dataBaseErrorFromSagaToRedux,
+  registerEmailErrorFromSagaToRedux,
+  registerNameErrorFromSagaToRedux,
+  loginNameEmailErrorFromSagaToRedux,
+  loginPasswordErrorFromSagaToRedux,
+  loadingSessionCheck,
   logout,
-  logoutFromReduxToSaga
+  logoutFromSagaToRedux,
+  loadThreads,
+  loadThreadsFromSagaToRedux,
+  loadDebates,
+  loadDebatesFromSagaToRedux,
+  createNewThread,
+  createNewDebate,
 }
