@@ -52,7 +52,6 @@ function GlobalThread() {
             }
             return el;
           });
-
         })
       });
   }, [socket]);

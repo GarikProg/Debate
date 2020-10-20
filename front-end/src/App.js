@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loadingSessionCheck, loadThreads, loadDebates } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
