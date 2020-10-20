@@ -6,7 +6,7 @@ import { CHECK_REGISTER, CHECK_SIGN_IN, LOADING_CHECK, LOGOUT, LOAD_THREADS, LOA
 function* checkForSignIn(action) {
   const { nameEmail, password } = action.data;
   try {
-    const responce = yield fetch('http://localhost:3001/signin', {
+    const responce = yield fetch('/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ function* checkForSignIn(action) {
 function* checkForRegister(action) {
   const { name, email, password } = action.data
   try {
-    const responce = yield fetch('http://localhost:3001/signup', {
+    const responce = yield fetch('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -65,7 +65,7 @@ function* checkForRegister(action) {
 // +
 function* loadingCheck() {
   try {
-    const responce = yield fetch('http://localhost:3001/loading', {
+    const responce = yield fetch('/loading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -82,7 +82,7 @@ function* loadingCheck() {
 // ++
 function* logOut() {
   try {
-    const responce = yield fetch('http://localhost:3001/logout', {
+    const responce = yield fetch('/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
