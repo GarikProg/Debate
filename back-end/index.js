@@ -9,6 +9,7 @@ import cors from "cors";
 import ioSocket from "socket.io";
 const io = ioSocket();
 import Comments from "./models/comment.js";
+import Likes from "./models/like.js"
 
 const logger = console;
 const app = express();
@@ -21,6 +22,8 @@ const store = new MongoDBStore({
 io.on("connection", (socket) => {
   socket.join(socket.handshake.query.id);
   socket.on("message", async (data) => {
+    if(data.type === "comment") {
+      console.log(data);
     const { text, creator,  id, side, nickName} = data;
     try {
       await Comments.create({
@@ -34,6 +37,28 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.log(error);
     }
+  }
+  if(data.type === "like") {
+    console.log(data);
+    const { comment_id, creator} = data;
+    try {
+      await Likes.create({
+        creator,
+        comment: comment_id,        
+      });
+      const comm = await Comments.findOne({_id: comment_id})
+      comm.likes.push(creator)
+      await comm.save();
+      // await Comments.updateOne(
+      //   {_id: comment_id},
+      //   {$push: {likes: creator}}
+      // )
+      
+      io.to(data.id).emit("broadcast", data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   });
 });
 
