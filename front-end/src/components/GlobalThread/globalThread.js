@@ -77,7 +77,7 @@ function GlobalThread() {
 
       {outPut &&
         outPut.map((el) => {
-          return (<h5><span>{el.text}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> </h5>
+          return (<h5><span>{el.nickName}</span> (<span>{el.side}</span> ) : <span>{el.text}</span> </h5>
             );
 
         })}
