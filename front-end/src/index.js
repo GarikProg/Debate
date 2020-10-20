@@ -10,13 +10,11 @@ import rootSaga from './redux/saga/rootSaga'
 
 const sagaMidlleware = createSagaMiddleware();
 
-const defaultValue = { isAuthorized: false, user: { name: null, id: null }, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
+const defaultValue = { isAuthorized: false, user: { name: null, id: null }, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null, appThreads: null, mainThreads: null, mainDebates: null, appDebates: null };
 
 const store = createStore(reducer, defaultValue, composeWithDevTools(applyMiddleware(sagaMidlleware)));
 
 sagaMidlleware.run(rootSaga);
-
-
 
 ReactDOM.render(
   <React.StrictMode>

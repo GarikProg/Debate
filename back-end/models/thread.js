@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const ThreadSchema = new mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
   theme: String,
   description: String,
@@ -21,7 +21,7 @@ const ThreadSchema = new mongoose.Schema({
   debatedAt: Date,
   threadWinner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: process.env.USER,
+    ref: process.env.DB_USER,
   },
 });
 

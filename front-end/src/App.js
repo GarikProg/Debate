@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { loadingCheck } from "./redux/actions";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { loadingSessionCheck, loadThreads, loadDebates } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
 import LocalThread from './components/LocalThread/localThread'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -13,7 +13,6 @@ import Footer from './components/Footer/footer'
 import Registration from './components/Registration/Registration'
 import Login from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import Secret from './components/Secret/Secret';
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
@@ -26,11 +25,13 @@ function App() {
   const isAuthorized = useSelector(state => state.isAuthorized);
 
   const dispatch = useDispatch()
-
+  
   useEffect(() => {
-    dispatch(loadingCheck())
+    dispatch(loadingSessionCheck());
+    dispatch(loadThreads());
+    dispatch(loadDebates());
   }, [])
-
+  
   return (
     <>
 <Router>
@@ -57,9 +58,6 @@ function App() {
     <Route exact path="/Profile">
       <Profile />
     </Route>
-    <PrivateRoute path="/Secret">
-      <Secret />
-    </PrivateRoute>
     <Route path="/TestChat">
       <TestChat />
     </Route>
@@ -78,7 +76,6 @@ function App() {
     <Route path="/createDebate">
       <CreateDebate />
     </Route>
-
   </Switch>
 </Router>
 <Footer />

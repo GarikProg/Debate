@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import { useParams } from "react-router-dom";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
+import Comment from "../Comment/Comment";
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -9,10 +10,11 @@ function GlobalThread() {
   const [outPut, setOutput] = useState([]);
   const [side, setSide] = useState("");
   const [thread, setThread] = useState({});
-  
+
   const { id } = useParams();
 
-  const nickName = 'Igor'//useSelector(state => state.nickName)
+  const nickName = useSelector((state) => state.user.username); 
+  const creator = useSelector((state) => state.user.id);
 
   useEffect(() => {
     (async () => {
@@ -23,7 +25,6 @@ function GlobalThread() {
     })();
   }, []);
 
-  
   useEffect(() => {
     const socket = openSocket("http://localhost:8000", {
       query: {
@@ -36,18 +37,42 @@ function GlobalThread() {
   useEffect(() => {
     socket &&
       socket.on("broadcast", (data) => {
+        if(data.type === "comment")
         setOutput((prev) => {
           return [...prev, data];
         });
+        if(data.type === "like")
+        setOutput((prev) => {
+          prev.map((el, i) => {
+            if(el._id === data.comment_id) {
+              return {
+                ...el,
+                likes: el.likes.push(data.creator)
+              };
+            }
+            return el;
+          });
+        })
       });
   }, [socket]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nickName = 'Debate King'
-    const creator = '5f8968b4654ab30793ca8f6e'
-    socket.send({ text, id, side, nickName, creator});
+    socket.send({ type: "comment", text, id, side, nickName, creator });
   };
+
+  const punch = (comment_id, creator_comment) => { 
+    let isLike = 0;  
+    outPut.forEach(element => {
+      if(element.likes.includes(creator)) {
+        isLike += 1;
+      }
+    });
+    if((isLike === 0) && creator !== creator_comment) {    
+    socket.send({ type: "like", comment_id, creator });
+  } 
+    }   
+  
 
   return (
     <>
@@ -59,10 +84,14 @@ function GlobalThread() {
       <h1>{thread.theme}</h1>
       <div>
         <span>
-          <button onClick={() => setSide(thread.sideOne)}>{thread.sideOne}</button>
+          <button onClick={() => setSide(thread.sideOne)}>
+            {thread.sideOne}
+          </button>
         </span>
         <span>
-          <button onClick={() => setSide(thread.sideTwo)}>{thread.sideTwo}</button>
+          <button onClick={() => setSide(thread.sideTwo)}>
+            {thread.sideTwo}
+          </button>
         </span>
       </div>
       <form onSubmit={(e) => handleSubmit(e)} id="messageForm">
@@ -77,9 +106,18 @@ function GlobalThread() {
 
       {outPut &&
         outPut.map((el) => {
-          return (<h5><span>{el.nickName}</span> (<span>{el.side}</span> ) : <span>{el.text}</span> </h5>
-            );
-
+          return (
+            <Comment
+              key={el._id}
+              comment_id={el._id}
+              text={el.text}
+              side={el.side}
+              nickName={el.nickName}
+              creator_comment={creator}
+              likes={el.likes}
+              punch={punch}
+            />
+          );
         })}
     </>
   );
