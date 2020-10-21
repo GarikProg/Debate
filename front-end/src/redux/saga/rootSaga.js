@@ -140,7 +140,7 @@ function* createNewThread(action) {
       mode: 'cors',
       body: JSON.stringify(action.data)
     });
-    const data = responce.json();
+    const data = yield responce.json();
     console.log(data)
     if (data.successfulThreadCrate) {
       yield put(createNewThreadFromSagaToRedux(data.thread))

@@ -42,6 +42,7 @@ const sorted = (data) => {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX:
+      console.log(action.user)
       return {...state, isAuthorized: true, user: action.user, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
     case DATABASE_ERROR_FROM_SAGA_TO_REDUX:
       return {...state, dbError: action.error, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null};

@@ -22,6 +22,7 @@ function GlobalThread() {
       const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
       setThread(resp.thread);
+      console.log(resp.comments)
       setOutput(resp.comments);
     })();
   }, []);
