@@ -28,7 +28,7 @@ router
       await user.save();
       res.json({ successfulThreadCrate: true, thread });
     } catch (error) {
-      res.json({ successfulThreadCrate: false, err: 'Data base error, plase try again' });
+      res.json({ successfulThreadCreate: false, err: 'Data base error, plase try again' });
     }
 })
 

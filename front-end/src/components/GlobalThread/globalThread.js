@@ -19,7 +19,7 @@ function GlobalThread() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`http://localhost:3001/thread/${id}`);
+      const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
       setThread(resp.thread);
       setOutput(resp.comments);
