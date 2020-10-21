@@ -35,41 +35,40 @@ export default function CreateThread() {
         dispatch(createNewThread(formData))
       }}>
         <div className="formInner">
-          <div className="descriptionContainer">
-            <div className="themeDescription">
-              Theme
-            </div>
-            <div className="sideOneDescription">
-              Side One
-            </div>
-            <div className="sideTwoDescription">
-              Side Two
-            </div>
-          </div>
-          <div className="inputTheme">
-            <input className="inputTheme2" onChange={(e) => handleInput(e)} required name="theme" type="text"/>
+          <div className="form-group">
+          <label className="form-label" placeholder=" ">
+            <input className="form-control" onChange={(e) => handleInput(e)} required name="theme" placeholder=" " type="text"/>
+            <p className="labelP">Theme</p>          
+          </label>
           </div>
           <div>
             <img className="questionPic" src={Question} />
           </div>
-          <div className="inputSideOne">
-            <input className="inputTheme3" onChange={(e) => handleInput(e)} required name="sideOne" placeholder="sideOne" type="text"/>
+          <div className="form-group">
+          <label className="form-label" placeholder=" ">
+            <input className="form-control" onChange={(e) => handleInput(e)} required name="sideOne" placeholder=" " type="text"/>
+            <p className="labelP">Side One</p>
+          </label>
           </div>
           <div>
             <img className="colonPic" src={Colon} />
           </div>
-          <div className="inputSideTwo">
-            <input className="inputTheme4" onChange={(e) => handleInput(e)} required name="sideTwo" placeholder="sideTwo" type="text"/>
+          <div className="form-group">
+          <label className="form-label" placeholder=" ">
+            <input className="form-control" onChange={(e) => handleInput(e)} required name="sideTwo" placeholder=" " type="text"/>
+            <p className="labelP">Side Two</p>
+          </label>
           </div>
         </div>
-        <div className="secondContainer">
-          <div className="description">
-            <input className="descriptionInner" onChange={(e) => handleInput(e)} required name="description" placeholder="description" type="text"/>
+          <div className="form-group">
+          <label className="form-label" placeholder=" ">
+            <input className="form-control" onChange={(e) => handleInput(e)} required name="description" type="text"/>
+            <p className="labelP">Description</p>
+          </label>
           </div>
           <div>
-            <button type='submit'>sumbmit</button>
+            <button type='submit'>Submit</button>
           </div>
-        </div>
       </form>
     </div>
     
