@@ -109,7 +109,7 @@ function GlobalThread() {
       </form>
       </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}
       
-
+<div>
       {outPut &&
 
         outPut.map((el, index) => {
@@ -128,6 +128,7 @@ function GlobalThread() {
             />
           );
         })}
+        </div>
     </>
   );
 }
