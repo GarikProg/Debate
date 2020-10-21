@@ -1,6 +1,7 @@
 import express from "express";
 import Thread from "../models/thread.js";
 import Comments from "../models/comment.js";
+import Users from '../models/user.js'
 
 const router = express.Router();
 
@@ -20,6 +21,8 @@ router
         createdAt: date,
         updatedAt: date,
       })
+      const user = await Users.findById(creator);
+      user.threads.push(thread._id);
       res.json({ successfulThreadCrate: true, thread });
     } catch (error) {
       res.json({ successfulThreadCrate: false, err: 'Data base error, plase try again' });
