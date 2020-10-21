@@ -49,7 +49,7 @@ function MainNavigation() {
     <button className="globalThread">
       <Link to="/GlobalThread">Explore more </Link>
       </button>
-      </animated.div> ]
+    </animated.div> ]
 
   const transitions1 = useTransition(index, p => p, {
     from: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
