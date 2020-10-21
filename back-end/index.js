@@ -12,6 +12,7 @@ const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
+import Users from './models/user.js'
 
 const logger = console;
 const app = express();
@@ -34,12 +35,13 @@ io.on("connection", (socket) => {
         commentLocation: id,
         side,
         nickName,
-      });
+      });      
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
-      comment.type = "comment";
-      
+      const user = await Users.findById(creator);
+      user.comments.push(comment._id)
+      await user.save();    
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
@@ -55,7 +57,10 @@ io.on("connection", (socket) => {
       });
       const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
-      await comment.save();             
+      await comment.save();
+      const user = await Users.findById(creator);      
+      user.votedFor.push(comment_id)
+      await user.save();    
       io.to(data.id).emit("broadcast", like);
     } catch (error) {
       console.log(error);
