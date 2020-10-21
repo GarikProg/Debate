@@ -24,22 +24,22 @@ function Login() {
         dispatch(checkSignIn({ nameEmail, password }));
       }}>
         <div className="form-group">
-          <label className="form-label" placeholder=" ">
-            <input className="form-control" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
+          <label className="form-label">
+            <input className="form-control" type="text" placeholder=" " required onChange={(e) => setNameEmail(e.target.value)}/>
               <p className="labelP">Name or Email</p>
             {nameEmail && <p>{nameEmailError}</p>}
           </label>
         </div>
         <div className="form-group">
           <label className="form-label">
-            <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" className='form-control' placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
               <p className="labelP">Password</p>
             {passwordError && <span>{passwordError}</span>}
           </label>
         </div>
         <div className="logBtn">
           <button className="loginBtn" type='submit'>
-            {/* <Link className="loginLink" to="/Home">Sign In</Link> */}TEST
+            Sign In
           </button>
         </div>
       </form>

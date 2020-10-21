@@ -24,21 +24,21 @@ function Registration() {
       }}>
       <div className="form-group">
         <label className="form-label" placeholder=" ">
-          <input className="form-control" type="text" required onChange={(e) => setName(e.target.value)}/>
+          <input className="form-control" type="text" placeholder=" " required onChange={(e) => setName(e.target.value)}/>
           <p className="labelP">Name</p>
           {nameError ?? <span>{nameError}</span>}
         </label>
       </div>
       <div className="form-group">
         <label className="form-label">
-          <input className="form-control" type="email" required onChange={(e) => setEmail(e.target.value)}/>
+          <input className="form-control"  placeholder=" " type="email" required onChange={(e) => setEmail(e.target.value)}/>
           <p className="labelP">Email</p> 
           {emailError ?? <span>{emailError}</span>}
         </label>
       </div>
       <div>
         <label className="form-label">
-          <input className="form-control" type="password" required onChange={(e) => setPassword(e.target.value)}/>
+          <input className="form-control" type="password" placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
           <p className="labelP">Password</p>
         </label>
       </div>
