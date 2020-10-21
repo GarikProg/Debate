@@ -16,10 +16,10 @@ router.route('/').get((req, res) => {
   res.send('rabotaet')
 });
 
-router.route('/loading').post((req, res) => {
-  console.log('imhere', req.session.user)
+router.route('/loading').post(async (req, res) => {
   if (req.session.user) {
-    return res.json({ authenticated: true, user: req.session.user });
+    const user = await User.findById(req.session.user.id)
+    return res.json({ authenticated: true, user });
   } else {
     return res.json({ authenticated: false });
   }
@@ -45,7 +45,6 @@ router
             return res.json({ authenticated: true, user: userByEmail });
           }
         } catch (error) {
-          console.log(error);
           return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       } else {
@@ -53,13 +52,11 @@ router
         if (!isValidPassword) {
           return res.json({ authenticated: false, err: 'Invalid password' });
         } else {
-          console.log(userByName, serializeUser(userByName))
           req.session.user = serializeUser(userByName);
           return res.json({ authenticated: true, user: userByName });
         }
       }
     } catch (error) {
-      console.log(error);
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
 });
@@ -90,12 +87,10 @@ router
             return res.json({ authenticated: true, user });
           }
         } catch (error) {
-          console.log(error)
           return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       }
     } catch (error) {
-      console.log(error)
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
 });
