@@ -63,9 +63,9 @@ const Header = ({ history }) => {
             </div>
             <div className="menu">
               <button className="profileStyle" disabled={disabled} onClick={handleMenu}>
-              <Link className="profileLinkStyle">
+              <div className="profileLinkStyle">
                 Menu
-                </Link>
+                </div>
               </button>
               {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/createThread">Create Thread </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
               <button className="profileStyle">
