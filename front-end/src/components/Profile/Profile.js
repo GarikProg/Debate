@@ -10,7 +10,7 @@ const {name, id, comments, threads, debates, votedFor} = user;
 <h1>Hello {name}!</h1>
 <br/>
 <div>
-<h2>You created threads:</h2>
+{/* <h2>You created threads:</h2>
 <div>
   { threads && threads.map((el) => {
     return (
@@ -18,7 +18,6 @@ const {name, id, comments, threads, debates, votedFor} = user;
     )
   })}
 </div>
-
 <h2>Your comments:</h2>
 <div>
   { comments && comments.map((el) => {
@@ -34,7 +33,7 @@ const {name, id, comments, threads, debates, votedFor} = user;
       <Link to="/Auth"><button>{el}</button></Link>
     )
   })}
-</div>
+</div> */}
 
 </div> 
 </div>

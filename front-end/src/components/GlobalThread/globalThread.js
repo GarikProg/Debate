@@ -14,7 +14,9 @@ function GlobalThread() {
   const { id } = useParams();
 
   const nickName = useSelector((state) => state.user.name);
-  const creator = useSelector((state) => state.user.id);
+
+  const creator = useSelector((state) => state.user._id);
+
   const isAuthorized = useSelector(state => state.isAuthorized);
 
   useEffect(() => {    
@@ -79,6 +81,10 @@ function GlobalThread() {
     }
   };
 
+  const challenge = (comment_creator) => {
+
+  }
+
   return (
     <>
     {isAuthorized ? <> <section>
@@ -123,6 +129,7 @@ function GlobalThread() {
               creator_comment={el.creator}
               likes={el.likes}
               punch={punch}
+              challenge={challenge}
             />
           );
         })}
