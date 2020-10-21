@@ -10,6 +10,7 @@ body {
   flex-direction: column;
    .form-label {
     position: relative;
+    outline: none;
     .form-control {
       font-size: 1rem;
       color: #f9f9f9;
@@ -44,6 +45,7 @@ body {
         top: 0;
         font-size: 0.9rem;
         color: white;
+        outline: none;
     } .form-control:not(:focus) + .labelP {
       color: #7a7a7a56;
     }
