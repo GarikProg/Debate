@@ -65,9 +65,6 @@ const Header = ({ history }) => {
           </button>
             </div>
             <div className="menu">
-            <button className="profileStyle">
-            <Link className="profileLinkStyle" to="/GlobalThread" >Global threads </Link>
-              </button>
               <button className="profileStyle" disabled={disabled} onClick={handleMenu}>
               <div className="profileLinkStyle">
                 Menu
