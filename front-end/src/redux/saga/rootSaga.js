@@ -154,14 +154,16 @@ function* createNewThread(action) {
 }
 
 function* createNewDebate(action) {
+  console.log(action);
   try {
     const responce = yield fetch('/debate/createnew', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
       body: JSON.stringify(action.data)
-    });
-    const data = responce.json();
+    });    
+    const data = yield responce.json();
+    console.log(data)
     if (data.successfulDebateCrate) {
       yield put(createNewDabateFromSagaToRedux(data.debate))
     } else {

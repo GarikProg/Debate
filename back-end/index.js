@@ -50,19 +50,19 @@ io.on("connection", (socket) => {
       console.log(error);
     }
   }
-  if(data.type === "like") {
-    console.log(data);
+  if(data.type === "like") {    
     const { comment_id, creator} = data;
     try {
       const like = await Likes.create({
         creator,
         comment: comment_id,        
       });
+      console.log(like)
       const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
       await comment.save();
       const user = await Users.findById(creator);      
-      user.votedFor.push(comment_id)
+      user.likes.push(like._id)
       await user.save();    
       io.to(data.id).emit("broadcast", like);
     } catch (error) {
@@ -100,7 +100,7 @@ app.use(
 );
 
 app.use(authRouter);
-app.use('/debate',debateRouter);
+app.use('/debate', debateRouter);
 app.use('/thread', threadRouter);
 app.use('profile', profileRouter);
 

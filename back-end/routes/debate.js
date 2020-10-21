@@ -15,8 +15,8 @@ router
 });
 
 router
-  .route('createnew')
-  .post(async (req, res) => {
+  .route('/createnew')  
+  .post(async (req, res) => {    
     const { creator, participant } = req.body
     const createdAt = Date.now();
     const voteAt = createdAt + 172800;

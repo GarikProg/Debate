@@ -15,7 +15,6 @@ export default function DebateThreadAll() {
           return (
           <div>
             <Link to={`/GlobalThread/${el._id}`}><button>{el.theme}</button> </Link>
-            
             </div>);
         })}        
     </div>
