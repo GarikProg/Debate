@@ -83,7 +83,7 @@ function GlobalThread() {
 
   const challenge = (comment_creator) => {
     console.log(creator, 'ghggh', comment_creator);
-    dispatch(createNewDebate( creator, comment_creator))
+    dispatch(createNewDebate( {creator, participant: comment_creator}))
   }
   return (
     <>
