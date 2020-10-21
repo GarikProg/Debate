@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
+import {createNewDebate} from '../../redux/actions'
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -13,18 +14,18 @@ function GlobalThread() {
 
   const { id } = useParams();
 
-  const nickName = useSelector((state) => state.user.name);
+  const nickName = useSelector((state) => state.user.name);  
 
   const creator = useSelector((state) => state.user._id);
 
   const isAuthorized = useSelector(state => state.isAuthorized);
+  const  dispatch = useDispatch();
 
   useEffect(() => {    
     (async () => {
       const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
-      setThread(resp.thread);
-      console.log(resp.comments)
+      setThread(resp.thread);      
       setOutput(resp.comments);
     })();
   }, []);
@@ -74,25 +75,20 @@ function GlobalThread() {
       if (element.creator === creator) {
         isLike += 1;
       }
-    });
-    console.log(isLike);    
+    });       
     if (creator_comment !== creator && isLike === 0) {
       socket.send({ type: "like", comment_id, creator, id });
     }
   };
 
   const challenge = (comment_creator) => {
-
+    console.log(creator, 'ghggh', comment_creator);
+    dispatch(createNewDebate( creator, comment_creator))
   }
-
   return (
     <>
-    {isAuthorized ? <> <section>
-        <div>
-          <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
-        </div>
-      </section>
       <h1>{thread.theme}</h1>
+      <h2>{thread.description}</h2>
       <div>
         <span>
           <button onClick={() => setSide(thread.sideOne)}>
@@ -105,6 +101,11 @@ function GlobalThread() {
           </button>
         </span>
       </div>
+    {isAuthorized ? <> <section>
+        <div>
+          <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
+        </div>
+      </section>
       <form onSubmit={(e) => handleSubmit(e)} id="messageForm">
         <input
           onChange={(e) => setText(e.target.value)}
