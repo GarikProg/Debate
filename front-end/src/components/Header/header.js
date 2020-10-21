@@ -67,13 +67,13 @@ const Header = ({ history }) => {
                 Menu
                 </Link>
               </button>
-              {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/Profile">Profile </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
-              <button>
+              {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/createThread">Create Thread </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
+              <button className="profileStyle">
               {isAuthorized && <Link className="profileLinkStyle" to="/Logout">Logout </Link>}
              </button>
-             <button>
-              {isAuthorized && <Link Link className="profileStyleLink" to="/createThread">Create Thread </Link>}      
-              </button>
+             <button className="profileStyle">
+              {isAuthorized && <Link className="profileLinkStyle" to="/Profile">Profile </Link>}
+             </button>
             </div>
           </div>
         </div>
