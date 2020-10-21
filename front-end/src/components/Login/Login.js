@@ -30,6 +30,7 @@ function Login() {
             {nameEmail && <p style={{color: 'red'}}>{nameEmailError}</p>}
           </label>
         </div>
+        <br></br>
         <div className="form-group">
           <label className="form-label">
             <input type="password" className='form-control' placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
@@ -39,7 +40,7 @@ function Login() {
         </div>
         <div className="logBtn">
           <button className="loginBtn" type='submit'>
-            Sign In
+            <div className="loginLink">Sign in</div>
           </button>
         </div>
       </form>

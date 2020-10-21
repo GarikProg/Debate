@@ -22,6 +22,7 @@ function GlobalThread() {
       const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
       setThread(resp.thread);
+      console.log(resp.comments)
       setOutput(resp.comments);
     })();
   }, []);
@@ -107,10 +108,9 @@ function GlobalThread() {
         ></input>
         <button type="submit">Punch</button>
       </form>
-      </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}
-      
+      </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
 <div>
-      {outPut &
+      {outPut &&
         outPut.map((el, index) => {
           return (
             <Comment

@@ -29,23 +29,29 @@ function Registration() {
           {nameError ?? <span>{nameError}</span>}
         </label>
       </div>
+      <br></br>
+
       <div className="form-group">
         <label className="form-label">
-          <input className="form-control"  placeholder=" " type="email" required onChange={(e) => setEmail(e.target.value)}/>
+          <input className="form-control" type="email" placeholder=" " required onChange={(e) => setEmail(e.target.value)}/>
           <p className="labelP">Email</p> 
           {emailError ?? <span>{emailError}</span>}
         </label>
       </div>
+      <br></br>
+
       <div>
         <label className="form-label">
           <input className="form-control" type="password" placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
           <p className="labelP">Password</p>
         </label>
       </div>
+      <br></br>
+
       <div>
         <button className="loginBtn" type="submit">
         {/* <Link className="loginLink" to="/Home"> */}
-        Register
+        <div className="loginLink">Register</div>
         {/* </Link> */}
         </button>
         </div>
