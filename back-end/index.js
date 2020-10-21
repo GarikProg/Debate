@@ -96,6 +96,11 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log(req.url)
+  next()
+})
+
 app.use(authRouter);
 app.use('/debate',debateRouter);
 app.use('/thread', threadRouter);

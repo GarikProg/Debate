@@ -17,6 +17,22 @@ router
 router
   .route('createnew')
   .post(async (req, res) => {
+    const { creator, participant } = req.body
+    const createdAt = Date.now();
+    const voteAt = createdAt + 172800;
+    const closedAt = createdAt + 345600;
+    try {
+      const debate = await Debate.create({
+        creator,
+        participant,
+        createdAt,
+        voteAt,
+        closedAt
+      });
+      res.json({ successfulDebateCreate: true, debate });
+    } catch (error) {
+      res.json({ successfulDebateCreate: false, err: 'Data base error, plase try again' });
+    }
     res.end();
 });
 
