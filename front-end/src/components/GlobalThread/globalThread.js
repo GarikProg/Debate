@@ -17,7 +17,7 @@ function GlobalThread() {
   const creator = useSelector((state) => state.user.id);
   const isAuthorized = useSelector(state => state.isAuthorized);
 
-  useEffect(() => {
+  useEffect(() => {    
     (async () => {
       const response = await fetch(`http://localhost:3001/thread/${id}`);
       const resp = await response.json();
@@ -110,10 +110,8 @@ function GlobalThread() {
       </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}
       
 <div>
-      {outPut &&
-
+      {outPut &
         outPut.map((el, index) => {
-
           return (
             <Comment
               key={el._id}
