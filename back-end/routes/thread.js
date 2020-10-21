@@ -1,14 +1,17 @@
-import express from 'express'
-import Thread from '../models/thread.js'
-import Comments from '../models/comment.js'
+import express from "express";
+import Thread from "../models/thread.js";
+import Comments from "../models/comment.js";
+import Users from '../models/user.js'
 
 const router = express.Router();
+
 
 router
   .route('/createnew')
   .post(async (req, res) => {
     const { theme, sideTwo, sideOne, description, creator } = req.body;
     const date = Date.now();
+    console.log(req.body);
     try {
       const thread = await Thread.create({
         creator,
@@ -19,9 +22,13 @@ router
         createdAt: date,
         updatedAt: date,
       })
+      const user = await Users.findById(creator);
+      console.log(user);
+      user.threads.push(thread._id);
+      await user.save();
       res.json({ successfulThreadCrate: true, thread });
     } catch (error) {
-      res.json({ successfulThreadCrate: false, err: 'Data base error, plase try again' });
+      res.json({ successfulThreadCreate: false, err: 'Data base error, plase try again' });
     }
 })
 
@@ -34,15 +41,33 @@ router
     } catch (error) {
       return res.json({ loadedThreads: false, err: 'Data base error, plase try again' });
     }
+
 });
 
-router
-  .route('/:id')
-  .get(async (req, res) => {  
-    const thread = await Thread.findById(req.params.id).populate('comments').populate('threadWinner').populate('creator').exec();
-    const comments = await Comments.find({commentLocation: req.params.id});
-    res.json({thread, comments});
-})
+router.route("/loadall").post(async (req, res) => {
+  try {
+    const threads = await Thread.find({})
+      .populate("comments")
+      .populate("threadWinner")
+      .populate("creator")
+      .exec();
+    res.json({ loadedThreads: true, threads });
+  } catch (error) {
+    return res.json({
+      loadedThreads: false,
+      err: "Data base error, plase try again",
+    });
+  }
+});
 
+router.route("/:id").get(async (req, res) => {
+  const thread = await Thread.findById(req.params.id)
+    .populate("comments")
+    .populate("threadWinner")
+    .populate("creator")    
+    .exec();
+  const comments = await Comments.find({ commentLocation: req.params.id }).populate("likes");
+  res.json({ thread, comments});
+});
 
 export default router;

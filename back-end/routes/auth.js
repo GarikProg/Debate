@@ -1,12 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
+import Vote from '../models/vote.js';
 
 const router = express.Router();
 
 function serializeUser(user) {
   return {
-    id: user.id,
+    id: user._id,
     username: user.name,    
   };
 }
@@ -16,6 +17,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/loading').post((req, res) => {
+  console.log('imhere', req.session.user)
   if (req.session.user) {
     return res.json({ authenticated: true, user: req.session.user });
   } else {
@@ -28,10 +30,10 @@ router
   .post(async (req, res) => {
     const { nameEmail, password } = req.body;
     try {
-      const userByName = await User.findOne({ name: nameEmail }).exec();
+      const userByName = await User.findOne({ name: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').exec();
       if (!userByName) {
         try {
-          const userByEmail = await User.findOne({ email: nameEmail }).exec();
+          const userByEmail = await User.findOne({ email: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').exec();
           if (!userByEmail) {
             return res.json({ authenticated: false, err: 'No such user' });
           } else {
@@ -40,9 +42,10 @@ router
               return res.json({ authenticated: false, err: 'Invalid password' });
             }
             req.session.user = serializeUser(userByEmail);
-            return res.json({ authenticated: true, user: req.session.user });
+            return res.json({ authenticated: true, user: userByEmail });
           }
         } catch (error) {
+          console.log(error);
           return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       } else {
@@ -50,11 +53,13 @@ router
         if (!isValidPassword) {
           return res.json({ authenticated: false, err: 'Invalid password' });
         } else {
+          console.log(userByName, serializeUser(userByName))
           req.session.user = serializeUser(userByName);
-          return res.json({ authenticated: true, user: req.session.user });
+          return res.json({ authenticated: true, user: userByName });
         }
       }
     } catch (error) {
+      console.log(error);
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
 });
@@ -78,16 +83,19 @@ router
             const user = await User.create({
                   name,
                   password: hashedPassword,
-                  email,        
+                  email,      
                 });
+            user.populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor');
             req.session.user = serializeUser(user);
-            return res.json({ authenticated: true, user: req.session.user });
+            return res.json({ authenticated: true, user });
           }
         } catch (error) {
+          console.log(error)
           return res.json({ authenticated: false, err: 'Data base error, plase try again' });
         }
       }
     } catch (error) {
+      console.log(error)
       return res.json({ authenticated: false, err: 'Data base error, plase try again' });
     }
 });

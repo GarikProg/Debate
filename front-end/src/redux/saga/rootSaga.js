@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 
-import { sendAuthenticatedFromSagaToRedux, dataBaseErrorFromSagaToRedux, registerEmailErrorFromSagaToRedux, registerNameErrorFromSagaToRedux, loginNameEmailErrorFromSagaToRedux, loginPasswordErrorFromSagaToRedux, logoutFromSagaToRedux, loadThreadsFromSagaToRedux, loadDebatesFromSagaToRedux } from '../actions';
+import { sendAuthenticatedFromSagaToRedux, dataBaseErrorFromSagaToRedux, registerEmailErrorFromSagaToRedux, registerNameErrorFromSagaToRedux, loginNameEmailErrorFromSagaToRedux, loginPasswordErrorFromSagaToRedux, logoutFromSagaToRedux, loadThreadsFromSagaToRedux, createNewThreadFromSagaToRedux, loadDebatesFromSagaToRedux, createNewDabateFromSagaToRedux } from '../actions';
 
 import { CHECK_REGISTER, CHECK_SIGN_IN, LOADING_CHECK, LOGOUT, LOAD_THREADS, LOAD_DEBATES, CREATE_NEW_THREAD, CREATE_NEW_DEBATE } from '../actionTypes';
 
@@ -8,7 +8,7 @@ import { CHECK_REGISTER, CHECK_SIGN_IN, LOADING_CHECK, LOGOUT, LOAD_THREADS, LOA
 function* checkForSignIn(action) {
   const { nameEmail, password } = action.data;
   try {
-    const responce = yield fetch('http://localhost:3001/signin', {
+    const responce = yield fetch('/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ function* checkForSignIn(action) {
 function* checkForRegister(action) {
   const { name, email, password } = action.data
   try {
-    const responce = yield fetch('http://localhost:3001/signup', {
+    const responce = yield fetch('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -67,7 +67,7 @@ function* checkForRegister(action) {
 // ++
 function* loadingCheck() {
   try {
-    const responce = yield fetch('http://localhost:3001/loading', {
+    const responce = yield fetch('/loading', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -86,7 +86,7 @@ function* loadingCheck() {
 // ++
 function* logOut() {
   try {
-    const responce = yield fetch('http://localhost:3001/logout', {
+    const responce = yield fetch('/logout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -105,7 +105,7 @@ function* logOut() {
 // ++
 function* loadThreads() {
   try {
-    const responce = yield fetch('http://localhost:3001/thread/loadall', {
+    const responce = yield fetch('/thread/loadall', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -120,13 +120,13 @@ function* loadThreads() {
 // ++
 function* loadDebates() {
   try {
-    const responce = yield fetch('http://localhost:3001/debate/loadall', {
+    const responce = yield fetch('/debate/loadall', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
     });
     const data = yield responce.json();
-    yield put(loadDebatesFromSagaToRedux(data.debates));
+    yield put(loadDebatesFromSagaToRedux(data));
   } catch (error) {
     console.log('Error while Loading threads fetch', error);
   }
@@ -134,7 +134,7 @@ function* loadDebates() {
 
 function* createNewThread(action) {
   try {
-    const responce = yield fetch('http://localhost:3001/thread/createnew', {
+    const responce = yield fetch('/thread/createnew', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       mode: 'cors',
@@ -143,7 +143,7 @@ function* createNewThread(action) {
     const data = responce.json();
     console.log(data)
     if (data.successfulThreadCrate) {
-
+      yield put(createNewThreadFromSagaToRedux(data.thread))
     } else {
       yield put(dataBaseErrorFromSagaToRedux(data.err));
     }
@@ -152,8 +152,23 @@ function* createNewThread(action) {
   }
 }
 
-function* createNewDebate() {
-
+function* createNewDebate(action) {
+  try {
+    const responce = yield fetch('/debate/createnew', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      mode: 'cors',
+      body: JSON.stringify(action.data)
+    });
+    const data = responce.json();
+    if (data.successfulDebateCrate) {
+      yield put(createNewDabateFromSagaToRedux(data.debate))
+    } else {
+      yield put(dataBaseErrorFromSagaToRedux(data.err));
+    }
+  } catch (error) {
+    console.log('Error while creating new debate fetch', error);
+  }
 }
 
 
