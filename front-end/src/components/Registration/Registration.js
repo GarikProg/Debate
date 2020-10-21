@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { checkRegister } from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import './registration.scss'
 
 function Registration() {
   
@@ -15,25 +17,35 @@ function Registration() {
 
   return (
     <>
-    <form onSubmit={(e) => {
+    <form className="form" onSubmit={(e) => {
       e.preventDefault()
       dispatch(checkRegister({ name, email, password }));
       }}>
-      <label>
-        Nickname:
-      <input type="text" required onChange={(e) => setName(e.target.value)}/>Enter ur nickname
+        <div className="form-group">
+      <label for="name" className="form-label" placeholder=" ">
+      <input className="form-control" type="text" required onChange={(e) => setName(e.target.value)}/>
+      <p className="labelP">Name</p>
       </label>
-      <br></br>
-      <label>
-        Email:
-      <input type="email" required onChange={(e) => setEmail(e.target.value)}/>Enter ur email
+      </div>
+      <div className="form-group">
+      <label for="email" className="form-label">
+      <input className="form-control" type="email" required onChange={(e) => setEmail(e.target.value)}/>
+      <p className="labelP">Email</p>
       </label>
-      <br></br>
-      <label>
-        Password:
-      <input type="password" required onChange={(e) => setPassword(e.target.value)}/>Enter ur password
+      </div>
+      <div>
+      <label for="password" className="form-label">
+      <input className="form-control" type="password" required onChange={(e) => setPassword(e.target.value)}/>
+      <p className="labelP">Password</p>
       </label>
-      <div><button type="submit">Register</button></div>
+      </div>
+      <div>
+        <button className="loginBtn" type="submit">
+        <Link className="loginLink" to="/Home">
+        Register
+        </Link>
+        </button>
+        </div>
     </form>
     </>
   )

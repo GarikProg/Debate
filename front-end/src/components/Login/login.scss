@@ -1,19 +1,90 @@
 body {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  width: 100%;
-  height: 100%;
 }
 
-.formContainer {
+.form {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
+   .form-label {
+    position: relative;
+    .form-control {
+      font-size: 1rem;
+      color: #f9f9f9;
+      background: transparent;
+
+      padding: 1rem 1.2rem;
+      min-width: 24rem;
+
+      border-radius: 0.2rem;
+      border: 2px solid #7a7a7a56;
+
+      transition: border-color 0.2s;
+    }  
+    .form-control:focus {
+      border-color: white;
+    } 
+    .labelP {
+      color: #f9f9f9;
+      font-size: 1rem;
+      user-select: none;
+    
+      position: absolute;
+      top: 50px;
+      transform: translateY(-50px);
+    
+      margin-left: 0.8rem;
+      padding: 0 0.4rem;
+     
+      transition: top 0.2s, font-size 0.2s, color 0.2s;
+    } .form-control:focus + .labelP,
+      .form-control:not(:placeholder-shown) + .labelP{
+        top: 0;
+        font-size: 0.9rem;
+        color: white;
+    } .form-control:not(:focus) + .labelP {
+      color: #7a7a7a56;
+    }
+  }
+}
+
+.loginBtn {
+  background-color: Transparent;
+  background-repeat: no-repeat;
   border: none;
-  width: 65vw;
-  box-shadow: 0 15px 35px rgb(0, 0, 0), 0 5px 15px rgb(34, 34, 34);
-  padding: 2em;
-  .form-group {
-  margin-bottom: 1em;
-  transition: all .3s;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  text-decoration: none;
+
+  .loginLink {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+  }
+
+  .loginLink:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+
+  .loginLink:hover:after {
+    width: 100%;
+    left: 0;
   }
 }
