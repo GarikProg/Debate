@@ -3,16 +3,9 @@ import {Link} from "react-router-dom"
 import {useSelector} from 'react-redux'
 
 export default function DebateThreadAll() {
-  const [debates, setDebates] = useState([]);
+  const debates = useSelector(state => state);
   const isAuthorized = useSelector(state => state.isAuthorized)
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("http://localhost:3001/debate");
-      const resp = await response.json();
-      console.log(resp);
-      setDebates(resp.debates);
-    })();
-  }, []);
+  
 
   return (
     <>

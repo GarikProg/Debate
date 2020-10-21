@@ -27,13 +27,15 @@ export default function Comment(props) {
       <span>{likes && likes.length}</span>
       {isAuthorized ? (
         <>
+          {user_id !== creator_comment ? (
+            <>
           <button onClick={() => punch(index, comment_id, creator_comment)}>
             Like
           </button>
-          {user_id !== creator_comment ? (
             <button onClick={() => challenge(creator_comment)}>
               Challenge
             </button>
+            </>
           ) : (
             ""
           )}

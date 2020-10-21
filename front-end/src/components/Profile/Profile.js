@@ -10,6 +10,7 @@ const {name, id, comments, threads, debates, votedFor} = user;
 <h1>Hello {name}!</h1>
 <br/>
 <div>
+
 {/* <h2>You created threads:</h2>
 <div>
   { threads && threads.map((el) => {
