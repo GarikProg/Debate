@@ -20,6 +20,7 @@ function* checkForSignIn(action) {
       mode: 'cors'
     });
     const data = yield responce.json();
+    console.log(data)
     if (data.authenticated) {
       yield put(sendAuthenticatedFromSagaToRedux(data.user));
     } else if (data.err === 'Data base error, plase try again') {
@@ -27,10 +28,10 @@ function* checkForSignIn(action) {
     } else if (data.err === 'Invalid password') {
       yield put(loginPasswordErrorFromSagaToRedux(data.err));
     } else if (data.err === 'No such user') {
-      yield put(loginNameEmailErrorFromSagaToRedux(data.err));
+      yield put(loginNameEmailErrorFromSagaToRedux(data.err))
     }
   } catch (error) {
-    console.error('Error while Sign In fetch', error);
+    console.error(error);
   }
 }
 
