@@ -7,7 +7,7 @@ export default function Comment(props) {
       <span>{nickName}</span>
       <span>{side}</span>
       <span>{text}</span>
-  <span>{likes.length}</span>
+  {/* <span>{likes.length}</span> */}
       <input type="checkbox" name="" onClick={() => punch(comment_id, creator_comment)}/>
     </div>
   )
