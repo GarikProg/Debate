@@ -52,6 +52,7 @@ router
         if (!isValidPassword) {
           return res.json({ authenticated: false, err: 'Invalid password' });
         } else {
+          console.log(userByName)
           req.session.user = serializeUser(userByName);
           return res.json({ authenticated: true, user: userByName });
         }
