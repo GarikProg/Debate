@@ -59,7 +59,7 @@ const SecondLayer = ({ state }) => {
                 <ul>
                   <li>
                     <Link
-                      to='/createDebate'>
+                      to='/GlobalThread'>
                       <div
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
