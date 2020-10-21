@@ -17,10 +17,10 @@ function MainNavigation() {
    {threads && threads.map(el => {
      return (
      <div className="description">
-        <div className="innerDiv">{el.theme} ? {el.sideOne} : {el.sideTwo}</div>
+        <Link to={`/GlobalThread/${el._id}`}><div className="innerDiv" >{el.theme} ? {el.sideOne} : {el.sideTwo}</div></Link>
             <div className="innerDescription">
               <h3 className="descriptionHeader">
-              //:Description//
+              Description:
               </h3>
               <p className="descriptionInner">
               {el.description}
@@ -29,16 +29,17 @@ function MainNavigation() {
                Comments: {el.comments.length}
               </p>
         </div>
-     </div>)
+     </div>
+     )
    })}
         <div className="description">
-        <div className="innerDiv">Theme #3 ? side 1 : side 2</div>
+        <div className="innerDiv">Choose the better pokemon ? Charizard : Blastoise </div>
         <div className="innerDescription">
         <h3 className="descriptionHeader">
-          //:Description//
+          Description:
           </h3>
           <p className="descriptionInner">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          Blastoise is a water type based pokemon, who also is a final evolution of Squirtle. He definetly is supposed to overpower Charizard. But! Charizard is an insanely powerful pokemon. There is basically a very small amount of pokemon regardless of type who can even compete with him. Choose wisely!
           </p>
           </div>
         </div>

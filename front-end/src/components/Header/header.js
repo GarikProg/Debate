@@ -71,7 +71,7 @@ const Header = ({ history }) => {
                 </div>
               </button>
               <button className="profileStyle">
-              <Link className="profileLinkStyle" to="/GlobalThread">Global Threads </Link>
+                <Link className="profileLinkStyle" to="/GlobalThread">Global Threads </Link>
               </button>
               {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/createThread">Create Thread </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
               <button className="profileStyle">
