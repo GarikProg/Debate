@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
       threads.comments.push(comment._id)
       await threads.save();
       const user = await Users.findById(creator);
+      console.log(creator);
       user.comments.push(comment._id)
       await user.save();    
       io.to(data.id).emit("broadcast", comment);
