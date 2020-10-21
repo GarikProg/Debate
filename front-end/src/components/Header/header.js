@@ -70,9 +70,6 @@ const Header = ({ history }) => {
                 Menu
                 </div>
               </button>
-              <button className="profileStyle">
-                <Link className="profileLinkStyle" to="/GlobalThread">Global Threads </Link>
-              </button>
               {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/createThread">Create Thread </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
               <button className="profileStyle">
               {isAuthorized && <Link to="/Home" className="profileLinkStyle" onClick={() => dispatch(logout())}>Logout </Link>}
