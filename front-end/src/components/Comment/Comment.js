@@ -1,14 +1,32 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Comment(props) {
-  const {nickName, side, text, comment_id, punch, creator_comment, likes } = props;
+  const isAuthorized = useSelector((state) => state.isAuthorized);
+
+  const {
+    nickName,
+    side,
+    text,
+    comment_id,
+    punch,
+    creator_comment,
+    likes,
+    index,
+  } = props;
   return (
     <div>
-      <span>{nickName}</span>
-      <span>{side}</span>
-      <span>{text}</span>
-  {/* <span>{likes.length}</span> */}
-      <input type="checkbox" name="" onClick={() => punch(comment_id, creator_comment)}/>
+      <span>{nickName}___</span>
+      <span>{side}___</span>
+      <span>{text}___</span>
+      <span>{likes && likes.length}</span>
+      {isAuthorized ? (
+        <button onClick={() => punch(index, comment_id, creator_comment)}>
+          Like
+        </button>
+      ) : (
+        ""
+      )}
     </div>
-  )
+  );
 }

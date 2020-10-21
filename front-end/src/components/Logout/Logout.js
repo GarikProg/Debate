@@ -1,16 +1,16 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../redux/actions'
+// import React from 'react'
+// import { useDispatch } from 'react-redux'
+// import { logout } from '../../redux/actions'
 
-function Logout() {
+// function Logout() {
 
-  const dispatch = useDispatch();
+//   const dispatch = useDispatch();
 
-  return (
-    <div>
-      <button onClick={() => dispatch(logout())}>Logout</button>
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       <button onClick={() => dispatch(logout())}>Logout</button>
+//     </div>
+//   )
+// }
 
-export default Logout
+// export default Logout

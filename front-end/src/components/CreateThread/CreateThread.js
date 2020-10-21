@@ -10,6 +10,13 @@ import GlobalThread from '../../components/GlobalThread/globalThread'
 export default function CreateThread() {
 
   const creatorRedux = useSelector(state => state.user.id);
+
+
+  // при успешном создании треда - переводит куда вам надо, при неудаче - передводит на страницу или модально с ошибкой!!!!
+  const succsessThreadCreate = useSelector(state => state.successfulThreadCreate);
+  // при обишке бд - модалка/окно с текстом ошибки бд, попробуйте снова
+  const dbError = useSelector(state => state.dbError);
+
   const [formData, setFormData] = useState();
 
   const dispatch = useDispatch();
@@ -24,8 +31,6 @@ export default function CreateThread() {
       };
     });
   }
-
-  console.log(formData)
 
   return (
     <>

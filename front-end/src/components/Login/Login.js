@@ -19,28 +19,31 @@ function Login() {
   return (
     <>
     <div className="formContainer">
-      <form className="form">
-      <div className="form-group">
-      <input className="form-control" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
-      <label for="name" className="form-label">
-        Name or Email
-      {nameEmail && <p>{nameEmailError}</p>}
-      </label>
-      </div>
-      <div className="form-group">
-      <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
-      <label for="password" className="form-label">
-        Password
-      {passwordError && <span>{passwordError}</span>}
-      </label>
-      </div>
-      <div className="logBtn">
-        <button onClick={() =>dispatch(checkSignIn({ nameEmail, password }))}>
-      {isAuthorized ? <Redirect to="/Home">Login</Redirect> : 'Login'}
-      </button>
-      </div>
+      <form className="form" onSubmit={(e) => {
+        e.preventDefault()
+        dispatch(checkSignIn({ nameEmail, password }));
+      }}>
+        <div className="form-group">
+          <label className="form-label" placeholder=" ">
+            <input className="form-control" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
+              <p className="labelP">Name or Email</p>
+            {nameEmail && <p>{nameEmailError}</p>}
+          </label>
+        </div>
+        <div className="form-group">
+          <label className="form-label">
+            <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
+              <p className="labelP">Password</p>
+            {passwordError && <span>{passwordError}</span>}
+          </label>
+        </div>
+        <div className="logBtn">
+          <button className="loginBtn" type='submit'>
+            {/* <Link className="loginLink" to="/Home">Sign In</Link> */}TEST
+          </button>
+        </div>
       </form>
-      </div>
+    </div>
     </>
   )
 }

@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
   socket.join(socket.handshake.query.id);
   socket.on("message", async (data) => {
     if(data.type === "comment") {
-      console.log(data);
+      
     const { text, creator,  id, side, nickName} = data;
     try {
       const comment = await Comments.create({
@@ -38,7 +38,9 @@ io.on("connection", (socket) => {
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
-      io.to(data.id).emit("broadcast", data);
+      comment.type = "comment";
+      
+      io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
     }
@@ -51,15 +53,10 @@ io.on("connection", (socket) => {
         creator,
         comment: comment_id,        
       });
-      const comment = await Comments.findById(comment_id)
+      const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
-      await comment.save();
-      // await Comments.updateOne(
-      //   {_id: comment_id},
-      //   {$push: {likes: creator}}
-      // )
-      
-      io.to(data.id).emit("broadcast", data);
+      await comment.save();             
+      io.to(data.id).emit("broadcast", like);
     } catch (error) {
       console.log(error);
     }

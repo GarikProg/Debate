@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import { logout } from '../../redux/actions';
 import SecondLayer from '../secondLayer/secondLayer'
 
 const Header = ({ history }) => {
@@ -47,6 +48,8 @@ const Header = ({ history }) => {
     }, 1200
     )
   }
+  const dispatch = useDispatch();
+
 
   const isAuthorized = useSelector(state => state.isAuthorized);
   
@@ -63,17 +66,17 @@ const Header = ({ history }) => {
             </div>
             <div className="menu">
               <button className="profileStyle" disabled={disabled} onClick={handleMenu}>
-              <Link className="profileLinkStyle">
+              <div className="profileLinkStyle">
                 Menu
-                </Link>
+                </div>
               </button>
-              {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/Profile">Profile </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
-              <button>
-              {isAuthorized && <Link className="profileLinkStyle" to="/Logout">Logout </Link>}
+              {isAuthorized ? <button className="profileStyle"><Link className="profileLinkStyle" to="/createThread">Create Thread </Link></button> : <button className="profileStyle"><Link className="profileLinkStyle" to="/Auth">Authentication </Link></button>}
+              <button className="profileStyle">
+              {isAuthorized && <Link className="profileLinkStyle" to="/Home" onClick={() => dispatch(logout())}>Logout </Link>}
              </button>
-             <button>
-              {isAuthorized && <Link Link className="profileStyleLink" to="/createThread">Create Thread </Link>}      
-              </button>
+             <button className="profileStyle">
+              {isAuthorized && <Link className="profileLinkStyle" to="/Profile">Profile </Link>}
+             </button>
             </div>
           </div>
         </div>
