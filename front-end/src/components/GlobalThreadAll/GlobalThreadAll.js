@@ -22,7 +22,7 @@ export default function GlobalThreadAll() {
     </div>
     <div>
       <br/>
-    {!isAuthorized && <Link to="/createThread"> <button>Create Thread</button>  </Link>}  
+    {isAuthorized && <Link to="/createThread"> <button>Create Thread</button>  </Link>}  
     </div>
     </>
   );

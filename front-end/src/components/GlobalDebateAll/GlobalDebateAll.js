@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 
 export default function DebateThreadAll() {
   const [debates, setDebates] = useState([]);
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
+  const isAuthorized = useSelector(state => state.isAuthorized)
   useEffect(() => {
     (async () => {
       const response = await fetch("http://localhost:3001/debate");
@@ -28,7 +28,7 @@ export default function DebateThreadAll() {
     </div>
     <div>
       <br/>
-    {!isAuthenticated && <Link to="/createDebate"> <button>Create Debate</button>  </Link>}  
+    {<Link to="/createDebate"> <button>Create Debate</button>  </Link>}  
     </div>
     </>
   );
