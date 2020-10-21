@@ -18,7 +18,7 @@ router.route('/').get((req, res) => {
 
 router.route('/loading').post(async (req, res) => {
   if (req.session.user) {
-    const user = await User.findById(req.session.user.id)
+    const user = await User.findById(req.session.user.id).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor');
     return res.json({ authenticated: true, user });
   } else {
     return res.json({ authenticated: false });
