@@ -11,6 +11,7 @@ router
   .post(async (req, res) => {
     const { theme, sideTwo, sideOne, description, creator } = req.body;
     const date = Date.now();
+    console.log(req.body);
     try {
       const thread = await Thread.create({
         creator,
@@ -22,7 +23,9 @@ router
         updatedAt: date,
       })
       const user = await Users.findById(creator);
+      console.log(user);
       user.threads.push(thread._id);
+      await user.save();
       res.json({ successfulThreadCrate: true, thread });
     } catch (error) {
       res.json({ successfulThreadCrate: false, err: 'Data base error, plase try again' });
