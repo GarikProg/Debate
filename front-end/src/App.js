@@ -21,6 +21,7 @@ import './App.scss'
 function App() {
 
   const isAuthorized = useSelector(state => state.isAuthorized);
+  const successfulThreadCreate = useSelector(state => state.successfulThreadCreate);
 
   const dispatch = useDispatch()
   
@@ -69,7 +70,7 @@ function App() {
       <Logout />
     </Route>
     <Route path="/createThread">
-      <CreateThread />
+      { successfulThreadCreate ? <Redirect to='/Home'/> : <CreateThread /> }
     </Route>
     <Route path="/createDebate">
       <CreateDebate />

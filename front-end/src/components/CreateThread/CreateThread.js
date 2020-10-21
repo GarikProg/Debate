@@ -1,16 +1,14 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {Link} from "react-router-dom"
 import Question from "../../images/quest2.png"
 import Colon from "../../images/colon2.png"
 import { createNewThread } from '../../redux/actions';
 import './createThread.scss';
-import GlobalThread from '../../components/GlobalThread/globalThread'
+import { Redirect } from 'react-router-dom';
 
 export default function CreateThread() {
 
-  const creatorRedux = useSelector(state => state.user.id);
-
+  const creatorRedux = useSelector(state => state.user._id);
 
   // при успешном создании треда - переводит куда вам надо, при неудаче - передводит на страницу или модально с ошибкой!!!!
   const succsessThreadCreate = useSelector(state => state.successfulThreadCreate);
@@ -37,7 +35,7 @@ export default function CreateThread() {
     <div className="createContainer">
       <form className="form" onSubmit={(e) => {
         e.preventDefault()
-        dispatch(createNewThread(formData))
+        dispatch(createNewThread(formData));
       }}>
                   <br></br>
                   <br></br>

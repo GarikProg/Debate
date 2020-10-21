@@ -1,4 +1,4 @@
-import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX } from './actionTypes'
+import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD } from './actionTypes'
 
 function compare(one, two) {
   let firtsToCompare;
@@ -42,7 +42,6 @@ const sorted = (data) => {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX:
-      console.log(action.user)
       return {...state, isAuthorized: true, user: action.user, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
     case DATABASE_ERROR_FROM_SAGA_TO_REDUX:
       return {...state, dbError: action.error, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null};
@@ -55,8 +54,7 @@ export const reducer = (state, action) => {
     case LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX:
       return {...state, loginPasswordError: action.error, loginNameEmailError: null, dbError: null };
     case LOGOUT_FROM_SAGA_TO_REDUX:
-      const defaultValue = { isAuthorized: false, user: { name: null, id: null }, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
-      return defaultValue;
+      return {...state, isAuthorized: false, user: {}, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null };
     case LOAD_THREADS_FROM_SAGA_TO_REDUX:
       const threadsClone = action.data.threads.slice()
       threadsClone.sort(compare);
@@ -70,9 +68,13 @@ export const reducer = (state, action) => {
       if (action.data === 'Data base error, plase try again') {
         return {...state}
       } else {
+        const userThreads = state.user.threads;
+        userThreads.push(action.data)
         addThreadsClone.push(action.data);
-        return {...state, appThreads: addThreadsClone, mainThreads: sorted(addThreadsClone), successfulThreadCreate: true };
-      }
+        return {...state, user: {...state.user, threads: userThreads }, appThreads: addThreadsClone, mainThreads: sorted(addThreadsClone.sort(compare)), successfulThreadCreate: true };
+      };
+    case CHECK_CREATED_THREAD: 
+      return {...state, successfulThreadCreate: false };
     case CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX: 
       const addDebatesClone = state.addDebates.slice();
       if (action.data === 'Data base error, plase try again') {
