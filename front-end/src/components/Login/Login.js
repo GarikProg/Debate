@@ -22,14 +22,14 @@ function Login() {
       <form className="form">
       <div className="form-group">
       <label for="name" className="form-label" placeholder=" ">
-      <input className="form-control" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
+      <input className="form-control" type="text" placeholder=" " required onChange={(e) => setNameEmail(e.target.value)}/>
         <p className="labelP">Name or Email</p>
       {nameEmail && <p>{nameEmailError}</p>}
       </label>
       </div>
       <div className="form-group">
       <label for="password" className="form-label">
-      <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
+      <input type="password" className='form-control' placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
         <p className="labelP">Password</p>
       {passwordError && <span>{passwordError}</span>}
       </label>
