@@ -19,6 +19,7 @@ import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
 import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
 import CreateDebate from './components/CreateDebate/CreateDebate'
 import Auth from './components/Auth/Auth';
+import './App.scss'
 
 function App() {
 
@@ -36,6 +37,9 @@ function App() {
     <>
 <Router>
     <Header />
+    <div className="container">
+      <div className="wrapper">
+        <div className="home">
   <Switch>
     <Route path="/Home">
       <MainPage />
@@ -77,6 +81,9 @@ function App() {
       <CreateDebate />
     </Route>
   </Switch>
+      </div>
+    </div>
+  </div>
 </Router>
 <Footer />
     </>

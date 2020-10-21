@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Login from '../Login/Login';
 import Registration from '../Registration/Registration';
+import './auth.scss'
 
 
 function Auth() {
@@ -9,11 +10,12 @@ function Auth() {
 
   return (
     <>    
-    <div>{regState ? <Login /> : <Registration />}</div>
-    <button onClick={() => setRegState(!regState)}>{regState ? 'Еще не зарегестрированы?': 'Уже зарегестрированы? Войти!'}</button>
-    <button><Link className="mainLinkStyle" to="/Home">Skip</Link></button>
+    <div className="authContainer">
+    <div className="containerInner">{regState ? <Login /> : <Registration />}</div>
+    <button className="authBtn" onClick={() => setRegState(!regState)}>{regState ? 'Еще не зарегестрированы?': 'Уже зарегестрированы? Войти!'}</button>
+    <Link className="skipLink" to="/Home"><button className="authBtn2">Skip</button></Link>
     {/* <Link className="mainLinkStyle" to="/Home"> Skip2 </Link> */}
-
+    </div>
     </>
   )
 }

@@ -111,9 +111,9 @@ function GlobalThread() {
       
 
       {outPut &&
+
         outPut.map((el, index) => {
-          // return (<h5><span>{el.text}</span>: <span>{el.side}</span> : <span>{el.nickName}</span> <input type="checkbox" name="like" id=""/></h5>
-          //   );
+
           return (
             <Comment
               key={el._id}

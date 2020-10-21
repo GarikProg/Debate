@@ -21,10 +21,11 @@ export default function CreateThread() {
         ...prev,
         [e.target.name]: e.target.value,
         creator: creatorRedux,
-        createdAt: Date.now(),
       };
     });
   }
+
+  console.log(formData)
 
   return (
     <>

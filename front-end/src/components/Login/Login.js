@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { checkSignIn } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom';
+import './login.scss'
 
 function Login() {
 
@@ -17,19 +18,29 @@ function Login() {
 
   return (
     <>
-      <label>
-        Name or Email:
-      <input name="nameEmail" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
-      {nameEmail && <span>{nameEmailError}</span>}
+    <div className="formContainer">
+      <form className="form">
+      <div className="form-group">
+      <label for="name" className="form-label" placeholder=" ">
+      <input className="form-control" type="text" required onChange={(e) => setNameEmail(e.target.value)}/>
+        <p className="labelP">Name or Email</p>
+      {nameEmail && <p>{nameEmailError}</p>}
       </label>
-      <br></br>
-      <label>
-        Password:
-      <input type="password" name='password' required onChange={(e) => setPassword(e.target.value)}/>
+      </div>
+      <div className="form-group">
+      <label for="password" className="form-label">
+      <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
+        <p className="labelP">Password</p>
       {passwordError && <span>{passwordError}</span>}
       </label>
-      <div><button onClick={() =>dispatch(checkSignIn({ nameEmail, password }))}>
-      {isAuthorized ? <Redirect to="/Home">Login</Redirect> : 'Login'}</button></div>
+      </div>
+      <div className="logBtn">
+        <button className="loginBtn" onClick={() =>dispatch(checkSignIn({ nameEmail, password }))}>
+          <Link className="loginLink" to="/Home">Sign In</Link>
+      </button>
+      </div>
+      </form>
+      </div>
     </>
   )
 }

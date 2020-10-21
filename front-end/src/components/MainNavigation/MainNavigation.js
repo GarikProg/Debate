@@ -31,7 +31,7 @@ function MainNavigation() {
     </button>
     </animated.div>,
      ({ style }) => <animated.div className="threadTwo" style={{...style}}>
-       <h1>Global</h1>
+       <h1>Hot Threads!</h1>
        <div className="threadNameOne">
     <h3 className="threadNameOneHeader">Thread name goes here</h3>
     <div className="threadNameTwoInner">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
@@ -74,12 +74,12 @@ function MainNavigation() {
     //  </div>
     // </>
     <>
-    <div className="simple-trans-main1">
+    {/* <div className="simple-trans-main1">
       {transitions1.map(({ item, props, key }) => {
         const Page = pages[item]
         return <Page key={key} style={props} />
       })}
-      </div>
+      </div> */}
       <div className="simple-trans-main2">
        {transitions2.map(({ item, props, key }) => {
         //  console.log(item)
