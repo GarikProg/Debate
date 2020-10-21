@@ -60,8 +60,6 @@ body {
   overflow: hidden;
   outline: none;
   text-decoration: none;
-
-  .loginLink {
     color: #fff;
     text-transform: uppercase;
     text-decoration: none;
@@ -72,7 +70,7 @@ body {
     position: relative;
   }
 
-  .loginLink:after {
+  .loginBtn:after {
     background: none repeat scroll 0 0 transparent;
     bottom: 0;
     content: "";
@@ -85,8 +83,8 @@ body {
     width: 0;
   }
 
-  .loginLink:hover:after {
+  .loginBtn:hover:after {
     width: 100%;
     left: 0;
   }
-}
+
