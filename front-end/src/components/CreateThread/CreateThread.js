@@ -39,6 +39,10 @@ export default function CreateThread() {
         e.preventDefault()
         dispatch(createNewThread(formData))
       }}>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
         <div className="formInner">
           <div className="form-group">
           <label className="form-label" placeholder=" ">
@@ -46,6 +50,8 @@ export default function CreateThread() {
             <p className="labelP">Theme</p>          
           </label>
           </div>
+          <br></br>
+
           <div>
             <img className="questionPic" src={Question} />
           </div>
@@ -65,12 +71,17 @@ export default function CreateThread() {
           </label>
           </div>
         </div>
+        <br></br>
+
           <div className="form-group">
           <label className="form-label" placeholder=" ">
-            <input className="form-control" onChange={(e) => handleInput(e)} required name="description" type="text"/>
+            <input className="form-control" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>
             <p className="labelP">Description</p>
           </label>
           </div>
+          <br></br>
+          <br></br>
+
           <div>
             <button type='submit'>Submit</button>
           </div>

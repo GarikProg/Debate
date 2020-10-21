@@ -30,6 +30,7 @@ function Login() {
             {nameEmail && <p>{nameEmailError}</p>}
           </label>
         </div>
+        <br></br>
         <div className="form-group">
           <label className="form-label">
             <input type="password" className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
@@ -39,7 +40,7 @@ function Login() {
         </div>
         <div className="logBtn">
           <button className="loginBtn" type='submit'>
-            {/* <Link className="loginLink" to="/Home">Sign In</Link> */}TEST
+            {/* <Link className="loginLink" to="/Home">Sign In</Link> */} <div className="loginLink">Sign in</div>
           </button>
         </div>
       </form>
