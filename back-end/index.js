@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import debateRouter from './routes/debate.js'
 import MongoDB from "connect-mongodb-session";
 import threadRouter from "./routes/thread.js";
+import profileRouter from './routes/profile.js'
 import cors from "cors";
 import ioSocket from "socket.io";
 const io = ioSocket();
@@ -13,6 +14,7 @@ import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
 import Users from './models/user.js'
+
 
 const logger = console;
 const app = express();
@@ -99,6 +101,7 @@ app.use(
 app.use(authRouter);
 app.use('/debate',debateRouter);
 app.use('/thread', threadRouter);
+app.use('profile', profileRouter);
 
 const port = process.env.PORT ?? 3001;
 const httpServer = app.listen(port, () => {
