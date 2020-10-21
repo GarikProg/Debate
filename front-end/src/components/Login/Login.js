@@ -27,6 +27,9 @@ function Login() {
       {nameEmail && <p>{nameEmailError}</p>}
       </label>
       </div>
+      <br></br>
+      <br></br>
+
       <div className="form-group">
       <label className="form-label">
       <input type="password" placeholder=" " className='form-control' required onChange={(e) => setPassword(e.target.value)}/>
@@ -34,6 +37,8 @@ function Login() {
       {passwordError && <span>{passwordError}</span>}
       </label>
       </div>
+      <br></br>
+
       <div className="logBtn">
         <button className="loginBtn" onClick={() =>dispatch(checkSignIn({ nameEmail, password }))}>
           <Link className="loginLink" to="/Home">Sign In</Link>
