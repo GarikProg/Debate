@@ -22,6 +22,7 @@ router
         createdAt: date,
         updatedAt: date,
       })
+      console.log(creator)
       const user = await Users.findById(creator);
       console.log(user);
       user.threads.push(thread._id);

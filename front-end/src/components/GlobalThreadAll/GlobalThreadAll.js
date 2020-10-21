@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom"
-import {useSelector} from 'react-redux'
+import {Link} from "react-router-dom";
+import {useSelector} from 'react-redux';
+import './globalthreadAll.scss'
 
 export default function GlobalThreadAll() {
   
@@ -14,9 +15,9 @@ export default function GlobalThreadAll() {
       {threads &&
         threads.map((el) => {
           return (
-          <div>
-            <Link to={`/GlobalThread/${el._id}`}><button>{el.theme}</button> </Link>
-            
+          <div className="thread">
+            <Link className="linkGlobal" to={`/GlobalThread/${el._id}`}><button className="theme" >{el.theme}</button></Link>
+            <span className="question"> ? </span><span className="sideOne">{el.sideOne}</span> <span className="colon"> : </span><span className="sideTwo">{el.sideTwo}</span>
             </div>);
         })}        
     </div>

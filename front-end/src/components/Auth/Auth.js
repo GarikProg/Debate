@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Login from '../Login/Login';
 import Registration from '../Registration/Registration';
 import './auth.scss'
