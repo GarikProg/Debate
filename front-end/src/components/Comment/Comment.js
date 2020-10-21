@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import "./comment.scss"
 
 export default function Comment(props) {
   const isAuthorized = useSelector((state) => state.isAuthorized);
@@ -15,10 +16,10 @@ export default function Comment(props) {
     index,
   } = props;
   return (
-    <div>
-      <span>{nickName}___</span>
-      <span>{side}___</span>
-      <span>{text}___</span>
+    <div className="comment">
+      <div><span>_{nickName}_</span></div>
+      <span>{side}_</span>
+      <span>{text}_</span>
       <span>{likes && likes.length}</span>
       {isAuthorized ? (
         <button onClick={() => punch(index, comment_id, creator_comment)}>
