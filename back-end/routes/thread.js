@@ -61,12 +61,16 @@ router.route("/loadall").post(async (req, res) => {
 
 router.route("/:id").get(async (req, res) => {
   const thread = await Thread.findById(req.params.id)
-    .populate("comments")
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'creator'
+      }
+    })
     .populate("threadWinner")
     .populate("creator")    
     .exec();
-  const comments = await Comments.find({ commentLocation: req.params.id }).populate("likes");
-  res.json({ thread, comments});
+  res.json({ thread });
 });
 
 export default router;

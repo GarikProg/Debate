@@ -40,10 +40,7 @@ io.on("connection", (socket) => {
         commentLocation: id,
         side,
         nickName,
-      });      
-      const threads = await Threads.findById(id)
-      threads.comments.push(comment._id)
-      await threads.save();
+      });
 
       const user = await User.findById(creator);      
       user.comments.push(comment._id)
@@ -61,8 +58,7 @@ io.on("connection", (socket) => {
         const debate = await Debates.findById(id)
         debate.comments.push(comment._id)
         await debate.save();
-      }   
-
+      };
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
@@ -75,16 +71,22 @@ io.on("connection", (socket) => {
         creator,
         comment: comment_id,        
       });
+      like.populate('creator').populate('comment');
+      
       const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
       await comment.save();
+      
+      // Добавление рейтинга пользователю
       const ratingUser = await User.findById(comment.creator);
       ratingUser.rating += 1;
       await ratingUser.save();
+
+      // Добвления лайка к лайкнувшему юзеру 
       const user = await User.findById(creator);      
-      user.likes.push(like._id)
+      user.likes.push(like._id);
       await user.save();
-      like.populate('creator').populate('comment');  
+      
       io.to(data.id).emit("broadcast", like);
     } catch (error) {
       console.log(error);

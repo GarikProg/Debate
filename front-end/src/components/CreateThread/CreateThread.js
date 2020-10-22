@@ -4,11 +4,11 @@ import Question from "../../images/quest4.png"
 import Colon from "../../images/colon4.png"
 import { createNewThread } from '../../redux/actions';
 import './createThread.scss';
-import { Redirect } from 'react-router-dom';
 
 export default function CreateThread() {
 
   const creatorRedux = useSelector(state => state.user._id);
+  const dispatch = useDispatch();
 
   // при успешном создании треда - переводит куда вам надо, при неудаче - передводит на страницу или модально с ошибкой!!!!
   const succsessThreadCreate = useSelector(state => state.successfulThreadCreate);
@@ -16,8 +16,6 @@ export default function CreateThread() {
   const dbError = useSelector(state => state.dbError);
 
   const [formData, setFormData] = useState();
-
-  const dispatch = useDispatch();
 
   const handleInput = (e) => {
     e.persist();
@@ -30,17 +28,16 @@ export default function CreateThread() {
     });
   }
 
-  return (
-    <>
+return (
+  <>
     <div className="createContainer">
       <form className="form1" onSubmit={(e) => {
         e.preventDefault()
         dispatch(createNewThread(formData));
       }}>
-                  <br></br>
-                  <br></br>
-                  <br></br>
-
+        <br/>
+        <br/>
+        <br/>
         <div className="formInner">
           <div className="form-group1">
           <label className="form-label1" placeholder=" ">
@@ -48,8 +45,7 @@ export default function CreateThread() {
             <p className="labelP1">Theme</p>          
           </label>
           </div>
-          <br></br>
-
+            <br/>
           <div>
             <img className="questionPic" src={Question} />
           </div>
@@ -85,7 +81,5 @@ export default function CreateThread() {
           </div>
       </form>
     </div>
-    
   </>
-  )
-}
+)}
