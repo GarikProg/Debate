@@ -9,7 +9,6 @@ import Profile from './components/Profile/Profile'
 import TestChat from './components/Chat/TestChat'
 import About from './components/About/About'
 import Header from './components/Header/header'
-import Footer from './components/Footer/footer'
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
@@ -93,7 +92,6 @@ function App() {
     </div>
   </div>
 </Router>
-<Footer />
     </>
   );
 }
