@@ -8,7 +8,6 @@ function MainPage() {
 
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(sortHotThreads());
     dispatch(checkCreatedThread());
   }, [])
 

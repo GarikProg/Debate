@@ -49,8 +49,6 @@ const addCommentCountToCommentsInRedux = (threadId, comment) => ({ type: ADD_COM
 const changeCommetWritingPermission = () => ({ type: CHANGE_COMMET_WRITING_PERMISSON });
 const setCommetWritingCooldown = (data) => ({ type: SET_COMMENT_WRITING_COOLDOWN, data });
 
-// Сортировка новых тредов при переходи на HOT THREADS
-const sortHotThreads = () => ({ type: SORT_HOT_THREADS })
 
 export {
   checkSignIn,
@@ -78,5 +76,4 @@ export {
   changeCommetWritingPermission,
   setCommetWritingCooldown,
   addCommentCountToCommentsInRedux,
-  sortHotThreads
 }

@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { loadingSessionCheck, loadThreads, loadDebates, changeCommetWritingPermission, setCommetWritingCooldown } from "./redux/actions";
-import MainPage from './components/MainPage/MainPage'
-import Debate from './components/Debate/Debate'
-import GlobalThread from './components/GlobalThread/globalThread'
-import Profile from './components/Profile/Profile'
-import TestChat from './components/Chat/TestChat'
-import About from './components/About/About'
-import Header from './components/Header/header'
-import Footer from './components/Footer/footer'
-import Logout from './components/Logout/Logout';
+import MainPage from './components/MainPage/MainPage';
+import Debate from './components/Debate/Debate';
+import GlobalThread from './components/GlobalThread/globalThread';
+import Profile from './components/Profile/Profile';
+import TestChat from './components/Chat/TestChat';
+import About from './components/About/About';
+import Header from './components/Header/header';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
-import CreateDebate from './components/CreateDebate/CreateDebate'
+import CreateDebate from './components/CreateDebate/CreateDebate';
 import Auth from './components/Auth/Auth';
-import './App.scss'
+import './App.scss';
 
 function App() {
 
@@ -48,52 +46,47 @@ function App() {
   }, [canWriteComment])
   
   return (
-    <>
-<Router>
+  <Router>
     <Header />
     <div className="container">
       <div className="wrapper">
         <div className="home">
-  <Switch>
-    <Route path="/Home">
-      <MainPage />
-    </Route>
-    <Route exact path="/Auth">
-      { isAuthorized ? <Redirect to='/Home' /> : <Auth /> }
-    </Route>
-    <Route exact path="/Debate/:id">
-      <Debate />
-    </Route>    
-    <Route exact path="/GlobalThread/">
-      <GlobalThreadAll />
-    </Route>
-    <Route exact path="/GlobalThread/:id">
-      <GlobalThread />
-    </Route>
-    <Route exact path="/Profile">
-      <Profile />
-    </Route>
-    <Route path="/TestChat">
-      <TestChat />
-    </Route>
-    <Route path="/About">
-      <About />
-    </Route>
-    <Route path="/Logout">
-      <Logout />
-    </Route>
-    <Route path="/createThread">
-      { successfulThreadCreate ? <Redirect to='/Home'/> : <CreateThread /> }
-    </Route>
-    <Route path="/createDebate">
-      <CreateDebate />
-    </Route>
-  </Switch>
+          <Switch>
+            <Route path="/Home">
+              <MainPage />
+            </Route>
+            <Route exact path="/Auth">
+              { isAuthorized ? <Redirect to='/Home' /> : <Auth /> }
+            </Route>
+            <Route exact path="/Debate/:id">
+              <Debate />
+            </Route>    
+            <Route exact path="/GlobalThread/">
+              <GlobalThreadAll />
+            </Route>
+            <Route exact path="/GlobalThread/:id">
+              <GlobalThread />
+            </Route>
+            <Route exact path="/Profile">
+              <Profile />
+            </Route>
+            <Route path="/TestChat">
+              <TestChat />
+            </Route>
+            <Route path="/About">
+              <About />
+            </Route>
+            <Route path="/createThread">
+              { successfulThreadCreate ? <Redirect to='/Home'/> : <CreateThread /> }
+            </Route>
+            <Route path="/createDebate">
+              <CreateDebate />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </div>
-  </div>
-</Router>
-    </>
+  </Router>
   );
 }
 

@@ -24,7 +24,7 @@ function GlobalThread() {
   }, [])
   
   const { id } = useParams();
-  console.log(outPut)
+
   const nickName = useSelector((state) => state.user.name);  
   
   const creator = useSelector((state) => state.user._id);
@@ -41,7 +41,7 @@ function GlobalThread() {
     let seconds = num % 60;
     let minutes = Math.floor(num / 60);
     return `${minutes}:${seconds}`;
-  } 
+  };
 
   useEffect(() => {    
     (async () => {
@@ -76,7 +76,6 @@ function GlobalThread() {
         if (data.comment) {
           // Присылает класс Like
           dispatch(addLikeToUserInRedux(data));
-          console.log(data);
           setOutput((prev) =>                    
             prev.map((el, i) => {
               if (el._id === data.comment) {                
