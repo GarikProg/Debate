@@ -1,17 +1,17 @@
-.headers{
-  color: antiquewhite;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
+.headers {
+  width: 100%;
+  color:red;  
   font-size: 30px;
-
+}
+.debators {
+  font-size: 3rem;
 }
 
-// .inputForm{
-//   display: flex;
-//   flex-direction: row;
-//   font-size: 40px;
-// }
+.inputForm{
+display: flex;
+  flex-direction: row;
+  font-size: 40px;
+ }
 .comment{
   color: yellowgreen;
 }
@@ -23,10 +23,17 @@
   color: yellowgreen;
   border-color: darkgray;
   font-size: 35px;
-
-
-
 }
+.form {
+  display: block;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+}
+
+
 .like{
   background-color: black;
 }

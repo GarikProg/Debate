@@ -3,7 +3,7 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../CommentDebate/CommentDebate";
-import './debate.scss'
+import styles from './Debate.module.css'
 
 function Debate() {
   const [socket, setSocket] = useState();
@@ -72,12 +72,7 @@ function Debate() {
       creator,
       from: "debate",
     });
-  };
-
-  const comment = () => {
-    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
-    return colorArr[(Math.floor(Math.random() * 23))];
-  };
+  }; 
 
   const punch = (index, comment_id, creator_comment) => {
     let isLike = 0;
@@ -93,19 +88,13 @@ function Debate() {
   };
   return (
     <>
-    <div className="headers">
-      <h1>First debator: {debate.creator?.name}</h1>
-      <h1>Second debator: {debate.participant?.name}</h1>
+    <div className={styles.headers}>
+      <div className={styles.debators}>First debator: {debate.creator?.name}</div>      
+      <div className={styles.debators}>Second debator: {debate.participant?.name}</div>
       {creator === debate.creator?._id || creator === debate.participant?._id ? (
-        <>
-          {" "}
-          <section>
-            <div>
-              <strong>NICK: {nickName}</strong>
-            </div>
-          </section>
-          <form onSubmit={(e) => handleSubmit(e)} id="messageForm">
-            <input
+        <>                   
+          <form className={styles.form} onSubmit={(e) => handleSubmit(e)} id="messageForm">
+            <input className={styles.input}
               onChange={(e) => setText(e.target.value)}
               type="text"
               name="message"
