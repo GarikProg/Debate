@@ -3,9 +3,8 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
-import {createNewDebate} from '../../redux/actions'
 
-function GlobalThread() {
+function Debate() {
   const [socket, setSocket] = useState();
   const [text, setText] = useState("");
   const [outPut, setOutput] = useState([]);
@@ -15,17 +14,15 @@ function GlobalThread() {
   const { id } = useParams();
 
   const nickName = useSelector((state) => state.user.name);  
-
   const creator = useSelector((state) => state.user._id);
-
   const isAuthorized = useSelector(state => state.isAuthorized);
+
   const  dispatch = useDispatch();
 
   useEffect(() => {    
     (async () => {
-      const response = await fetch(`/thread/${id}`);
-      const resp = await response.json();
-      setThread(resp.thread);      
+      const response = await fetch(`/debate/${id}`);
+      const resp = await response.json();           
       setOutput(resp.comments);
     })();
   }, []);
@@ -34,7 +31,6 @@ function GlobalThread() {
     const socket = openSocket("http://localhost:8000", {
       query: {
         id,
-        nickName,
       },
     });
     setSocket(socket);
@@ -81,11 +77,6 @@ function GlobalThread() {
       socket.send({ type: "like", comment_id, creator, id });
     }
   };
-
-  const challenge = (comment_creator) => {
-    console.log(creator, 'ghggh', comment_creator);
-    dispatch(createNewDebate( {creator, participant: comment_creator}))
-  }
   return (
     <>
       <h1>{thread.theme}</h1>
@@ -130,8 +121,7 @@ function GlobalThread() {
               nickName={el.nickName}
               creator_comment={el.creator}
               likes={el.likes}
-              punch={punch}
-              challenge={challenge}
+              punch={punch}              
             />
           );
         })}
@@ -140,4 +130,4 @@ function GlobalThread() {
   );
 }
 
-export default GlobalThread;
+export default Debate

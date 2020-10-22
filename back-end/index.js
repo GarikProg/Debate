@@ -25,10 +25,12 @@ const store = new MongoDBStore({
 });
 
 io.on("connection", (socket) => {
-  socket.join(socket.handshake.query.id);
+  socket.nickname = socket.handshake.query.nickname;
+  const roomID = socket.handshake.query.id;
+  socket.join(roomID);
   socket.on("message", async (data) => {
-    if(data.type === "comment") {
-      
+    console.log(io.sockets.clients(roomID)); 
+    if(data.type === "comment") {      
     const { text, creator,  id, side, nickName} = data;
     try {
       const comment = await Comments.create({
@@ -41,8 +43,7 @@ io.on("connection", (socket) => {
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
-      const user = await Users.findById(creator);
-      console.log(creator);
+      const user = await Users.findById(creator);      
       user.comments.push(comment._id)
       await user.save();    
       io.to(data.id).emit("broadcast", comment);

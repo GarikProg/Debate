@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { useDispatch, useSelector } from 'react-redux'
 import { loadingSessionCheck, loadThreads, loadDebates } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
-import LocalThread from './components/LocalThread/localThread'
+import Debate from './components/Debate/Debate'
 import GlobalThread from './components/GlobalThread/globalThread'
 import Profile from './components/Profile/Profile'
 import TestChat from './components/Chat/TestChat'
@@ -13,7 +13,6 @@ import Footer from './components/Footer/footer'
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
-import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
 import CreateDebate from './components/CreateDebate/CreateDebate'
 import Auth from './components/Auth/Auth';
 import './App.scss'
@@ -45,12 +44,9 @@ function App() {
     <Route exact path="/Auth">
       { isAuthorized ? <Redirect to='/Home' /> : <Auth /> }
     </Route>
-    <Route exact path="/LocalThread/:id">
-      <LocalThread />
-    </Route>
-    <Route exact path="/LocalThread/">
-      <GlobalDebateAll />
-    </Route>
+    <Route exact path="/Debate/:id">
+      <Debate />
+    </Route>    
     <Route exact path="/GlobalThread/">
       <GlobalThreadAll />
     </Route>
