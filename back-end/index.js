@@ -29,7 +29,6 @@ io.on("connection", (socket) => {
   const roomID = socket.handshake.query.id;
   socket.join(roomID);
   socket.on("message", async (data) => {
-    console.log(io.sockets.clients(roomID)); 
     if(data.type === "comment") {      
     const { text, creator,  id, side, nickName} = data;
     try {
