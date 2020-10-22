@@ -3,7 +3,7 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
-import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown } from '../../redux/actions'
+import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown, addCommentCountToCommentsInRedux } from '../../redux/actions'
 import './globalthread.scss'
 
 
@@ -40,7 +40,6 @@ function GlobalThread() {
       const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
       setThread(resp.thread);
-      console.log(resp.thread.comments)
       setOutput(resp.thread.comments);
     })();
   }, []);
@@ -61,6 +60,7 @@ function GlobalThread() {
         if (data.commentLocation) {
           // Присылает класс Comment
           dispatch(addCommentToUserInRedux(data))
+          dispatch(addCommentCountToCommentsInRedux(id, data))
           setOutput((prev) => {
             return [...prev, data];
           });

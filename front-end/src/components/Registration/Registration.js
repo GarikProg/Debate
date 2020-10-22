@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { checkRegister } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import './registration.scss'
 
 function Registration() {
@@ -29,8 +28,7 @@ function Registration() {
           {nameError ?? <span>{nameError}</span>}
         </label>
       </div>
-      <br></br>
-
+      <br/>
       <div className="form-group">
         <label className="form-label">
           <input className="form-control" type="email" placeholder=" " required onChange={(e) => setEmail(e.target.value)}/>
@@ -38,21 +36,17 @@ function Registration() {
           {emailError ?? <span>{emailError}</span>}
         </label>
       </div>
-      <br></br>
-
+      <br />
       <div>
         <label className="form-label">
           <input className="form-control" type="password" placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
           <p className="labelP">Password</p>
         </label>
       </div>
-      <br></br>
-
+      <br/>
       <div>
         <button className="loginBtn" type="submit">
-        {/* <Link className="loginLink" to="/Home"> */}
-        <div className="loginLink">Register</div>
-        {/* </Link> */}
+          <div className="loginLink">Register</div>
         </button>
         </div>
     </form>

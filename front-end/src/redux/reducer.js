@@ -1,4 +1,4 @@
-import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD, ADD_LIKE_TO_USER_IN_REDUX, ADD_COMMENT_TO_USER_IN_REDUX, CHANGE_COMMET_WRITING_PERMISSON, SET_COMMENT_WRITING_COOLDOWN } from './actionTypes'
+import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD, ADD_LIKE_TO_USER_IN_REDUX, ADD_COMMENT_TO_USER_IN_REDUX, CHANGE_COMMET_WRITING_PERMISSON, SET_COMMENT_WRITING_COOLDOWN, ADD_COMMENT_COUNT_TO_COMMENTS_IN_REDUX, SORT_HOT_THREADS } from './actionTypes'
 
 function compare(one, two) {
   let firtsToCompare;
@@ -91,10 +91,22 @@ export const reducer = (state, action) => {
       const userCommetsClone = state.user.comments.slice();
       userCommetsClone.push(action.data);
       return { ...state, user: { ...state.user, comments: userCommetsClone } };
+    case ADD_COMMENT_COUNT_TO_COMMENTS_IN_REDUX:
+      const threadsMainClone = state.mainThreads.slice();
+      threadsMainClone.forEach(el => {
+        if (el._id === action.threadId) {
+          el.comments.push(action.comment)
+        }
+      })
+      return {...state, mainThreads: threadsMainClone };
     case CHANGE_COMMET_WRITING_PERMISSON: 
       return { ...state, canWriteComment: !state.canWriteComment };
     case SET_COMMENT_WRITING_COOLDOWN:
       return { ...state, commentWritingTimeout: action.data };
+    case SORT_HOT_THREADS:
+      const threardsForHotClone = state.appThreads.slice();
+      threardsForHotClone.sort(compare)
+      return { ...state, mainThreads: sorted(threardsForHotClone) }
     default:
       return state;
   }
