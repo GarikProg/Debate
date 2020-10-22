@@ -65,7 +65,7 @@ const SecondLayer = ({ state }) => {
                       <div
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
-                      ref={el => (line1 = el)}>Debate</div>
+                      ref={el => (line1 = el)}>Thread</div>
                     </Link>
                   </li>
                   <li>
