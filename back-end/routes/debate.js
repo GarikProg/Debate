@@ -1,5 +1,6 @@
 import express from 'express';
 import Debate from '../models/debate.js';
+import Users from '../models/user.js'
 const router = express.Router();
 
 
@@ -29,6 +30,15 @@ router
         voteAt,
         closedAt
       });
+
+      const oneParticipant = await Users.findById(creator);
+      oneParticipant.debates.push(debate._id);      
+      await oneParticipant.save();
+
+      const twoParticipant = await Users.findById(participant);
+      twoParticipant.debates.push(debate._id);
+      await twoParticipant.save();
+
       res.json({ successfulDebateCreate: true, debate });
     } catch (error) {
       res.json({ successfulDebateCreate: false, err: 'Data base error, plase try again' });
@@ -38,7 +48,8 @@ router
 
 router
   .route('/:id')
-  .post(async (req, res) => {
+  .get(async (req, res) => {
+    
     res.end();
 });
 
