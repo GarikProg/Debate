@@ -4,7 +4,8 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
 import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown } from '../../redux/actions'
-import './globalthread.scss'
+import './globalthread.scss';
+import Like from '../../images/like.svg'
 
 
 function GlobalThread() {
@@ -113,26 +114,20 @@ function GlobalThread() {
   }
   return (
     <>
+    <div className="globalThreadsContainer">
       <div className="headers">
-        <div>
-          <strong>
-            <div>Your nickname: </div>
+          <div>Your nickname: </div>
             <div className={comment()}>{nickName}</div>
-          </strong> 
-        </div>
         <div>
-          <h1>
             <div>Theme: </div>
             <div className={comment()}>{thread.theme}</div>
-          </h1>
         </div>
       <div>
-        <h2>
           <div>Description: </div>
           <div className={comment()}>{thread.description}</div>
-        </h2>
       </div>
-      <div>
+      </div>
+      <div className="randomDiv">
         <span>
           <button className="challengeButton"  onClick={() => setSide(thread.sideOne)}>
             {thread.sideOne}
@@ -147,20 +142,17 @@ function GlobalThread() {
 
     {isAuthorized ?
     <>
-      <section>
-        <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) } id="messageForm">
-          <input className="challengeButton"
+       <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) } id="messageForm">
+          <input className="challengeButton" 
             onChange={(e) => setText(e.target.value)}
             type="text"
             name="message"
             id="message"
           />
-          {canWriteComment ? <button className="challengeButton"type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
+          {canWriteComment ? <button className="challengeButton" type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
         </form>
-      </section>
     </> : <> <Link to="/Auth"><button>Sign in to punch and vote</button></Link> </>}      
-      </div>  
-    </div>
+      </div> 
       <div>
       {outPut &&
         outPut.map((el, index) => {
@@ -179,6 +171,7 @@ function GlobalThread() {
             />
           );
         })}
+      </div>
       </div>
     </>
   );

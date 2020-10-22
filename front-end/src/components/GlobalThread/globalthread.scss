@@ -2,16 +2,11 @@
   color: antiquewhite;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  font-size: 40px;
-
 }
 
-// .inputForm{
-//   display: flex;
-//   flex-direction: row;
-//   font-size: 40px;
-// }
+.globalThreadsContainer {
+  display: flex;
+}
 .comment{
   color: yellowgreen;
 }
@@ -19,14 +14,24 @@
   color: antiquewhite;
 }
 .challengeButton{
-  background-color: black;
-  color: yellowgreen;
-  border-color: darkgray;
-  font-size: 35px;
-
-
-
+background: transparent;
+border: 1px solid white;
+color: white;
+outline: none;
 }
+.challengeButton:hover{
+  background: transparent;
+  border: 1px solid rgb(253, 0, 118);
+  color:   rgb(253, 0, 118);
+  outline: none;
+  }
+
+  .randomDiv {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin-top: 15%;
+  }
 .like{
   background-color: black;
 }
