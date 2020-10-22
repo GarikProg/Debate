@@ -9,6 +9,7 @@ import {
   handleHoverExit,
   staggerRevealClose
 } from "./Animations";
+import './secondlayer.scss'
 
 const SecondLayer = ({ state }) => {
 
@@ -68,7 +69,7 @@ const SecondLayer = ({ state }) => {
                   </li>
                   <li>
                     <Link
-                      to='/About'>
+                      to='/'>
                       <div  
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
@@ -87,12 +88,17 @@ const SecondLayer = ({ state }) => {
                 </ul>
               </nav>
                   <div ref={el => (info = el)} className="info">
-                    <h3>
-                      About us
-                    </h3>
-                    <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+                      <h1>
+                    <div className="animation-content-line">
+                      <div className="animation-content-line-inner1">About us:</div>
+                    </div>
+                    <div className="animation-content-line">
+                      <div className="animation-content-line-inner2"><br></br>Debates is fresh sketch on an old theme. <br /> We are trying to make your internet arguments constructive. </div>  
+                    </div>
+                    <div className="animation-content-line">
+                      <div className="animation-content-line-inner3">Someone on the web is not correct? Give us a chance!</div>
+                    </div>
+                  </h1>
                   </div>
                  </div>
                </div>

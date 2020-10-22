@@ -100,6 +100,7 @@ function GlobalThread() {
       <div className={comment()}>{thread.theme}</div></h1></div>
       <div><h2><div>Description: </div>
       <div className={comment()}>{thread.description}</div></h2></div>
+      <div>
         <span>
           <button className="challengeButton"  onClick={() => setSide(thread.sideOne)}>
             {thread.sideOne}
@@ -110,13 +111,14 @@ function GlobalThread() {
             {thread.sideTwo}
           </button>
         </span>
+      </div>  
 
     {isAuthorized ? <> <section>
 
           {/* <div><strong>NICK:  {nickName}</strong> </div> */}
           {/* <span>MESSAGE</span> */}
 
-      <form onSubmit={(e) => handleSubmit(e)} id="messageForm">
+      <form className="inputForm" onSubmit={(e) => handleSubmit(e)} id="messageForm">
         <input  
           className="challengeButton" 
           onChange={(e) => setText(e.target.value)}

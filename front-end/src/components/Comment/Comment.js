@@ -34,12 +34,13 @@ export default function Comment(props) {
 
 
   return (
+    <div className="fontSize">
     <div className={comment()}>
       <div><span>_{nickName}_ </span> 
       {toDisplay && toDisplay}
       </div>
       {/* <span>{side}_</span> */}
-      : <span>{text}_</span>
+      : <span >{text}</span>
       <div>{isAuthorized ? (
         <>
           {user_id !== creator_comment ? (
@@ -61,6 +62,7 @@ export default function Comment(props) {
       )}</div>
       <br></br>
 
+    </div>
     </div>
   );
 }
