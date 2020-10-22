@@ -30,7 +30,7 @@ export default function Comment(props) {
           {user_id !== creator_comment ? (
             <>
           <button onClick={() => punch(index, comment_id, creator_comment)}>
-            Like
+          &#x1F44D;
           </button>
             <button onClick={() => challenge(creator_comment)}>
               Challenge

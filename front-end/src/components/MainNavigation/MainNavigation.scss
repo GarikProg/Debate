@@ -7,10 +7,14 @@
     width: 300px;
     color: pink;
     text-decoration: none;
-    
-  }
+    font-size: 18px;
+    font-weight: bold;
+    }
   .innerDiv:hover {
-    color: rgb(117, 65, 117);
+    color: rgb(189, 138, 147);
+  }
+  .mainLink {
+    text-decoration: none;
   }
 }
 .mainPageHeader {
@@ -47,8 +51,9 @@
   height: 50%;
   margin-left: 40px;
   .descriptionInner {
-    font-size: 12px !important;
+    font-size: 15px !important;
     text-transform: none !important;
   }
- 
-}
+ }
+ .descriptionContainer {
+   }
