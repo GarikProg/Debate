@@ -153,7 +153,7 @@ function GlobalThread() {
       <section>
         <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) }>
           <input className="challengeButton"
-            onChange={(e) => {
+            onBlur={(e) => {
               e.preventDefault();
               setText(e.target.value)
             }}
