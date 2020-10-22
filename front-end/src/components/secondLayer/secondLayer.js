@@ -70,11 +70,11 @@ const SecondLayer = ({ state }) => {
                   </li>
                   <li>
                     <Link
-                      to='/About'>
+                      to='/CreateThread'>
                       <div  
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
-                      ref={el => (line2 = el)}>About</div>
+                      ref={el => (line2 = el)}>Create</div>
                     </Link>
                   </li>
                   <li>
@@ -88,11 +88,11 @@ const SecondLayer = ({ state }) => {
                   </li>
                   <li>
                     <Link
-                      to='/CreateThread'>
+                      to='/About'>
                       <div  
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
-                      ref={el => (line4 = el)}>Create</div>
+                      ref={el => (line4 = el)}>About</div>
                     </Link>
                   </li>
                 </ul>
