@@ -20,7 +20,7 @@ export default function DebateThreadAll() {
     </div>
     <div>
       <br/>
-    {<Link to="/createDebate"> <button>Create Debate</button>  </Link>}  
+      {<Link to="/createDebate"> <button>Create Debate</button>  </Link>}  
     </div>
     </>
   );
