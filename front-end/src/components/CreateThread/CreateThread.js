@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import Question from "../../images/quest2.png"
-import Colon from "../../images/colon2.png"
+import Question from "../../images/quest4.png"
+import Colon from "../../images/colon4.png"
 import { createNewThread } from '../../redux/actions';
 import './createThread.scss';
 
@@ -31,7 +31,7 @@ export default function CreateThread() {
 return (
   <>
     <div className="createContainer">
-      <form className="form" onSubmit={(e) => {
+      <form className="form1" onSubmit={(e) => {
         e.preventDefault()
         dispatch(createNewThread(formData));
       }}>
@@ -39,45 +39,46 @@ return (
         <br/>
         <br/>
         <div className="formInner">
-          <div className="form-group">
-            <label className="form-label" placeholder=" ">
-              <input className="form-control" onChange={(e) => handleInput(e)} required name="theme" placeholder=" " type="text"/>
-              <p className="labelP">Theme</p>          
-            </label>
+          <div className="form-group1">
+          <label className="form-label1" placeholder=" ">
+            <input className="form-control1" onChange={(e) => handleInput(e)} required name="theme" placeholder=" " type="text"/>
+            <p className="labelP1">Theme</p>          
+          </label>
           </div>
             <br/>
           <div>
             <img className="questionPic" src={Question} />
           </div>
-          <div className="form-group">
-            <label className="form-label" placeholder=" ">
-              <input className="form-control" onChange={(e) => handleInput(e)} required name="sideOne" placeholder=" " type="text"/>
-              <p className="labelP">Side One</p>
-            </label>
+          <div className="form-group1">
+          <label className="form-label1" placeholder=" ">
+            <input className="form-control1" onChange={(e) => handleInput(e)} required name="sideOne" placeholder=" " type="text"/>
+            <p className="labelP1">Side One</p>
+          </label>
           </div>
           <div>
             <img className="colonPic" src={Colon} />
           </div>
-          <div className="form-group">
-            <label className="form-label" placeholder=" ">
-              <input className="form-control" onChange={(e) => handleInput(e)} required name="sideTwo" placeholder=" " type="text"/>
-              <p className="labelP">Side Two</p>
-            </label>
+          <div className="form-group1">
+          <label className="form-label1" placeholder=" ">
+            <input className="form-control1" onChange={(e) => handleInput(e)} required name="sideTwo" placeholder=" " type="text"/>
+            <p className="labelP1">Side Two</p>
+          </label>
           </div>
         </div>
-        <br/>
-        {/* НУЖНО ОЧЕНЬ СДЕЛАТЬ ЧТОБЫ ДЕСКРИПШН БЫЛ СПРАВА А BСЕ ОСТАЛЬНОЕ КАК ЕСТЬ ПРИЧЕМ ДЕСК. ДОЛЖЕН БЫТЬ БОЛЬШОЙ */}
-        <div className="form-group">
-          <label className="form-label" placeholder=" ">
-            <input className="form-control" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>
-            <p className="labelP">Description</p>
+        <br></br>
+
+          <div className="form-group2">
+          <label className="form-label2" placeholder=" ">
+            <input className="form-control2" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>
+            <p className="labelP2">Description</p>
           </label>
-        </div>
-        <br/>
-        <br/>
-        <div>
-          <button type='submit'>Submit</button>
-        </div>
+          </div>
+          <br></br>
+          <br></br>
+
+          <div>
+            <button className="createThreadBtn" type='submit'>Submit</button>
+          </div>
       </form>
     </div>
   </>
