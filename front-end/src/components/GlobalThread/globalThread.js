@@ -28,6 +28,7 @@ function GlobalThread() {
   // Логика кулдауна
   const coolDown = useSelector(state => state.commentWritingTimeout);
   const canWriteComment = useSelector(state => state.canWriteComment);
+
   // Конвертер времени для отображения
   function convertNumberToTime(num) {
     let seconds = num % 60;
@@ -39,8 +40,9 @@ function GlobalThread() {
     (async () => {
       const response = await fetch(`/thread/${id}`);
       const resp = await response.json();
-      setThread(resp.thread);      
-      setOutput(resp.comments);
+      setThread(resp.thread);
+      console.log(resp.thread.comments)
+      setOutput(resp.thread.comments);
     })();
   }, []);
 
@@ -88,6 +90,7 @@ function GlobalThread() {
     // Отправка комментария на бек
     dispatch(changeCommetWritingPermission());
     dispatch(setCommetWritingCooldown(60));
+
     socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
@@ -106,12 +109,14 @@ function GlobalThread() {
 
   const comment = () => {
     const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
-      return colorArr[(Math.floor(Math.random() * 23))];
-  }
+    return colorArr[(Math.floor(Math.random() * 23))];
+  };
+  
   const challenge = (comment_creator) => {
     console.log(creator, 'ghggh', comment_creator);
     dispatch(createNewDebate( {creator, participant: comment_creator}))
-  }
+  };
+
   return (
     <>
     <div className="globalThreadsContainer">
@@ -138,8 +143,6 @@ function GlobalThread() {
             {thread.sideTwo}
           </button>
         </span>
-
-
     {isAuthorized ?
     <>
        <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) } id="messageForm">
@@ -158,16 +161,15 @@ function GlobalThread() {
         outPut.map((el, index) => {
           return (
             <Comment
-              key={el._id}
-              index={index}
-              comment_id={el._id}
-              text={el.text}
-              side={el.side}
-              nickName={el.nickName}
-              creator_comment={el.creator}
-              likes={el.likes}
-              punch={punch}
-              challenge={challenge}
+              key={ el._id }
+              index={ index }
+              comment_id={ el._id }
+              text={ el.text }
+              side={ el.side }
+              likes={ el.likes }
+              punch={ punch }
+              challenge={ challenge }
+              creator={ el.creator }
             />
           );
         })}
