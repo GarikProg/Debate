@@ -30,10 +30,10 @@ router
   .post(async (req, res) => {
     const { nameEmail, password } = req.body;
     try {
-      const userByName = await User.findOne({ name: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').exec();
+      const userByName = await User.findOne({ name: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').populate({ path: 'likes', populate: { path: 'comment' } }).exec();
       if (!userByName) {
         try {
-          const userByEmail = await User.findOne({ email: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').exec();
+          const userByEmail = await User.findOne({ email: nameEmail }).populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').populate({ path: 'likes', populate: { path: 'comment' } }).exec();
           if (!userByEmail) {
             return res.json({ authenticated: false, err: 'No such user' });
           } else {
@@ -52,7 +52,6 @@ router
         if (!isValidPassword) {
           return res.json({ authenticated: false, err: 'Invalid password' });
         } else {
-          console.log(userByName)
           req.session.user = serializeUser(userByName);
           return res.json({ authenticated: true, user: userByName });
         }
@@ -81,9 +80,10 @@ router
             const user = await User.create({
                   name,
                   password: hashedPassword,
-                  email,      
+                  email,
+                  rating: 0,    
                 });
-            user.populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor');
+            user.populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').populate({ path: 'likes', populate: { path: 'comment' } });
             req.session.user = serializeUser(user);
             return res.json({ authenticated: true, user });
           }

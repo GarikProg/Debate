@@ -13,7 +13,7 @@ const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
-import Users from './models/user.js'
+import User from './models/user.js'
 
 
 const logger = console;
@@ -29,7 +29,6 @@ io.on("connection", (socket) => {
   const roomID = socket.handshake.query.id;
   socket.join(roomID);
   socket.on("message", async (data) => {
-    console.log(io.sockets.clients(roomID)); 
     if(data.type === "comment") {      
     const { text, creator,  id, side, nickName} = data;
     try {
@@ -43,9 +42,10 @@ io.on("connection", (socket) => {
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
-      const user = await Users.findById(creator);      
+      const user = await User.findById(creator);      
       user.comments.push(comment._id)
-      await user.save();    
+      await user.save();
+      comment.populate('creator').populate('likes').populate('commentLocation')
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
@@ -58,13 +58,16 @@ io.on("connection", (socket) => {
         creator,
         comment: comment_id,        
       });
-      console.log(like)
       const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
       await comment.save();
-      const user = await Users.findById(creator);      
+      const ratingUser = await User.findById(comment.creator);
+      ratingUser.rating += 1;
+      await ratingUser.save();
+      const user = await User.findById(creator);      
       user.likes.push(like._id)
-      await user.save();    
+      await user.save();
+      like.populate('creator').populate('comment');  
       io.to(data.id).emit("broadcast", like);
     } catch (error) {
       console.log(error);

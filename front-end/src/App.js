@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { loadingSessionCheck, loadThreads, loadDebates } from "./redux/actions";
+import { loadingSessionCheck, loadThreads, loadDebates, changeCommetWritingPermission, setCommetWritingCooldown } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
 import Debate from './components/Debate/Debate'
 import GlobalThread from './components/GlobalThread/globalThread'
@@ -22,6 +22,9 @@ function App() {
   const isAuthorized = useSelector(state => state.isAuthorized);
   const successfulThreadCreate = useSelector(state => state.successfulThreadCreate);
 
+  const canWriteComment = useSelector(state => state.canWriteComment);
+  const coolDown = useSelector(state => state.commentWritingTimeout);
+
   const dispatch = useDispatch()
   
   useEffect(() => {
@@ -29,6 +32,20 @@ function App() {
     dispatch(loadThreads());
     dispatch(loadDebates());
   }, [])
+
+  useEffect(() => {
+    if (!canWriteComment) {
+      let cloneCooldown = coolDown;
+      const interval = setInterval(() => {
+        cloneCooldown -= 1;
+        dispatch(setCommetWritingCooldown(cloneCooldown));
+        if (cloneCooldown === 0) {
+          clearInterval(interval);
+          dispatch(changeCommetWritingPermission());
+        }
+      }, 1000);
+    }
+  }, [canWriteComment])
   
   return (
     <>

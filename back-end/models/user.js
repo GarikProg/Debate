@@ -1,10 +1,7 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    match: /^[A-Z]\w+$/i,
-  },
+  name: String,
   email: {
     type: String,
     required: true,
