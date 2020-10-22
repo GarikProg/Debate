@@ -54,7 +54,7 @@ function MainNavigation() {
      </div>
      )
    })}
-        <div className="description">
+        {/* <div className="description">
         <div className="innerDiv">Choose the better pokemon ? Charizard : Blastoise </div>
         <div className="innerDescription">
         <h3 className="descriptionHeader">
@@ -64,8 +64,9 @@ function MainNavigation() {
           Blastoise is a water type based pokemon, who also is a final evolution of Squirtle. He definetly is supposed to overpower Charizard. But! Charizard is an insanely powerful pokemon. There is basically a very small amount of pokemon regardless of type who can even compete with him. Choose wisely!
           </p>
           </div>
-        </div>
+        </div> */}
       </div>
+      
   </div>
    </>
  )
