@@ -5,24 +5,56 @@
   .innerDiv {
     margin-top: 20px;
     width: 300px;
-    color: yellowgreen;
+    color: pink;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    }
+  .innerDiv:hover {
+    color: rgb(189, 138, 147);
+  }
+  .mainLink {
+    text-decoration: none;
   }
 }
 .mainPageHeader {
   display: flex;
   justify-content: center;
   color: white;
+  text-shadow: 0 0 20px #ffe7ff, 10px -10px 30px rgb(253, 88, 184), -20px -20px 40px rgb(243, 26, 189), 20px -40px 50px #da27da, -20px -60px 60px rgb(122, 0, 106), 0 -80px 70px #61015c, 10px -90px 80px #500045;
+  animation: animation 1s ease-in-out infinite alternate;
+  -moz-animation: animation 1s ease-in-out infinite alternate;
+  -webkit-animation: animation 1s ease-in-out infinite alternate;
+  -o-animation: animation 1s ease-in-out infinite alternate;
 }
+@keyframes animation
+{
+0% {text-shadow: 0 0 20px #ffe7ff,
+  10px -10px 30px rgb(253, 88, 184)
+  -20px -20px 40px rgb(243, 26, 189),
+  20px -40px 50px #da27da,
+  -20px -60px 60px rgb(122, 0, 106)
+  0 -80px 70px #61015c,
+  10px -90px 80px #500045;}
+100% {text-shadow: 0 0 20px #a3d1f0,
+  10px -10px 30px #62baf5,
+  -20px -20px 40px #32a3ee,
+  22px -42px 60px #175ae9,
+  -22px -58px 50px #0b59e9,
+  0 -82px 80px #001fd1,
+  10px -90px 80px  #00375c;}
+}
+
+
 .innerDescription {
   width: 65%;
   height: 50%;
   margin-left: 40px;
   .descriptionInner {
-    font-size: 12px !important;
+    font-size: 15px !important;
     text-transform: none !important;
   }
- 
-}
+ }
 .mainContainer{
-  font-size: 25px;
+  font-size: 20px;
 }
