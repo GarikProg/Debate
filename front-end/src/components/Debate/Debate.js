@@ -3,6 +3,7 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../CommentDebate/CommentDebate";
+import './debate.scss'
 
 function Debate() {
   const [socket, setSocket] = useState();
@@ -73,6 +74,11 @@ function Debate() {
     });
   };
 
+  const comment = () => {
+    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+    return colorArr[(Math.floor(Math.random() * 23))];
+  };
+
   const punch = (index, comment_id, creator_comment) => {
     let isLike = 0;
     outPut[index].likes &&
@@ -87,6 +93,7 @@ function Debate() {
   };
   return (
     <>
+    <div className="headers">
       <h1>First debator: {debate.creator?.name}</h1>
       <h1>Second debator: {debate.participant?.name}</h1>
       {creator === debate.creator?._id || creator === debate.participant?._id ? (
@@ -110,6 +117,7 @@ function Debate() {
       ) : (
         ""
       )}
+      </div>
       <div>
         {outPut &&
           outPut.map((el, index) => {
