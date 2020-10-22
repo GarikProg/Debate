@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./comment.scss"
 
@@ -18,23 +18,40 @@ export default function Comment(props) {
     challenge,
   } = props;
   
-  
+  const comment = () => {
+  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+    return colorArr[(Math.floor(Math.random() * 23))];
+  }
+
+
+  let toDisplay;
+
+  if (side === 'Neutral') {
+    toDisplay = false;
+  } else {
+    toDisplay = <span><span className='signs'>for: </span> <span className={comment()}>{side}</span></span>;
+  }
+
+
   return (
-    <div className="comment">
-      <div><span>_{nickName}_</span></div>
-      <span>{side}_</span>
-      <span>{text}_</span>
-      <span>{likes && likes.length}</span>
-      {isAuthorized ? (
+    <div className="fontSize">
+    <div className={comment()}>
+      <div><span>_{nickName}_ </span> 
+      {toDisplay && toDisplay}
+      </div>
+      {/* <span>{side}_</span> */}
+      : <span >{text}</span>
+      <div>{isAuthorized ? (
         <>
           {user_id !== creator_comment ? (
             <>
-          <button onClick={() => punch(index, comment_id, creator_comment)}>
-            Like
-          </button>
-            <button onClick={() => challenge(creator_comment)}>
+                  {/* <span>Total likes: {likes && likes.length}:   </span> */}
+          <span><button className="like" onClick={() => punch(index, comment_id, creator_comment)}>
+              💕
+          </button> <span className="signs">: {likes && likes.length}</span></span>
+            <div><button className="challengeButton" onClick={() => challenge(creator_comment)}>
               Challenge
-            </button>
+            </button></div>
             </>
           ) : (
             ""
@@ -42,7 +59,10 @@ export default function Comment(props) {
         </>
       ) : (
         ""
-      )}
+      )}</div>
+      <br></br>
+
+    </div>
     </div>
   );
 }

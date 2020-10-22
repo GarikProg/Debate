@@ -1,5 +1,5 @@
 import express from 'express';
-import Debate from '../models/debate.js';
+import Debates from '../models/debate.js';
 import Users from '../models/user.js'
 const router = express.Router();
 
@@ -50,8 +50,8 @@ router
 router
   .route('/:id')
   .get(async (req, res) => {
-    
-    res.end();
+    const debate = await Debates.findById(req.params.id).populate('participant').populate('creator').populate('comments'); 
+    res.json(debate);
 });
 
 export default router;

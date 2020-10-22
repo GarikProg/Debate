@@ -4,6 +4,8 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
 import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown } from '../../redux/actions'
+import './globalthread.scss'
+
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -84,7 +86,7 @@ function GlobalThread() {
     e.preventDefault();
     // Отправка комментария на бек
     dispatch(changeCommetWritingPermission());
-    socket.send({ type: "comment", text, id, side, nickName, creator });
+    socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
   const punch = (index, comment_id, creator_comment) => {
@@ -100,37 +102,50 @@ function GlobalThread() {
     }
   };
 
+  const comment = () => {
+    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+      return colorArr[(Math.floor(Math.random() * 23))];
+  }
   const challenge = (comment_creator) => {
     console.log(creator, 'ghggh', comment_creator);
     dispatch(createNewDebate( {creator, participant: comment_creator}))
   }
   return (
     <>
-      <h1>{thread.theme}</h1>
-      <h2>{thread.description}</h2>
+      <div className="headers">
+      <div><strong><div>Your nickname:  </div>
+        <div className={comment()}>{nickName}</div></strong> </div>
+      <div><h1><div>Theme: </div>
+      <div className={comment()}>{thread.theme}</div></h1></div>
+      <div><h2><div>Description: </div>
+      <div className={comment()}>{thread.description}</div></h2></div>
       <div>
         <span>
-          <button onClick={() => setSide(thread.sideOne)}>
+          <button className="challengeButton"  onClick={() => setSide(thread.sideOne)}>
             {thread.sideOne}
           </button>
         </span>
         <span>
-          <button onClick={() => setSide(thread.sideTwo)}>
+          <button className="challengeButton"  onClick={() => setSide(thread.sideTwo)}>
             {thread.sideTwo}
           </button>
         </span>
-      </div>
+      </div>  
+
     {isAuthorized ? <> <section>
         <div>
           <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
         </div>
       </section>
-      <form onSubmit={(e) => {
+      <form className="inputForm" id="messageForm" onSubmit={(e) => {
         handleSubmit(e);
         dispatch(changeCommetWritingPermission())
         dispatch(setCommetWritingCooldown(60))
         }} id="messageForm">
-        <input
+        <input className="challengeButton" 
+
+          {/* <div><strong>NICK:  {nickName}</strong> </div> */}
+          {/* <span>MESSAGE</span> */}
           onChange={(e) => setText(e.target.value)}
           type="text"
           name="message"
@@ -138,7 +153,9 @@ function GlobalThread() {
         ></input>
         {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
       </form>
+      </section>
       </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
+      </div>
 <div>
       {outPut &&
         outPut.map((el, index) => {
