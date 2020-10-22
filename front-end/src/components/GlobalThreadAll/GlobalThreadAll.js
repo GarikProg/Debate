@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import './globalthreadAll.scss'
+import { loadThreads } from '../../redux/actions'
 
 export default function GlobalThreadAll() {
   
-  const isAuthorized = useSelector(state => state.isAuthorized)  
+  const isAuthorized = useSelector(state => state.isAuthorized) 
+  const dispatch = useDispatch();
 
-  const threads = useSelector(state => state.appThreads)
+  const threads = useSelector(state => state.appThreads);
+
+  useEffect(() => {
+    dispatch(loadThreads());
+  }, [])
 
   return (
     <>

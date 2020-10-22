@@ -13,7 +13,8 @@ const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
-import Users from './models/user.js'
+import User from './models/user.js'
+import Debates from './models/debate.js'
 
 
 const logger = console;
@@ -25,12 +26,14 @@ const store = new MongoDBStore({
 });
 
 io.on("connection", (socket) => {
-  socket.join(socket.handshake.query.id);
+  socket.nickname = socket.handshake.query.nickname;
+  const roomID = socket.handshake.query.id;
+  socket.join(roomID);
   socket.on("message", async (data) => {
-    if(data.type === "comment") {
-      
-    const { text, creator,  id, side, nickName} = data;
+    if(data.type === "comment") {      
+    const { text, creator,  id, side, nickName, from } = data;
     try {
+
       const comment = await Comments.create({
         creator,
         text,
@@ -41,10 +44,25 @@ io.on("connection", (socket) => {
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
-      const user = await Users.findById(creator);
-      console.log(creator);
+
+      const user = await User.findById(creator);      
       user.comments.push(comment._id)
-      await user.save();    
+      await user.save();
+      comment.populate('creator').populate('likes').populate('commentLocation')
+
+      if (data.from === "thread") {
+      const thread = await Threads.findById(id)
+      thread.comments.push(comment._id)
+      await thread.save();
+      }
+
+      if (data.from === "debate") {
+        console.log(id);
+        const debate = await Debates.findById(id)
+        debate.comments.push(comment._id)
+        await debate.save();
+      }   
+
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
@@ -57,13 +75,16 @@ io.on("connection", (socket) => {
         creator,
         comment: comment_id,        
       });
-      console.log(like)
       const comment = await Comments.findById(comment_id);
       comment.likes.push(like._id)
       await comment.save();
-      const user = await Users.findById(creator);      
+      const ratingUser = await User.findById(comment.creator);
+      ratingUser.rating += 1;
+      await ratingUser.save();
+      const user = await User.findById(creator);      
       user.likes.push(like._id)
-      await user.save();    
+      await user.save();
+      like.populate('creator').populate('comment');  
       io.to(data.id).emit("broadcast", like);
     } catch (error) {
       console.log(error);

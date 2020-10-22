@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { loadingSessionCheck, loadThreads, loadDebates } from "./redux/actions";
+import { loadingSessionCheck, loadThreads, loadDebates, changeCommetWritingPermission, setCommetWritingCooldown } from "./redux/actions";
 import MainPage from './components/MainPage/MainPage'
-import LocalThread from './components/LocalThread/localThread'
+import Debate from './components/Debate/Debate'
 import GlobalThread from './components/GlobalThread/globalThread'
 import Profile from './components/Profile/Profile'
 import TestChat from './components/Chat/TestChat'
@@ -13,7 +13,6 @@ import Footer from './components/Footer/footer'
 import Logout from './components/Logout/Logout';
 import CreateThread from './components/CreateThread/CreateThread';
 import GlobalThreadAll from './components/GlobalThreadAll/GlobalThreadAll'
-import GlobalDebateAll from '../src/components/GlobalDebateAll/GlobalDebateAll'
 import CreateDebate from './components/CreateDebate/CreateDebate'
 import Auth from './components/Auth/Auth';
 import './App.scss'
@@ -23,6 +22,9 @@ function App() {
   const isAuthorized = useSelector(state => state.isAuthorized);
   const successfulThreadCreate = useSelector(state => state.successfulThreadCreate);
 
+  const canWriteComment = useSelector(state => state.canWriteComment);
+  const coolDown = useSelector(state => state.commentWritingTimeout);
+
   const dispatch = useDispatch()
   
   useEffect(() => {
@@ -30,6 +32,20 @@ function App() {
     dispatch(loadThreads());
     dispatch(loadDebates());
   }, [])
+
+  useEffect(() => {
+    if (!canWriteComment) {
+      let cloneCooldown = coolDown;
+      const interval = setInterval(() => {
+        cloneCooldown -= 1;
+        dispatch(setCommetWritingCooldown(cloneCooldown));
+        if (cloneCooldown === 0) {
+          clearInterval(interval);
+          dispatch(changeCommetWritingPermission());
+        }
+      }, 1000);
+    }
+  }, [canWriteComment])
   
   return (
     <>
@@ -45,12 +61,9 @@ function App() {
     <Route exact path="/Auth">
       { isAuthorized ? <Redirect to='/Home' /> : <Auth /> }
     </Route>
-    <Route exact path="/LocalThread/:id">
-      <LocalThread />
-    </Route>
-    <Route exact path="/LocalThread/">
-      <GlobalDebateAll />
-    </Route>
+    <Route exact path="/Debate/:id">
+      <Debate />
+    </Route>    
     <Route exact path="/GlobalThread/">
       <GlobalThreadAll />
     </Route>
