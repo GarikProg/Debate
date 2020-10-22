@@ -19,6 +19,7 @@ const SecondLayer = ({ state }) => {
   let line1 = useRef(null);
   let line2 = useRef(null);
   let line3 = useRef(null);
+  let line4 = useRef(null);
   let info = useRef(null);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const SecondLayer = ({ state }) => {
       });
       staggerReveal(reveal1, reveal2);
       fadeInUp(info);
-      staggerText(line1, line2, line3);
+      staggerText(line1, line2, line3, line4);
     }
   }, [state]);
 
@@ -83,6 +84,15 @@ const SecondLayer = ({ state }) => {
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
                       ref={el => (line3 = el)}>Profile</div>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to='/CreateThread'>
+                      <div  
+                      onMouseEnter={e => handleHover(e)}
+                      onMouseOut={e => handleHoverExit(e)}
+                      ref={el => (line4 = el)}>Create</div>
                     </Link>
                   </li>
                 </ul>
