@@ -142,15 +142,10 @@ function GlobalThread() {
             {thread.sideTwo}
           </button>
         </span>
-      </div>  
-    </div>
+
+
     {isAuthorized ?
     <>
-     <section>
-        <div>
-          <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
-        </div>
-      </section>
       <section>
         <form className="inputForm" id="messageForm" onSubmit={(e) => {
           handleSubmit(e);
@@ -163,10 +158,12 @@ function GlobalThread() {
             name="message"
             id="message"
           />
-          {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
+          {canWriteComment ? <button className="challengeButton"type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
         </form>
       </section>
     </> : <> <Link to="/Auth"><button>Sign in to punch and vote</button></Link> </>}      
+      </div>  
+    </div>
       <div>
       {outPut &&
         outPut.map((el, index) => {
