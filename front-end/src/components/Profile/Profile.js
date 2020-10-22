@@ -15,10 +15,11 @@ function Profile() {
 
 
  const user = useSelector(state => state.user);
-const {name, id, comments, threads, debates, votedFor, likes} = user;
+const {name, id, comments, threads, debates, votedFor, likes, rating} = user;
   return (
     <div>
 <h1  className={comment()}>Hello {name}!</h1>
+  <h2 className={comment()}>Your rating is: {rating}</h2>
 <br/>
 <div>
 <div className={comment()}><h1>You have already:</h1></div>
@@ -26,7 +27,7 @@ const {name, id, comments, threads, debates, votedFor, likes} = user;
 <div>
   { threads && threads.map((el) => {
     return (
-      <Link to={`/GlobalThread/${el._id}`}><button>{el.theme}</button></Link>
+      <Link to={`/GlobalThread/${el._id}`}><button className="themeButton">{el.theme}</button></Link>
     )
   })}
 </div>
