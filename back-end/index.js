@@ -49,8 +49,6 @@ io.on("connection", (socket) => {
       await user.save();
       comment.populate('creator').populate('likes').populate('commentLocation')
 
-      });
-
       if (data.from === "thread") {
       const thread = await Threads.findById(id)
       thread.comments.push(comment._id)
