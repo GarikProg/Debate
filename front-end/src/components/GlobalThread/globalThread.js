@@ -68,7 +68,7 @@ function GlobalThread() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.send({ type: "comment", text, id, side, nickName, creator });
+    socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread"});
   };
 
   const punch = (index, comment_id, creator_comment) => {

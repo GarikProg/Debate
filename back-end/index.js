@@ -13,6 +13,7 @@ const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
+import Debates from './models/debate.js'
 import Users from './models/user.js'
 
 
@@ -30,21 +31,34 @@ io.on("connection", (socket) => {
   socket.join(roomID);
   socket.on("message", async (data) => {
     if(data.type === "comment") {      
-    const { text, creator,  id, side, nickName} = data;
+    const { text, creator,  id, side, nickName, from } = data;
     try {
+
       const comment = await Comments.create({
         creator,
         text,
         commentLocation: id,
         side,
         nickName,
-      });      
-      const threads = await Threads.findById(id)
-      threads.comments.push(comment._id)
-      await threads.save();
+      });
+
+      if (data.from === "thread") {
+      const thread = await Threads.findById(id)
+      thread.comments.push(comment._id)
+      await thread.save();
+      }
+
+      if (data.from === "debate") {
+        console.log(id);
+        const debate = await Debates.findById(id)
+        debate.comments.push(comment._id)
+        await debate.save();
+      }
+
       const user = await Users.findById(creator);      
       user.comments.push(comment._id)
-      await user.save();    
+      await user.save();
+
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
