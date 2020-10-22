@@ -86,6 +86,7 @@ function GlobalThread() {
     e.preventDefault();
     // Отправка комментария на бек
     dispatch(changeCommetWritingPermission());
+    dispatch(setCommetWritingCooldown(60));
     socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
@@ -152,11 +153,7 @@ function GlobalThread() {
         </div>
       </section>
       <section>
-        <form className="inputForm" id="messageForm" onSubmit={(e) => {
-          handleSubmit(e);
-          dispatch(changeCommetWritingPermission())
-          dispatch(setCommetWritingCooldown(60))
-          }} id="messageForm">
+        <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) } id="messageForm">
           <input className="challengeButton"
             onChange={(e) => setText(e.target.value)}
             type="text"

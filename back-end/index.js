@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
       const threads = await Threads.findById(id)
       threads.comments.push(comment._id)
       await threads.save();
+
       const user = await User.findById(creator);      
       user.comments.push(comment._id)
       await user.save();
@@ -62,9 +63,6 @@ io.on("connection", (socket) => {
         await debate.save();
       }
 
-      const user = await User.findById(creator);      
-      user.comments.push(comment._id)
-      await user.save();
       io.to(data.id).emit("broadcast", comment);
     } catch (error) {
       console.log(error);
