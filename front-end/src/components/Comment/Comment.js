@@ -1,8 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import "./comment.scss"
+const comment = () => {
+  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+    return colorArr[(Math.floor(Math.random() * 23))];
+  }
 
-export default function Comment(props) {
+export default memo(function Comment(props) {
   const isAuthorized = useSelector((state) => state.isAuthorized);
 
   const user_id = useSelector((state) => state.user._id);
@@ -16,11 +20,7 @@ export default function Comment(props) {
     challenge,
     creator,
   } = props;
-  
-  const comment = () => {
-  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
-    return colorArr[(Math.floor(Math.random() * 23))];
-  }
+
 
   let toDisplay;
 
@@ -63,4 +63,4 @@ export default function Comment(props) {
     </div>
     </div>
   );
-}
+})
