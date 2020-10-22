@@ -16,7 +16,7 @@ function GlobalThread() {
 
   
   const { id } = useParams();
-  
+  console.log(outPut)
   const nickName = useSelector((state) => state.user.name);  
   
   const creator = useSelector((state) => state.user._id);
@@ -151,7 +151,7 @@ function GlobalThread() {
     {isAuthorized ?
     <>
       <section>
-        <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) } id="messageForm">
+        <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) }>
           <input className="challengeButton"
             onChange={(e) => {
               e.preventDefault();

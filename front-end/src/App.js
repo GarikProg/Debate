@@ -93,7 +93,6 @@ function App() {
     </div>
   </div>
 </Router>
-<Footer />
     </>
   );
 }

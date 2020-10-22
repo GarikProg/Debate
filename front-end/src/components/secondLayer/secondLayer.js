@@ -69,7 +69,7 @@ const SecondLayer = ({ state }) => {
                   </li>
                   <li>
                     <Link
-                      to='/'>
+                      to='/About'>
                       <div  
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}

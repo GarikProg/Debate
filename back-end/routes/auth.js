@@ -81,7 +81,7 @@ router
                   name,
                   password: hashedPassword,
                   email,
-                  rating: 0,    
+                  rating: 0,   
                 });
             user.populate('comments').populate('threads').populate('debates').populate('wonThreads').populate('wonDebates').populate('votedFor').populate({ path: 'likes', populate: { path: 'comment' } });
             req.session.user = serializeUser(user);

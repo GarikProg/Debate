@@ -26,8 +26,8 @@ function compare(one, two) {
 
 const sorted = (data) => {
   let result = [];
-  if (data.length > 3) {
-    for (let i = 0; i < 3; i++) {
+  if (data.length > 5) {
+    for (let i = 0; i < 5; i++) {
       result.push(data[i]);
     }
   } else {
