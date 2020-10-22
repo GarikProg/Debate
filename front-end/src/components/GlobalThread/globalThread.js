@@ -113,12 +113,24 @@ function GlobalThread() {
   return (
     <>
       <div className="headers">
-      <div><strong><div>Your nickname:  </div>
-        <div className={comment()}>{nickName}</div></strong> </div>
-      <div><h1><div>Theme: </div>
-      <div className={comment()}>{thread.theme}</div></h1></div>
-      <div><h2><div>Description: </div>
-      <div className={comment()}>{thread.description}</div></h2></div>
+        <div>
+          <strong>
+            <div>Your nickname: </div>
+            <div className={comment()}>{nickName}</div>
+          </strong> 
+        </div>
+        <div>
+          <h1>
+            <div>Theme: </div>
+            <div className={comment()}>{thread.theme}</div>
+          </h1>
+        </div>
+      <div>
+        <h2>
+          <div>Description: </div>
+          <div className={comment()}>{thread.description}</div>
+        </h2>
+      </div>
       <div>
         <span>
           <button className="challengeButton"  onClick={() => setSide(thread.sideOne)}>
@@ -131,32 +143,31 @@ function GlobalThread() {
           </button>
         </span>
       </div>  
-
-    {isAuthorized ? <> <section>
+    </div>
+    {isAuthorized ?
+    <>
+     <section>
         <div>
           <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
         </div>
       </section>
-      <form className="inputForm" id="messageForm" onSubmit={(e) => {
-        handleSubmit(e);
-        dispatch(changeCommetWritingPermission())
-        dispatch(setCommetWritingCooldown(60))
-        }} id="messageForm">
-        <input className="challengeButton" 
-
-          {/* <div><strong>NICK:  {nickName}</strong> </div> */}
-          {/* <span>MESSAGE</span> */}
-          onChange={(e) => setText(e.target.value)}
-          type="text"
-          name="message"
-          id="message"
-        ></input>
-        {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
-      </form>
+      <section>
+        <form className="inputForm" id="messageForm" onSubmit={(e) => {
+          handleSubmit(e);
+          dispatch(changeCommetWritingPermission())
+          dispatch(setCommetWritingCooldown(60))
+          }} id="messageForm">
+          <input className="challengeButton"
+            onChange={(e) => setText(e.target.value)}
+            type="text"
+            name="message"
+            id="message"
+          />
+          {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
+        </form>
       </section>
-      </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
-      </div>
-<div>
+    </> : <> <Link to="/Auth"><button>Sign in to punch and vote</button></Link> </>}      
+      <div>
       {outPut &&
         outPut.map((el, index) => {
           return (
@@ -174,7 +185,7 @@ function GlobalThread() {
             />
           );
         })}
-        </div>
+      </div>
     </>
   );
 }
