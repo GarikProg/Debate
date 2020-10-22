@@ -27,7 +27,11 @@ const DebateSchema = new mongoose.Schema({
   votes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: process.env.VOTE,
-  }]
+  }],
+  judge: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: process.env.DB_USER,
+  } 
 });
 
 export default mongoose.model(process.env.DEBATE, DebateSchema)
