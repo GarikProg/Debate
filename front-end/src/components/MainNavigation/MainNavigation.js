@@ -6,6 +6,7 @@ import "./MainNavigation.scss"
 
 
 function MainNavigation() {
+
   let mainAnimation = useRef(null);
   let mainAnimation2 = useRef(null);
 
@@ -29,7 +30,7 @@ function MainNavigation() {
 
 
   const threads = useSelector(state => state.mainThreads)
-  console.log(threads);
+
  return (
    <>
   
