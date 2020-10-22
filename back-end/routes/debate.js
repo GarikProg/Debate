@@ -1,5 +1,5 @@
 import express from 'express';
-import Debates from '../models/debate.js';
+import Debate from '../models/debate.js';
 import Users from '../models/user.js'
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router
 
 router
   .route('/createnew')  
-  .post(async (req, res) => {    
+  .post(async (req, res) => { 
     const { creator, participant } = req.body
     const createdAt = Date.now();
     const voteAt = createdAt + 172800;
@@ -30,6 +30,8 @@ router
         voteAt,
         closedAt
       });
+      await debate.save();
+      console.log(debate);   
 
       const oneParticipant = await Users.findById(creator);
       oneParticipant.debates.push(debate._id);      
@@ -50,7 +52,7 @@ router
 router
   .route('/:id')
   .get(async (req, res) => {
-    const debate = await Debates.findById(req.params.id).populate('participant').populate('creator').populate('comments'); 
+    const debate = await Debate.findById(req.params.id).populate('participant').populate('creator').populate('comments'); 
     res.json(debate);
 });
 
