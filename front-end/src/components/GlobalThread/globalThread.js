@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,6 +6,10 @@ import Comment from "../Comment/Comment";
 import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown, addCommentCountToCommentsInRedux } from '../../redux/actions'
 import './globalthread.scss'
 
+const comment = () => {
+  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+  return colorArr[(Math.floor(Math.random() * 23))];
+};
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -13,7 +17,11 @@ function GlobalThread() {
   const [outPut, setOutput] = useState([]);
   const [side, setSide] = useState("Neutral");
   const [thread, setThread] = useState({});
+  const [colors, setColors] = useState(["red", "red", "red"])
 
+  useEffect(() => {
+    setColors(state => ([comment(), comment(), comment()]))
+  }, [])
   
   const { id } = useParams();
   console.log(outPut)
@@ -93,7 +101,8 @@ function GlobalThread() {
     socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
-  const punch = (index, comment_id, creator_comment) => {
+
+  const punch =   useCallback((index, comment_id, creator_comment) => {
     let isLike = 0;    
     outPut[index].likes && outPut[index].likes.forEach((element) => {
       if (element.creator === creator) {
@@ -104,17 +113,12 @@ function GlobalThread() {
       // Отправка лайка на бек
       socket.send({ type: "like", comment_id, creator, id });
     }
-  };
-
-  const comment = () => {
-    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
-    return colorArr[(Math.floor(Math.random() * 23))];
-  };
+  }, [])
   
-  const challenge = (comment_creator) => {
+  const challenge = useCallback((comment_creator) => {
     console.log(creator, 'ghggh', comment_creator);
     dispatch(createNewDebate( {creator, participant: comment_creator}))
-  };
+  },[])
 
   return (
     <>
@@ -122,19 +126,19 @@ function GlobalThread() {
         <div>
           <strong>
             <div>Your nickname: </div>
-            <div className={comment()}>{nickName}</div>
+            <div className={`${colors[2]} nickClass`}>{nickName}</div>
           </strong> 
         </div>
         <div>
           <h1>
             <div>Theme: </div>
-            <div className={comment()}>{thread.theme}</div>
+            <div className={colors[0]}>{thread.theme}</div>
           </h1>
         </div>
       <div>
         <h2>
           <div>Description: </div>
-          <div className={comment()}>{thread.description}</div>
+          <div className={colors[1]}>{thread.description}</div>
         </h2>
       </div>
       <div>
