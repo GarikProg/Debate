@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { checkSignIn } from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom';
-import './login.scss'
+import React, { useState } from 'react';
+import { checkSignIn } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import './login.scss';
 
 function Login() {
 
@@ -13,11 +12,8 @@ function Login() {
 
   const nameEmailError = useSelector(state => state.loginNameEmailError);
   const passwordError = useSelector(state => state.loginPasswordError);
-  const isAuthorized = useSelector(state => state.isAuthorized);
-
 
   return (
-    <>
     <div className="formContainer">
       <form className="form" onSubmit={(e) => {
         e.preventDefault()
@@ -45,7 +41,6 @@ function Login() {
         </div>
       </form>
     </div>
-    </>
   )
 }
 

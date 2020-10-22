@@ -1,4 +1,4 @@
-import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD, ADD_LIKE_TO_USER_IN_REDUX, ADD_COMMENT_TO_USER_IN_REDUX, CHANGE_COMMET_WRITING_PERMISSON, SET_COMMENT_WRITING_COOLDOWN, ADD_COMMENT_COUNT_TO_COMMENTS_IN_REDUX, SORT_HOT_THREADS } from './actionTypes'
+import { SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD, ADD_LIKE_TO_USER_IN_REDUX, ADD_COMMENT_TO_USER_IN_REDUX, CHANGE_COMMET_WRITING_PERMISSON, SET_COMMENT_WRITING_COOLDOWN, ADD_COMMENT_COUNT_TO_COMMENTS_IN_REDUX } from './actionTypes'
 
 function compare(one, two) {
   let firtsToCompare;
@@ -60,9 +60,9 @@ export const reducer = (state, action) => {
       threadsClone.sort(compare);
       return {...state, appThreads: action.data.threads, mainThreads: sorted(threadsClone) };
     case LOAD_DEBATES_FROM_SAGA_TO_REDUX:
-      const debatesClone = action.data.debates.slice()
+      const debatesClone = action.data.debates.slice();
       debatesClone.sort(compare);
-      return {...state, appDebates: action.data.debates, mainDebates: sorted(debatesClone)}
+      return {...state, appDebates: action.data.debates, mainDebates: sorted(debatesClone) };
     case CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX: 
       const addThreadsClone = state.appThreads.slice();
       if (action.data === 'Data base error, plase try again') {
@@ -74,7 +74,9 @@ export const reducer = (state, action) => {
         return {...state, user: { ...state.user, threads: userThreads }, appThreads: addThreadsClone, mainThreads: sorted(addThreadsClone.sort(compare)), successfulThreadCreate: true };
       };
     case CHECK_CREATED_THREAD: 
-      return {...state, successfulThreadCreate: false };
+      const threardsForHotClone = state.appThreads.slice();
+      threardsForHotClone.sort(compare)
+      return {...state, successfulThreadCreate: false, mainThreads: sorted(threardsForHotClone) };
     case CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX: 
       const addDebatesClone = state.addDebates.slice();
       if (action.data === 'Data base error, plase try again') {
@@ -85,7 +87,7 @@ export const reducer = (state, action) => {
       };
     case ADD_LIKE_TO_USER_IN_REDUX:
       const userLikesClone = state.user.likes.slice();
-      userLikesClone.push(action.data)
+      userLikesClone.push(action.data);
       return { ...state, user: { ...state.user, likes: userLikesClone } };
     case ADD_COMMENT_TO_USER_IN_REDUX:
       const userCommetsClone = state.user.comments.slice();
@@ -103,10 +105,6 @@ export const reducer = (state, action) => {
       return { ...state, canWriteComment: !state.canWriteComment };
     case SET_COMMENT_WRITING_COOLDOWN:
       return { ...state, commentWritingTimeout: action.data };
-    case SORT_HOT_THREADS:
-      const threardsForHotClone = state.appThreads.slice();
-      threardsForHotClone.sort(compare)
-      return { ...state, mainThreads: sorted(threardsForHotClone) }
     default:
       return state;
   }

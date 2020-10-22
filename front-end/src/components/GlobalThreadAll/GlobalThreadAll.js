@@ -22,14 +22,19 @@ export default function GlobalThreadAll() {
         threads.map((el) => {
           return (
           <div className="thread">
-            <Link className="linkGlobal" to={`/GlobalThread/${el._id}`}><button className="theme" >{el.theme}</button></Link>
-            <span className="question"> ? </span><span className="sideOne">{el.sideOne}</span> <span className="colon"> : </span><span className="sideTwo">{el.sideTwo}</span>
-            </div>);
+            <Link className="linkGlobal" to={`/GlobalThread/${el._id}`}>
+              <button className="theme" >{el.theme}</button>
+            </Link>
+            <span className="question"> ? </span>
+            <span className="sideOne">{el.sideOne}</span>
+            <span className="colon"> : </span>
+            <span className="sideTwo">{el.sideTwo}</span>
+          </div>);
         })}    
-        <div>
-      <br/>
-    {isAuthorized && <Link to="/createThread"> <button className="createButton">Create Thread</button>  </Link>}  
-    </div>    
+      <div>
+        <br/>
+        {isAuthorized && <Link to="/createThread"> <button className="createButton">Create Thread</button>  </Link>}  
+      </div>    
     </div>
     </>
   );
