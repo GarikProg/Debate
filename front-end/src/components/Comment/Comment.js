@@ -44,15 +44,16 @@ export default function Comment(props) {
       <div>{isAuthorized ? (
         <>
           {user_id !== creator_comment ? (
-            <>
-                  {/* <span>Total likes: {likes && likes.length}:   </span> */}
-          <span><button className="like" onClick={() => punch(index, comment_id, creator_comment)}>
-              💕
-          </button> <span className="signs">: {likes && likes.length}</span></span>
-            <div><button className="challengeButton" onClick={() => challenge(creator_comment)}>
+            <div>
+              <span>
+                
+                <button className="like" onClick={() => punch(index, comment_id, creator_comment)}>💕</button>
+                <span className="likeAmount">: {likes && likes.length} </span>
+              </span>
+              <button className="challengeButton" onClick={() => challenge(creator_comment)}>
               Challenge
-            </button></div>
-            </>
+              </button>
+            </div>
           ) : (
             ""
           )}
