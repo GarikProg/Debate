@@ -1,4 +1,4 @@
-import { CHECK_SIGN_IN, SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, CHECK_REGISTER, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOADING_CHECK, LOGOUT, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD } from './actionTypes';
+import { CHECK_SIGN_IN, SEND_AUTHENTICATED_FROM_SAGA_TO_REDUX, CHECK_REGISTER, DATABASE_ERROR_FROM_SAGA_TO_REDUX, REGISTER_EMAIL_ERROR_FROM_SAGA_TO_REDUX, REGISTER_NAME_ERROR_FROM_SAGA_TO_REDUX, LOGIN_PASSWORD_ERROR_FROM_SAGA_TO_REDUX, LOGIN_NAME_EMAIL_ERROR_FROM_SAGA_TO_REDUX, LOADING_CHECK, LOGOUT, LOGOUT_FROM_SAGA_TO_REDUX, LOAD_THREADS, LOAD_THREADS_FROM_SAGA_TO_REDUX, LOAD_DEBATES, LOAD_DEBATES_FROM_SAGA_TO_REDUX, CREATE_NEW_THREAD, CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX, CREATE_NEW_DEBATE, CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, CHECK_CREATED_THREAD, ADD_COMMENT_TO_USER_IN_REDUX, ADD_LIKE_TO_USER_IN_REDUX, CHANGE_COMMET_WRITING_PERMISSON, SET_COMMENT_WRITING_COOLDOWN } from './actionTypes';
 
 // Проверка на активную сессию при загрузке страницы ++
 const loadingSessionCheck = () => ({ type: LOADING_CHECK });
@@ -40,6 +40,14 @@ const checkCreatedThread = () => ({ type: CHECK_CREATED_THREAD })
 const createNewDebate = (data) => ({ type: CREATE_NEW_DEBATE, data });
 const createNewDabateFromSagaToRedux = (data) => ({ type: CREATE_NEW_DEBATE_FROM_SAGA_TO_REDUX, data})
 
+// Добавление лайков и коментариев в редакс
+const addLikeToUserInRedux = (data) => ({ type: ADD_LIKE_TO_USER_IN_REDUX, data });
+const addCommentToUserInRedux = (data) => ({ type: ADD_COMMENT_TO_USER_IN_REDUX, data }) 
+
+// Кулдаун на комeнтарий
+const changeCommetWritingPermission = () => ({ type: CHANGE_COMMET_WRITING_PERMISSON });
+const setCommetWritingCooldown = (data) => ({ type: SET_COMMENT_WRITING_COOLDOWN, data }); 
+
 export {
   checkSignIn,
   sendAuthenticatedFromSagaToRedux,
@@ -60,5 +68,9 @@ export {
   createNewThreadFromSagaToRedux,
   checkCreatedThread,
   createNewDebate,
-  createNewDabateFromSagaToRedux
+  createNewDabateFromSagaToRedux,
+  addLikeToUserInRedux,
+  addCommentToUserInRedux,
+  changeCommetWritingPermission,
+  setCommetWritingCooldown
 }

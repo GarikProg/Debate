@@ -3,8 +3,9 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../Comment/Comment";
-import {createNewDebate} from '../../redux/actions'
+import { createNewDebate, addLikeToUserInRedux, addCommentToUserInRedux, changeCommetWritingPermission, setCommetWritingCooldown } from '../../redux/actions'
 import './globalthread.scss'
+
 
 function GlobalThread() {
   const [socket, setSocket] = useState();
@@ -13,14 +14,25 @@ function GlobalThread() {
   const [side, setSide] = useState("Neutral");
   const [thread, setThread] = useState({});
 
+  
   const { id } = useParams();
-
+  
   const nickName = useSelector((state) => state.user.name);  
-
+  
   const creator = useSelector((state) => state.user._id);
-
+  
   const isAuthorized = useSelector(state => state.isAuthorized);
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
+  
+  // Логика кулдауна
+  const coolDown = useSelector(state => state.commentWritingTimeout);
+  const canWriteComment = useSelector(state => state.canWriteComment);
+  // Конвертер времени для отображения
+  function convertNumberToTime(num) {
+    let seconds = num % 60;
+    let minutes = Math.floor(num / 60);
+    return `${minutes}:${seconds}`;
+  } 
 
   useEffect(() => {    
     (async () => {
@@ -45,11 +57,15 @@ function GlobalThread() {
     socket &&
       socket.on("broadcast", (data) => {
         if (data.commentLocation) {
+          // Присылает класс Comment
+          dispatch(addCommentToUserInRedux(data))
           setOutput((prev) => {
             return [...prev, data];
           });
         }
         if (data.comment) {
+          // Присылает класс Like
+          dispatch(addLikeToUserInRedux(data));
           console.log(data);
           setOutput((prev) =>                    
             prev.map((el, i) => {
@@ -68,7 +84,9 @@ function GlobalThread() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread"});
+    // Отправка комментария на бек
+    dispatch(changeCommetWritingPermission());
+    socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
   const punch = (index, comment_id, creator_comment) => {
@@ -79,6 +97,7 @@ function GlobalThread() {
       }
     });       
     if (creator_comment !== creator && isLike === 0) {
+      // Отправка лайка на бек
       socket.send({ type: "like", comment_id, creator, id });
     }
   };
@@ -114,19 +133,25 @@ function GlobalThread() {
       </div>  
 
     {isAuthorized ? <> <section>
+        <div>
+          <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
+        </div>
+      </section>
+      <form className="inputForm" id="messageForm" onSubmit={(e) => {
+        handleSubmit(e);
+        dispatch(changeCommetWritingPermission())
+        dispatch(setCommetWritingCooldown(60))
+        }} id="messageForm">
+        <input className="challengeButton" 
 
           {/* <div><strong>NICK:  {nickName}</strong> </div> */}
           {/* <span>MESSAGE</span> */}
-
-      <form className="inputForm" onSubmit={(e) => handleSubmit(e)} id="messageForm">
-        <input  
-          className="challengeButton" 
           onChange={(e) => setText(e.target.value)}
           type="text"
           name="message"
           id="message"
         ></input>
-        <button  className="challengeButton" type="submit">Punch</button>
+        {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
       </form>
       </section>
       </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      

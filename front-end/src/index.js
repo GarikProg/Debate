@@ -10,7 +10,7 @@ import rootSaga from './redux/saga/rootSaga'
 
 const sagaMidlleware = createSagaMiddleware();
 
-const defaultValue = { isAuthorized: false, user: {}, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null, appThreads: null, mainThreads: null, successfulThreadCreate: false, mainDebates: null, appDebates: null, successfulDebateCreate: null };
+const defaultValue = { isAuthorized: false, user: {}, loginNameEmailError: null, loginPasswordError: null, registerNameError: null, registerEmailError: null, dbError: null, appThreads: null, mainThreads: null, successfulThreadCreate: false, mainDebates: null, appDebates: null, successfulDebateCreate: null, canWriteComment: true, commentWritingTimeout: null };
 
 const store = createStore(reducer, defaultValue, composeWithDevTools(applyMiddleware(sagaMidlleware)));
 

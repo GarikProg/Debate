@@ -9,6 +9,10 @@ const DebateSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: process.env.DB_USER,
   },
+  theme: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: process.env.THREAD,
+  },
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: process.env.COMMENT,

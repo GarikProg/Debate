@@ -39,6 +39,7 @@ router
       twoParticipant.debates.push(debate._id);
       await twoParticipant.save();
 
+      debate.populate('creator').populate('participant').populate('theme').populate('commets')
       res.json({ successfulDebateCreate: true, debate });
     } catch (error) {
       res.json({ successfulDebateCreate: false, err: 'Data base error, plase try again' });
