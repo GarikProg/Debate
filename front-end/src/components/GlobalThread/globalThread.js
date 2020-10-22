@@ -16,7 +16,7 @@ function GlobalThread() {
 
   
   const { id } = useParams();
-  
+  console.log(outPut)
   const nickName = useSelector((state) => state.user.name);  
   
   const creator = useSelector((state) => state.user._id);
@@ -85,8 +85,8 @@ function GlobalThread() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Отправка комментария на бек
+    dispatch(setCommetWritingCooldown(60))
     dispatch(changeCommetWritingPermission());
-    dispatch(setCommetWritingCooldown(60));
     socket.send({ type: "comment", text, id, side, nickName, creator, from: "thread" });
   };
 
