@@ -70,7 +70,7 @@ export default function CreateThread() {
           </div>
         </div>
         <br></br>
-
+      {/* НУЖНО ОЧЕНЬ СДЕЛАТЬ ЧТОБЫ ДЕСКРИПШН БЫЛ СПРАВА А СЕ ОСТАЛЬНОЕ КАК ЕСТЬ ПРИЧЕМ ДЕСК. ДОЛЖЕН БЫТЬ БОЛЬШОЙ */}
           <div className="form-group">
           <label className="form-label" placeholder=" ">
             <input className="form-control" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>

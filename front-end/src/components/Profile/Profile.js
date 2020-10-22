@@ -5,21 +5,24 @@ import { checkRegister } from '../../redux/actions';
 
 function Profile() {
   const dispatch = useDispatch();
-
+  const comment = () => {
+    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+      return colorArr[(Math.floor(Math.random() * 23))];
+    }
 //   useEffect(() => 
 // dispatch(checkRegister())
 //   , [dispatch])
 
 
  const user = useSelector(state => state.user);
-const {name, id, comments, threads, debates, votedFor} = user;
+const {name, id, comments, threads, debates, votedFor, likes} = user;
   return (
     <div>
-<h1>Hello {name}!</h1>
+<h1  className={comment()}>Hello {name}!</h1>
 <br/>
 <div>
-
-  <h2>You created { threads && threads.length} threads:</h2>
+<div className={comment()}><h1>You have already:</h1></div>
+  <h2 className={comment()}>created { threads && threads.length} threads!</h2>
 <div>
   { threads && threads.map((el) => {
     return (
@@ -27,19 +30,20 @@ const {name, id, comments, threads, debates, votedFor} = user;
     )
   })}
 </div>
-<h2>Your comments {comments && comments.length} times.</h2>
+<h2 className={comment()}>liked { likes && likes.length} punches!</h2>
+<h2 className={comment()}>commented {comments && comments.length} times!</h2>
 
-<h2>You voted {votedFor && votedFor.length} times.</h2>
+{/* <h2 className={comment()}>voted {votedFor && votedFor.length} times!</h2> */}
 
-<h2>You participate in {debates && debates.length} debates:</h2>
-<div>
-  { debates && debates.map((el) => {
-    return (
-      <Link to={`/Debate/${el._id}`}><button>{el.creator === user.id ? el.participant : el.creator}</button></Link>
-    )
-  })}
-</div>
-
+  <div><h2 className={comment()}>participated in {debates && debates.length} debates!</h2>
+    <div >
+      { debates && debates.map((el) => {
+        return (
+          <Link to={`/Debate/${el._id}`}><button>{el.creator === user.id ? el.participant : el.creator}</button></Link>
+        )
+      })}
+    </div>
+  </div>
 </div> 
 </div>    
   )
