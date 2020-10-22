@@ -131,7 +131,7 @@ function GlobalThread() {
           </button>
         </span>
       </div>  
-
+    </div>
     {isAuthorized ? <> <section>
         <div>
           <strong>NICK:  {nickName}</strong> <span>MESSAGE</span>
@@ -154,9 +154,11 @@ function GlobalThread() {
         {canWriteComment ? <button type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
       </form>
       </section>
+        </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
       </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
+        </> : <Link to="/Auth"><button>Sign in to punch and vote</button> </Link>}      
       </div>
-<div>
+        <div>
       {outPut &&
         outPut.map((el, index) => {
           return (
@@ -175,6 +177,8 @@ function GlobalThread() {
           );
         })}
         </div>
+
+        
     </>
   );
 }
