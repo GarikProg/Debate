@@ -6,8 +6,8 @@ import "./MainNavigation.scss"
 
 
 function MainNavigation() {
-  const threads = useSelector(state => state.mainThreads)
-  console.log(threads);
+  const threads = useSelector(state => state.mainThreads);
+  
  return (
    <>
   

@@ -11,7 +11,6 @@ router
   .post(async (req, res) => {
     const { theme, sideTwo, sideOne, description, creator } = req.body;
     const date = Date.now();
-    console.log(req.body);
     try {
       const thread = await Thread.create({
         creator,
@@ -21,10 +20,9 @@ router
         sideTwo,
         createdAt: date,
         updatedAt: date,
+        comments: [],
       })
-      console.log(creator)
       const user = await Users.findById(creator);
-      console.log(user);
       user.threads.push(thread._id);
       await user.save();
       res.json({ successfulThreadCrate: true, thread });

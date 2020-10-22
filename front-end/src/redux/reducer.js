@@ -62,7 +62,7 @@ export const reducer = (state, action) => {
     case LOAD_DEBATES_FROM_SAGA_TO_REDUX:
       const debatesClone = action.data.debates.slice()
       debatesClone.sort(compare);
-      return {...state, addDebates: action.data.debates, mainDebates: sorted(debatesClone)}
+      return {...state, appDebates: action.data.debates, mainDebates: sorted(debatesClone)}
     case CREATE_NEW_THREAD_FROM_SAGA_TO_REDUX: 
       const addThreadsClone = state.appThreads.slice();
       if (action.data === 'Data base error, plase try again') {
