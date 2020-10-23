@@ -33,32 +33,24 @@ function Profile() {
   };
 
   const user = useSelector((state) => state.user);
-  const {
-    name,
-    id,
-    comments,
-    threads,
-    debates,
-    votedFor,
-    likes,
-    rating,
-  } = user;
 
   return (
+    <>
+    { user &&
     <div>
-      <h1 className={comment()}>Hello {name}!</h1>
-      <h2 className={comment()}>Your rating is: {rating}</h2>
+      <h1 className={comment()}>Hello {user.name}!</h1>
+      <h2 className={comment()}>Your rating is: {user.rating}</h2>
       <br />
       <div>
         <div className={comment()}>
           <h1>You have already:</h1>
         </div>
         <h2 className={comment()}>
-          created {threads && threads.length} threads!
+          created {user.threads && user.threads.length} threads!
         </h2>
         <div>
-          {threads &&
-            threads.map((el) => {
+          {user.threads &&
+            user.threads.map((el) => {
               return (
                 <Link to={`/GlobalThread/${el._id}`}>
                   <button className="themeButton">{el.theme}</button>
@@ -66,17 +58,17 @@ function Profile() {
               );
             })}
         </div>
-        <h2 className={comment()}>liked {likes && likes.length} punches!</h2>
+        <h2 className={comment()}>liked {user.likes && user.likes.length} punches!</h2>
         <h2 className={comment()}>
-          commented {comments && comments.length} times!
+          commented {user.comments && user.comments.length} times!
         </h2>
         <div>
           <h2 className={comment()}>
-            participated in {debates && debates.length} debates!
+            participated in {user.debates && user.debates.length} debates!
           </h2>
           <div>
-            {debates &&
-              debates.map((el) => {
+            {user.debates &&
+              user.debates.map((el) => {
                 return (
                   <Link to={`/Debate/${el._id}`}>
                     <button>
@@ -89,6 +81,8 @@ function Profile() {
         </div>
       </div>
     </div>
+    }
+    </>
   );
 }
 
