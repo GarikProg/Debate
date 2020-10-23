@@ -11,22 +11,18 @@ export default function GlobalThreadAll() {
   return (
     <div className="globalAll">
       {threads &&
-        threads.map((el) => {
+        threads.map((el, index) => {
           return (
-            <div className="thread">
-                <span className="threadInner"><Link className="linkGlobal" to={`/GlobalThread/${el._id}`}>
-                  <button className="theme">{el.theme}</button>
-                </Link></span>
-
-              <span className="spanInner">
-                <span className="question"> ? </span>
-                <span className="sideOne">{el.sideOne}</span>
-                <span className="colon"> : </span>
-                <span className="sideTwo">{el.sideTwo}</span>
-              </span>
-            </div>
-          );
-        })}
+          <div key={index} className="thread">
+            <Link className="linkGlobal" to={`/GlobalThread/${el._id}`}>
+              <button className="theme" >{el.theme}</button>
+            </Link>
+            <span className="question"> ? </span>
+            <span className="sideOne">{el.sideOne}</span>
+            <span className="colon"> : </span>
+            <span className="sideTwo">{el.sideTwo}</span>
+          </div>);
+        })}    
       <div>
         <br />
         {isAuthorized && (
