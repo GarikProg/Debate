@@ -8,21 +8,22 @@ import './globalthread.scss'
 
 
 function GlobalThread() {
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
   const [socket, setSocket] = useState();
   const [text, setText] = useState("");
   const [outPut, setOutput] = useState([]);
   const [side, setSide] = useState("Neutral");
   const [thread, setThread] = useState({});
-
   
-  const { id } = useParams();
 
   const nickName = useSelector((state) => state.user.name);  
   
   const creator = useSelector((state) => state.user._id);
   
   const isAuthorized = useSelector(state => state.isAuthorized);
-  const dispatch = useDispatch();
   
   // Логика кулдауна
   const coolDown = useSelector(state => state.commentWritingTimeout);
@@ -35,16 +36,18 @@ function GlobalThread() {
     return `${minutes}:${seconds}`;
   };
 
-  useEffect(() => {    
-    (async () => {
-      const response = await fetch(`/thread/${id}`);
-      const resp = await response.json();
-      setThread(resp.thread);
-      setOutput(resp.thread.comments);
-    })();
-  }, []);
-
+  // Подгружаем конкретный тред из редакса
+  const appThreads = useSelector(state => state.appThreads)
   useEffect(() => {
+    appThreads && appThreads.filter(el => {
+      if (el._id == id) {
+        setThread(el);
+        setOutput(el.comments)
+      }
+    });
+  }, [appThreads]);
+
+  useEffect(() => {    
     const socket = openSocket("http://localhost:8000", {
       query: {
         id,
@@ -59,6 +62,7 @@ function GlobalThread() {
       socket.on("broadcast", (data) => {
         if (data.commentLocation) {
           // Присылает класс Comment
+          console.log(data);
           dispatch(addCommentToUserInRedux(data))
           dispatch(addCommentCountToCommentsInRedux(id, data))
           setOutput((prev) => {

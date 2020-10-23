@@ -1,3 +1,8 @@
+.imgClass {
+  height: 40px;
+  background: url('./heart.png') transparent;
+}
+
 .comment{
   color: yellowgreen;
 }
@@ -11,7 +16,6 @@
   color: deeppink;
   border-color: antiquewhite;
   border-width: 10px;
-  // background-color: black;
 }
 .challengeButton{
   background-color: black;
@@ -21,7 +25,10 @@
 .like{
   font-size: 30px;
   margin-right: 5px;
-  background-color: black;
+  background-color: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 .one{
   color: pink;
