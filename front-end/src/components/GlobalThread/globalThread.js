@@ -107,17 +107,9 @@ function GlobalThread() {
   };
 
 
-  const punch =   useCallback((index, comment_id, creator_comment) => {
-    let isLike = 0;    
-    outPut[index].likes && outPut[index].likes.forEach((element) => {
-      if (element.creator === creator) {
-        isLike += 1;
-      }
-    });       
-    if (creator_comment !== creator && isLike === 0) {
+  const punch = useCallback((comment_id, socket) => {
       // Отправка лайка на бек
       socket.send({ type: "like", comment_id, creator, id });
-    }
   }, [])
   
   const challenge = useCallback((comment_creator) => {
@@ -190,6 +182,7 @@ function GlobalThread() {
               punch={ punch }
               challenge={ challenge }
               creator={ el.creator }
+              socket={ socket }
             />
           );
         })}

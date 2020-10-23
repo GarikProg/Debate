@@ -21,6 +21,7 @@ export default memo(function Comment(props) {
     likes,
     challenge,
     creator,
+    socket,
   } = props;
   
   const reduxUserLikes = useSelector(state => state.user.likes);
@@ -64,7 +65,7 @@ export default memo(function Comment(props) {
                   <button className="like" onClick={() => {
                     if (!checkIfLiked) {
                       setCheck(true);
-                      punch(index, comment_id, creator._id);
+                      punch(comment_id, socket);
                       setLikeToDisplay(likeToDisplay += 1);
                     }
                     }}>
