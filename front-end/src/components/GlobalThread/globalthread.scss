@@ -41,14 +41,14 @@
   outline: none;
   font-size: 30px;
   padding-left: 20px;
-  width: 860px;
+  width: 500px;
 
 }
 .sideButtonCD{
   background-color: #2b2929;
   padding: 10px 20px;
   height: 80px;
-  width: 971px;
+  width: 621px;
   text-align: center;
   border: 1px solid hotpink;
   color: hotpink;
@@ -92,10 +92,10 @@
   color: antiquewhite;
 }
 .challengeButton{
-  background-color: black;
-  color: yellowgreen;
-  border-color: darkgray;
-  font-size: 35px;
+  background-color: transparent;
+  color: hotpink;
+  border: 1px solid hotpink;
+  font-size: 25px;
 }
 
 .one{
@@ -105,10 +105,10 @@
   color: dodgerblue;
 }
 .three{
-  color: yellow;
+  color: rgb(175, 118, 192);
 }
 .four{
-  color: brown;
+  color: rgb(225, 86, 238);
 }
 .five{
   color: cornflowerblue
@@ -117,10 +117,10 @@
   color: coral;
 }
 .seven{
-  color: darkgreen;
+  color: lightcoral
 }
 .eight{
-  color: darkslateblue;
+  color: rgb(143, 132, 214);
 }
 .nine{
   color: hotpink;
@@ -129,34 +129,34 @@
   color: thistle;
 }
 .eleven{
-  color: springgreen;
+  color: rgb(85, 145, 240);
 }
 .twelve{
-  color: khaki;
+  color: rgb(191, 149, 246);
 }
 .thirteen{
-  color: darkorange;
+  color: rgb(224, 119, 180);
 }
 .fourteen{
-  color: goldenrod;
+  color: rgb(80, 250, 122);
 }
 .fifteen{
-  color: orangered;
+  color: rgba(55, 255, 228, 0.835);
 }
 .sixteen{
-  color: seagreen;
+  color: rgb(46, 223, 122);
 }
 .seventeen{
-  color: forestgreen;
+  color: rgb(173, 103, 150);
 }
 .eighteen{
   color: deepskyblue;
 }
 .nineteen{
-  color: lawngreen;
+  color: rgb(177, 116, 246);
 }
 .twenty{
-  color: firebrick;
+  color: rgb(105, 74, 243);
 }
 .twentyone{
   color: aqua;
@@ -165,7 +165,9 @@
   color: cadetblue;
 }
 .twentythree{
-  color: cadetblue;
+  color: rgb(136, 72, 255);
 }
+
+
 
 
