@@ -1,4 +1,5 @@
 .authContainer {
+  margin-top: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,8 +20,8 @@
   // border-bottom: 1px solid rgb(87, 87, 87);
   color: rgb(87, 87, 87);
   }   .authBtn:hover {
-    color: white;
-    border-bottom: 1px solid white;
+    color: hotpink;
+    border-bottom: 1px solid hotpink;
     }
 
   .authBtn2 {
@@ -42,7 +43,7 @@
 } .skipLink:hover {
   color: white;
 } .authBtn2:hover {
-  background-color:  rgb(65, 64, 64);
+  background-color: hotpink;
   color: white;
   } .skiplink:hover {
   color: white;

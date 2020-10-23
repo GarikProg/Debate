@@ -69,7 +69,7 @@ return (
 
           <div className="form-group2">
           <label className="form-label2" placeholder=" ">
-            <input className="form-control2" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>
+            <textarea className="form-control2" onChange={(e) => handleInput(e)} required name="description" placeholder=" " type="text"/>
             <p className="labelP2">Description</p>
           </label>
           </div>

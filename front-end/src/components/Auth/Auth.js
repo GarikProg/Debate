@@ -14,6 +14,7 @@ function Auth() {
       <div className="containerInner">
         {regState ? <Login /> : <Registration />}
       </div>
+      <br/>
       <Link className="skipLink" to="/Home">
         <button className="authBtn2">Skip</button>
       </Link>

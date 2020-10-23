@@ -27,6 +27,7 @@ function Login() {
           </label>
         </div>
         <br></br>
+        <br></br>
         <div className="form-group">
           <label className="form-label">
             <input type="password" className='form-control' placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
