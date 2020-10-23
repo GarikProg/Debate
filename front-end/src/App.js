@@ -67,7 +67,7 @@ function App() {
             <Route exact path="/GlobalThread/:id">
               <GlobalThread />
             </Route>
-            <Route exact path="/Profile">
+            <Route  path="/Profile">
               <Profile />
             </Route>
             <Route path="/TestChat">

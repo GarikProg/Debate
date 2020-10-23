@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import './globalthreadAll.scss'
+import { useSelector } from "react-redux";
+import "./globalthreadAll.scss";
 
 export default function GlobalThreadAll() {
-  
-  const isAuthorized = useSelector(state => state.isAuthorized);
-  
-  const threads = useSelector(state => state.appThreads);
-  
+  const isAuthorized = useSelector((state) => state.isAuthorized);
+
+  const threads = useSelector((state) => state.appThreads);
+
   return (
     <div className="globalAll">
       {threads &&
@@ -25,9 +24,13 @@ export default function GlobalThreadAll() {
           </div>);
         })}    
       <div>
-        <br/>
-        {isAuthorized && <Link to="/createThread"><button className="createButton">Create Thread</button></Link>}  
-      </div>    
+        <br />
+        {isAuthorized && (
+          <Link to="/createThread">
+            <button className="sideButton">Create Thread</button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

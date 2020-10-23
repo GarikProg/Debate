@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import './profile.scss'
 
 function Profile() {
   const comment = () => {
@@ -67,7 +68,7 @@ function Profile() {
             participated in {user.debates && user.debates.length} debates!
           </h2>
           <div>
-            {user.debates &&
+            {/* {user.debates &&
               user.debates.map((el) => {
                 return (
                   <Link to={`/Debate/${el._id}`}>
@@ -76,7 +77,7 @@ function Profile() {
                     </button>
                   </Link>
                 );
-              })}
+              })} */}
           </div>
         </div>
       </div>

@@ -9,8 +9,19 @@
   width: 150%;
   
 }
+.threadInner{
+  display: flex;
+  flex-direction: row;
+}
 .globalAll{
+  display: flex;
+  flex-direction: column;
   font-size: 45px;
+  justify-content: space-evenly;
+}
+.spanInner{
+  display: flex;
+  flex-direction: row;
 }
 .question{
   color: yellowgreen

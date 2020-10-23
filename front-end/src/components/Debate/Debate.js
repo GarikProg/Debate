@@ -3,7 +3,7 @@ import openSocket from "socket.io-client";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Comment from "../CommentDebate/CommentDebate";
-import './Debate.scss'
+import './debate.scss'
 
 function Debate() {
   const [socket, setSocket] = useState();
