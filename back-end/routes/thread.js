@@ -22,15 +22,6 @@ router
         updatedAt: date,
         comments: [],
       });
-
-      thread = await Thread.findById(thread._id).populate({
-        path: 'comments',
-        populate: {
-          path: 'creator'
-        }
-      })
-      .populate("threadWinner")
-      .populate("creator");
       
       const user = await Users.findById(creator);
       user.threads.push(thread._id);
@@ -54,7 +45,7 @@ router
       .populate('threadWinner')
       .populate('creator')
       .exec();
-      
+
       res.json({ loadedThreads: true, threads });
     } catch (error) {
       return res.json({ loadedThreads: false, err: 'Data base error, plase try again' });
