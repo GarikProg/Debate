@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import "./comment.scss"
+import "./comment.scss";
 import heartImg from './heart.png'
 import heartGradient from './heartGradient.png'
+const comment = () => {
+  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+    return colorArr[(Math.floor(Math.random() * 23))];
+  }
 
-export default function Comment(props) {
+export default memo(function Comment(props) {
   const isAuthorized = useSelector((state) => state.isAuthorized);
   
   const user_id = useSelector((state) => state.user._id);
@@ -34,11 +38,6 @@ export default function Comment(props) {
   }, [])
 
   let [likeToDisplay, setLikeToDisplay] = useState(likes.length)
-
-  const comment = () => {
-  const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
-    return colorArr[(Math.floor(Math.random() * 23))];
-  }
 
   let sideToDisplay;
 
@@ -87,4 +86,4 @@ export default function Comment(props) {
       </div>
     </div>
   );
-}
+})

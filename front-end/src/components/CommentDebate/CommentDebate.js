@@ -5,41 +5,57 @@ import "./comment.scss"
 export default function CommentDebate(props) {
   const isAuthorized = useSelector((state) => state.isAuthorized);
   const user_id = useSelector((state) => state.user._id);
-  
   const {
-    nickName,
-    side,
-    text,
-    comment_id,
-    punch,
-    creator_comment,
-    likes,
     index,
+    comment_id,
+    text,
+    side,
+    punch,
+    likes,
     challenge,
+    creator,
   } = props;
   
+  const comment = () => {
+    const colorArr = ['one', 'two', 'three','four','five','six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen','fourteen', 'fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twentyone','twentytwo','twentythree']
+      return colorArr[(Math.floor(Math.random() * 23))];
+    }
+  
+    let toDisplay;
+  
+    if (side === 'Neutral') {
+      toDisplay = false;
+    } else {
+      toDisplay = <span><span className='signs'>for: </span> <span className={comment()}>{side}</span></span>;
+    }
   
   return (
-    <div className="comment">
-      <div><span>_{nickName}_</span></div>
-      <span>{side}_</span>
-      <span>{text}_</span>
-      <span>{likes && likes.length}</span>
-      {isAuthorized ? (
+    <div className="fontSize">
+    <div className={comment()}>
+      <div><span>_{ creator?.name }({ creator?.rating })_ </span> 
+      {toDisplay && toDisplay}
+      </div>
+      {/* <span>{side}_</span> */}
+      : <span >{text}</span>
+      <div>{isAuthorized ? (
         <>
-          {user_id !== creator_comment ? (
-            <>
-          <button onClick={() => punch(index, comment_id, creator_comment)}>
-            Like
-          </button>            
-            </>
+          {user_id !== creator?._id ? (
+            <div>
+              <span>
+                <button className="like" onClick={() => punch(index, comment_id, creator._id)}>💕</button>
+                <span className="likeAmount">Likes: {likes && likes.length} </span>
+              </span>
+            </div>
           ) : (
-            ""
+            <span className="likeAmount">Likes: {likes && likes.length} </span>
           )}
         </>
       ) : (
         ""
-      )}
+      )}</div>
+      <br></br>
+
+    </div>
     </div>
   );
 }
