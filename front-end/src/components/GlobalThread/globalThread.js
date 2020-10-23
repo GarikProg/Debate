@@ -101,8 +101,10 @@ function GlobalThread() {
   };
 
 
-  const punch =   useCallback((index, comment_id, creator_comment) => {
-    let isLike = 0;    
+  const punch = useCallback((index, comment_id, creator_comment) => {
+    let isLike = 0; 
+    console.log(outPut)
+    console.log(index)   
     outPut[index].likes && outPut[index].likes.forEach((element) => {
       if (element.creator === creator) {
         isLike += 1;

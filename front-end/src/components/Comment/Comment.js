@@ -21,7 +21,7 @@ export default memo(function Comment(props) {
     creator,
   } = props;
 
-
+  console.log(props);
   let toDisplay;
 
   if (side === 'Neutral') {
