@@ -100,13 +100,13 @@ const SecondLayer = ({ state }) => {
                   <div ref={el => (info = el)} className="info">
                       <h1>
                     <div className="animation-content-line">
-                      <div className="animation-content-line-inner1">About us:</div>
+                      <div className="animation-content-line-inner1"></div>
                     </div>
                     <div className="animation-content-line">
-                      <div className="animation-content-line-inner2"><br></br>Debates is fresh sketch on an old theme. <br /> We are trying to make your internet arguments constructive. </div>  
+                      <div className="animation-content-line-inner2"></div>  
                     </div>
                     <div className="animation-content-line">
-                      <div className="animation-content-line-inner3">Someone on the web is not correct? Give us a chance!</div>
+                      <div className="animation-content-line-inner3"></div>
                     </div>
                   </h1>
                   </div>

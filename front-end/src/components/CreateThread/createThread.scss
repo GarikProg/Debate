@@ -9,7 +9,7 @@
   position: relative;
   outline: none;
   .form-control1 {
-  font-size: 1rem;
+  font-size: 2rem;
   color: hotpink;
   background: transparent;
   width: 20%;
@@ -31,7 +31,7 @@
   user-select: none;
   position: absolute;
   top: 0px;
-  transform: translateY(-85px);
+  transform: translateY(-95px);
   margin-left: 0.8rem;
   padding: 0 0.4rem;
   transition: top 0.2s, font-size 0.2s, color 0.2s;
