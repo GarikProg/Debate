@@ -68,16 +68,16 @@ function Profile() {
             participated in {user.debates && user.debates.length} debates!
           </h2>
           <div>
-            {/* {user.debates &&
+            {user.debates &&
               user.debates.map((el) => {
                 return (
                   <Link to={`/Debate/${el._id}`}>
-                    <button>
-                      {el.creator === user.id ? el.participant : el.creator}
+                    <button className="themeButton">
+                      {el.creator.name !== user.name ? el.creator.name : el.participant.name}
                     </button>
                   </Link>
                 );
-              })} */}
+              })}
           </div>
         </div>
       </div>
