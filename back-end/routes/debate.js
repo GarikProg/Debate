@@ -20,8 +20,8 @@ router
   .post(async (req, res) => { 
     const { creator, participant } = req.body
     const createdAt = Date.now();
-    const voteAt = createdAt + 172800;
-    const closedAt = createdAt + 345600;
+    const voteAt = createdAt + 172800000;
+    const closedAt = createdAt + 345600000;
     try {
       const debate = await Debate.create({
         creator,

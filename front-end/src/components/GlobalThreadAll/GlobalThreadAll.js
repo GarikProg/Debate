@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import './globalthreadAll.scss'
-import { loadThreads } from '../../redux/actions'
 
 export default function GlobalThreadAll() {
   
-  const isAuthorized = useSelector(state => state.isAuthorized) 
-  const dispatch = useDispatch();
-
+  const isAuthorized = useSelector(state => state.isAuthorized);
+  
   const threads = useSelector(state => state.appThreads);
-
-  useEffect(() => {
-    dispatch(loadThreads());
-  }, [])
-
+  
   return (
-    <>
     <div className="globalAll">
       {threads &&
         threads.map((el) => {
@@ -33,9 +26,8 @@ export default function GlobalThreadAll() {
         })}    
       <div>
         <br/>
-        {isAuthorized && <Link to="/createThread"> <button className="createButton">Create Thread</button>  </Link>}  
+        {isAuthorized && <Link to="/createThread"><button className="createButton">Create Thread</button></Link>}  
       </div>    
     </div>
-    </>
   );
 }
