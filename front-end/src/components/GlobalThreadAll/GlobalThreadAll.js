@@ -12,9 +12,9 @@ export default function GlobalThreadAll() {
   return (
     <div className="globalAll">
       {threads &&
-        threads.map((el) => {
+        threads.map((el, index) => {
           return (
-          <div className="thread">
+          <div key={index} className="thread">
             <Link className="linkGlobal" to={`/GlobalThread/${el._id}`}>
               <button className="theme" >{el.theme}</button>
             </Link>
