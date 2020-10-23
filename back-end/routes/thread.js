@@ -21,7 +21,17 @@ router
         createdAt: date,
         updatedAt: date,
         comments: [],
+      });
+
+      thread = await Thread.findById(thread._id).populate({
+        path: 'comments',
+        populate: {
+          path: 'creator'
+        }
       })
+      .populate("threadWinner")
+      .populate("creator");
+      
       const user = await Users.findById(creator);
       user.threads.push(thread._id);
       await user.save();
@@ -35,7 +45,16 @@ router
   .route('/loadall')
   .post(async (req, res) => {
     try {
-      const threads = await Thread.find({}).populate('comments').populate('threadWinner').populate('creator').exec();
+      const threads = await Thread.find({}).populate({
+        path: 'comments',
+        populate: {
+          path: 'creator'
+        }
+      })
+      .populate('threadWinner')
+      .populate('creator')
+      .exec();
+      
       res.json({ loadedThreads: true, threads });
     } catch (error) {
       return res.json({ loadedThreads: false, err: 'Data base error, plase try again' });

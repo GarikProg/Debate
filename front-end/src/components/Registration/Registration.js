@@ -25,8 +25,8 @@ function Registration() {
         <label className="form-label" placeholder=" ">
           <input className="form-control" type="text" placeholder=" " required onChange={(e) => setName(e.target.value)}/>
           <p className="labelP">Name</p>
-          {nameError ?? <span>{nameError}</span>}
         </label>
+        { nameError && <p style={{color: 'red'}}>{nameError}</p> }
       </div>
       <br/>
       <br></br>
@@ -34,8 +34,8 @@ function Registration() {
         <label className="form-label">
           <input className="form-control" type="email" placeholder=" " required onChange={(e) => setEmail(e.target.value)}/>
           <p className="labelP">Email</p> 
-          {emailError ?? <span>{emailError}</span>}
-        </label>
+        </label>  
+        { emailError && <p style={{color: 'red'}}>{emailError}</p> }
       </div>
       <br />
       <br/>

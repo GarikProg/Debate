@@ -12,7 +12,7 @@ const CommentSchema = new mongoose.Schema({
       ref: process.env.LIKE,
     },
   ],
-  commentLocation: mongoose.Schema.Types.ObjectId,
+  commentLocation: { type: mongoose.Schema.Types.ObjectId },
   isDebate: Boolean,
   side: String,
   nickName: String,
