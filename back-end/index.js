@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
     }
   }
   if(data.type === "like") {    
-    const { comment_id, creator} = data;
+    const { comment_id, creator } = data;
     try {
       // Ишем коментарий для лайка
       const comment = await Comments.findById(comment_id).populate('likes');
@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
           comment: comment_id,        
         });
 
-        like = await Likes.findById(like._id).populate('creator').populate('comment');
+        like = await Likes.findById(like._id)
 
         comment.likes.push(like._id)
         await comment.save();
@@ -97,10 +97,10 @@ io.on("connection", (socket) => {
         await ratingUser.save();
   
         // Добвления лайка к лайкнувшему юзеру 
-        const user = await User.findById(creator);      
+        const user = await User.findById(creator);
         user.likes.push(like._id);
         await user.save();
-        
+
         io.to(data.id).emit("broadcast", like);
       }
     } catch (error) {
