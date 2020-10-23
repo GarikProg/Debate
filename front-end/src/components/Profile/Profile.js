@@ -72,7 +72,7 @@ function Profile() {
                 return (
                   <Link to={`/Debate/${el._id}`}>
                     <button>
-                      {el.creator === user.id ? el.participant : el.creator}
+                      {el.creator.name !== user.name ? el.creator.name : el.participant.name }
                     </button>
                   </Link>
                 );
