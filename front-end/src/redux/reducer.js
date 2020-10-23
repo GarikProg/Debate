@@ -73,7 +73,7 @@ export const reducer = (state, action) => {
         addThreadsClone.push(action.data);
         return {...state, user: { ...state.user, threads: userThreads }, appThreads: addThreadsClone, mainThreads: sorted(addThreadsClone.sort(compare)), successfulThreadCreate: true };
       };
-    case CHECK_CREATED_THREAD: 
+    case CHECK_CREATED_THREAD:
       const threardsForHotClone = state.appThreads.slice();
       threardsForHotClone.sort(compare)
       return {...state, successfulThreadCreate: false, mainThreads: sorted(threardsForHotClone) };

@@ -9,11 +9,12 @@ const comment = () => {
   }
 
 export default memo(function Comment(props) {
+
   const isAuthorized = useSelector((state) => state.isAuthorized);
+  const reduxUserId = useSelector(state => state.user._id)
   
   const user_id = useSelector((state) => state.user._id);
   const {
-    index,
     comment_id,
     text,
     side,
@@ -23,6 +24,7 @@ export default memo(function Comment(props) {
     creator,
     socket,
   } = props;
+
   
   const reduxUserLikes = useSelector(state => state.user.likes);
 
@@ -31,12 +33,12 @@ export default memo(function Comment(props) {
   useEffect(() => {
     reduxUserLikes && reduxUserLikes.forEach(likeId => {
       likes.forEach(threadLikeId => {
-        if (likeId == threadLikeId) {
+        if (likeId === threadLikeId) {
           setCheck(true)
         }
       })
     })
-  }, [])
+  }, []);
 
   let [likeToDisplay, setLikeToDisplay] = useState(likes.length)
 
@@ -65,7 +67,7 @@ export default memo(function Comment(props) {
                   <button className="like" onClick={() => {
                     if (!checkIfLiked) {
                       setCheck(true);
-                      punch(comment_id, socket);
+                      punch(comment_id, socket, reduxUserId);
                       setLikeToDisplay(likeToDisplay += 1);
                     }
                     }}>
