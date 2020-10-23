@@ -49,7 +49,7 @@ function MainNavigation() {
                 <p className="descriptionInner">
                   {el.description}
                 </p>
-                <p className="descriptionInner">
+                <p className="descriptionInner2">
                   Comments: {el.comments.length}
                 </p>
               </div>

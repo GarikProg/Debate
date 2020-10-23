@@ -1,51 +1,85 @@
 .theme {
-  color: yellowgreen;
-  background-color: black;
-  border-color: darkgray;
-  text-decoration: none;
-  font-size: 45px;
-}
-.thread{
-  width: 150%;
+  background: transparent;
+  border: 1px solid deeppink;
+  color: deeppink;
+  font-size: 22px;
+  outline: none;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  }
+  .theme:hover{
+    background: deeppink;
+    border: 1px solid deeppink;
+    color: white;
+    font-size: 22px;
+    outline: none
+    } 
+  .thread{
+    // width: 150%;
+    height: 50%;
+    
+  }
+  .question{
+    color: white
+  }
   
-}
-.threadInner{
-  display: flex;
-  flex-direction: row;
-}
-.globalAll{
-  display: flex;
-  flex-direction: column;
-  font-size: 45px;
-  justify-content: space-evenly;
-}
-.spanInner{
-  display: flex;
-  flex-direction: row;
-}
-.question{
-  color: yellowgreen
-}
-.createButton{
-  font-size: 45px;
-  color: yellowgreen;
-  background-color: black;
-  border-color: darkgray;
-  text-decoration: none;
-}
-.colon{
-  color: yellowgreen;
-}
-
-.sideOne{
-  color: dodgerblue;
-}
-
-.sideTwo{
-  color: lightpink
-}
-
-.thread{
-  text-decoration: none;
-}
-
+  .colon{
+    color: white;
+  }
+  
+  .sideOne{
+    color: dodgerblue;
+  }
+  
+  .sideTwo{
+    color: lightpink
+  }
+  
+  .thread{
+    text-decoration: none;
+  }
+  
+  .threads {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .threadInner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 50%;
+    margin-left: 0%;
+    float: left;
+  }
+  
+  .threadInner2 {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    font-size: 25px;
+  }
+  
+  .threadInnerParentDiv {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .threadBtnInner {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    letter-spacing: 0.15em;
+    font-size: 17px;
+    display: inline-block;
+    padding: 15px 20px;
+    position: fixed;
+    outline: none;
+    left: 45%;
+    bottom: 0%;  
+  }
+  .threadBtnInner:hover{
+    color: deeppink;
+   }
