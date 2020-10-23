@@ -1,11 +1,83 @@
 .headers{
   color: antiquewhite;
   display: flex;
-  flex-direction: column;
-  justify-content: start;
-  font-size: 30px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border: 1px solid hotpink;
+  font-size: 25px;
+  padding: 10px;
+  >div{padding: 20px}
+}
+.globalest{
+  width: 100%;
+  height: 100%;
 
 }
+
+.chat{
+  margin-top: 40px;
+  padding: 15px;
+  // border: 1px solid hotpink;
+  overflow-y: scroll;
+  padding-bottom: 00px;
+  margin-bottom: 150px;
+  height: 700px
+}
+.inputGlob{
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  background-color: #2b2929;
+  padding: 10px 20px;
+  bottom:0;
+}
+.inputGlobInner{
+  background-color: #2b2929;
+  padding: 10px 20px;
+  height: 100px;
+  padding: 0;
+  border: 1px solid hotpink;
+  color: hotpink;
+  outline: none;
+  font-size: 30px;
+  padding-left: 20px;
+  width: 860px;
+
+}
+.sideButtonCD{
+  background-color: #2b2929;
+  padding: 10px 20px;
+  height: 80px;
+  width: 971px;
+  text-align: center;
+  border: 1px solid hotpink;
+  color: hotpink;
+  outline: none;
+  font-size: 30px;
+  transition: all;
+  transition-duration: 0.3s;
+}
+.sideButton{
+  background-color: #2b2929;
+  padding: 10px 20px;
+  height: 102px;
+  border: 1px solid hotpink;
+  color: hotpink;
+  outline: none;
+  font-size: 30px;
+  transition: all;
+  transition-duration: 0.3s;
+}
+.sideButton:hover{
+      border: 1px solid white;
+      color: white;
+}
+
+.sideButtonTwo{
+  bottom: 1;
+
+}
+
 .nickClass{
 }
 // .inputForm{
@@ -24,9 +96,6 @@
   color: yellowgreen;
   border-color: darkgray;
   font-size: 35px;
-
-
-
 }
 
 .one{

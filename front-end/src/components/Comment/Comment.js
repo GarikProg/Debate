@@ -38,6 +38,7 @@ export default memo(function Comment(props) {
     })
   }, [])
 
+
   let [likeToDisplay, setLikeToDisplay] = useState(likes.length)
 
   let sideToDisplay;

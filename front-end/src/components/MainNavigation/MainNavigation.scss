@@ -3,11 +3,11 @@
   flex-direction: row;
   color: white;
   .innerDiv {
-    margin-top: 20px;
+    margin-top: 40px;
     width: 300px;
     color: pink;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
     }
   .innerDiv:hover {
@@ -57,4 +57,7 @@
  }
 .mainContainer{
   font-size: 20px;
+}
+.descriptionContainer{
+  font-size: 30px;
 }

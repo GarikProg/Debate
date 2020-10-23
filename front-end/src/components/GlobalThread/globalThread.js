@@ -107,6 +107,7 @@ function GlobalThread() {
   };
 
 
+
   const punch = useCallback((comment_id, socket) => {
       // Отправка лайка на бек
       socket.send({ type: "like", comment_id, creator, id });
@@ -119,41 +120,33 @@ function GlobalThread() {
 
   return (
     <>
+    <div className="gobalest">
       <div className="headers">
-        <div>
-          <strong>
+        {/* <div>
             <div>Your nickname: </div>
             <div className={`${colors[2]} nickClass`}>{nickName}</div>
-          </strong> 
-        </div>
+        </div> */}
         <div>
-          <h1>
             <div>Theme: </div>
             <div className={colors[0]}>{thread.theme}</div>
-          </h1>
         </div>
-      <div>
-        <h2>
+        <div>
           <div>Description: </div>
           <div className={colors[1]}>{thread.description}</div>
-        </h2>
+        </div>
       </div>
-      <div>
-        <span>
-          <button className="challengeButton"  onClick={() => setSide(thread.sideOne)}>
+      {/* END OF HEADERS */}
+      <div className="inputGlob">
+          <button className="sideButton"  onClick={() => setSide(thread.sideOne)}>
             {thread.sideOne}
           </button>
-        </span>
-        <span>
-          <button className="challengeButton"  onClick={() => setSide(thread.sideTwo)}>
+          <button className="sideButton"  onClick={() => setSide(thread.sideTwo)}>
             {thread.sideTwo}
           </button>
-        </span>
     {isAuthorized ?
     <>
-      <section>
         <form className="inputForm" id="messageForm" onSubmit={ (e) => handleSubmit(e) }>
-          <input className="challengeButton"
+          {canWriteComment ? <><button className="sideButton sideButtonTwo" type="submit">Punch</button> <input placeholder="   TYPE HERE" className="inputGlobInner"
             onBlur={(e) => {
               e.preventDefault();
               setText(e.target.value)
@@ -161,14 +154,13 @@ function GlobalThread() {
             type="text"
             name="message"
             id="message"
-          />
-          {canWriteComment ? <button className="challengeButton"type="submit">Punch</button> : <div>Следующий комментарий можно писать через { convertNumberToTime(coolDown) }</div>}
+          /> </>: <div className="sideButtonCD">Следующий комментарий можно написать через { convertNumberToTime(coolDown) }</div>}
+          
         </form>
-      </section>
     </> : <> <Link to="/Auth"><button>Sign in to punch and vote</button></Link> </>}      
       </div>  
-    </div>
-      <div>
+    
+      <div className="chat">
       {outPut &&
         outPut.map((el, index) => {
           return (
@@ -186,6 +178,7 @@ function GlobalThread() {
             />
           );
         })}
+      </div>
       </div>
     </>
   );

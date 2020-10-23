@@ -29,6 +29,7 @@ function Registration() {
         { nameError && <p style={{color: 'red'}}>{nameError}</p> }
       </div>
       <br/>
+      <br></br>
       <div className="form-group">
         <label className="form-label">
           <input className="form-control" type="email" placeholder=" " required onChange={(e) => setEmail(e.target.value)}/>
@@ -37,6 +38,7 @@ function Registration() {
         { emailError && <p style={{color: 'red'}}>{emailError}</p> }
       </div>
       <br />
+      <br/>
       <div>
         <label className="form-label">
           <input className="form-control" type="password" placeholder=" " required onChange={(e) => setPassword(e.target.value)}/>
