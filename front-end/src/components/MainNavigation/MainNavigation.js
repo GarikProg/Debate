@@ -38,7 +38,7 @@ function MainNavigation() {
       <div className="descriptionContainer">
         {threads && threads.map(el => {
           return (
-            <div className="description">
+            <div key={el._id} className="description">
               <Link className="mainLink" to={`/GlobalThread/${el._id}`}>
                 <div className="innerDiv" >{el.theme} ? {el.sideOne} : {el.sideTwo}</div>
               </Link>

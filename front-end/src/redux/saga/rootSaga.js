@@ -142,7 +142,6 @@ function* createNewThread(action) {
       body: JSON.stringify(action.data)
     });
     const data = yield responce.json();
-    console.log(data)
     if (data.successfulThreadCrate) {
       yield put(createNewThreadFromSagaToRedux(data.thread))
     } else {

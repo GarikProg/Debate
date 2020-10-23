@@ -107,16 +107,15 @@ function GlobalThread() {
   };
 
 
-
-  const punch = useCallback((comment_id, socket) => {
+  const punch = useCallback((comment_id, socket, creator) => {
       // Отправка лайка на бек
       socket.send({ type: "like", comment_id, creator, id });
   }, [])
   
   const challenge = useCallback((comment_creator) => {
     console.log(creator, 'ghggh', comment_creator);
-    dispatch(createNewDebate( {creator, participant: comment_creator}))
-  },[])
+    dispatch(createNewDebate( { creator, participant: comment_creator}))
+  },[]);
 
   return (
     <>

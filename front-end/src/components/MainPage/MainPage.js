@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import MainNavigation from '../MainNavigation/MainNavigation'
 import logo from '../../images/logo.png'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkCreatedThread, sortHotThreads } from '../../redux/actions'
 
 function MainPage() {
-
-  const dispatch = useDispatch()
+  const appThreads = useSelector(state => state.appThreads);
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    dispatch(checkCreatedThread());
+    appThreads && dispatch(checkCreatedThread());
   }, [])
 
   return (
