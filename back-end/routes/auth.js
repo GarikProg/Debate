@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
 import Vote from '../models/vote.js';
+import path from 'path'
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ function serializeUser(user) {
 }
 
 router.route('/').get((req, res) => {
-  res.send('rabotaet')
+  res.sendFile(path.resolve('../front-end/build/index.html'))
 });
 
 router.route('/loading').post(async (req, res) => {
