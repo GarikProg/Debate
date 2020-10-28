@@ -1,0 +1,23 @@
+{
+  "name": "Debate",
+  "version": "1.0.0",
+  "description": "Программа для создания споров (дебатов) между участниками.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd front-end && yarn && yarn build",
+    "start": "cd back-end && npm install && npm start"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarikProg/Debate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarikProg/Debate/issues"
+  },
+  "homepage": "https://github.com/GarikProg/Debate#readme"
+}

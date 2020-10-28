@@ -15,6 +15,7 @@ import Threads from './models/thread.js'
 import User from './models/user.js'
 import Debates from './models/debate.js'
 import http from 'http'
+import path from 'path'
 
 
 const logger = console;
@@ -140,6 +141,8 @@ app.use(
   })
   );
   
+  app.use(express.static(path.resolve('../front-end/build/')))
+
   app.use(authRouter);
   app.use('/debate', debateRouter);
   app.use('/thread', threadRouter);
