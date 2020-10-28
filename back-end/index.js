@@ -9,12 +9,12 @@ import threadRouter from "./routes/thread.js";
 import profileRouter from './routes/profile.js'
 import cors from "cors";
 import ioSocket from "socket.io";
-const io = ioSocket();
 import Comments from "./models/comment.js";
 import Likes from "./models/like.js"
 import Threads from './models/thread.js'
 import User from './models/user.js'
 import Debates from './models/debate.js'
+import http from 'http'
 
 
 const logger = console;
@@ -25,47 +25,52 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
+const server =  http.createServer(app);
+
+const io = ioSocket(server);
+
 io.on("connection", (socket) => {
   socket.nickname = socket.handshake.query.nickname;
   const roomID = socket.handshake.query.id;
   socket.join(roomID);
   socket.on("message", async (data) => {
-    if(data.type === "comment") {      
-    const { text, creator,  id, side, from } = data;
-    try {
-      let comment = await Comments.create({
-        creator,
-        text,
-        commentLocation: id,
-        side,
-      });
-
-      comment = await Comments.findById(comment._id).populate('creator').populate('likes').exec();
-
-      const user = await User.findById(creator);      
-      user.comments.push(comment._id)
-      await user.save();
-
-      if (from === "thread") {
-        const updateTime = Date.now();
-        const thread = await Threads.findById(id)
-        thread.comments.push(comment._id);
-        thread.updatedAt = updateTime;
-        await thread.save();
-      } else if (from === "debate") {
-        console.log(id);
-        const debate = await Debates.findById(id)
-        debate.comments.push(comment._id)
-        await debate.save();
-      };
-
-
-      io.to(data.id).emit("broadcast", comment);
-    } catch (error) {
-      console.log(error);
+    if(data.type === "comment") { 
+      console.log(data);     
+      const { text, creator,  id, side, from } = data;
+      try {
+        let comment = await Comments.create({
+          creator,
+          text,
+          commentLocation: id,
+          side,
+        });
+        
+        comment = await Comments.findById(comment._id).populate('creator').populate('likes').exec();
+        
+        const user = await User.findById(creator);      
+        user.comments.push(comment._id)
+        await user.save();
+        
+        if (from === "thread") {
+          const updateTime = Date.now();
+          const thread = await Threads.findById(id)
+          thread.comments.push(comment._id);
+          thread.updatedAt = updateTime;
+          await thread.save();
+        } else if (from === "debate") {
+          console.log(id);
+          const debate = await Debates.findById(id)
+          debate.comments.push(comment._id)
+          await debate.save();
+        };
+        
+        
+        io.to(data.id).emit("broadcast", comment);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-  if(data.type === "like") {    
+    if(data.type === "like") {    
     const { comment_id, creator } = data;
     try {
       // Ишем коментарий для лайка
@@ -79,28 +84,28 @@ io.on("connection", (socket) => {
           checkIfLiked = true;
         }
       }
-
+      
       if (!checkIfLiked) {
         let like = await Likes.create({
           creator,
           comment: comment_id,        
         });
-
+        
         like = await Likes.findById(like._id)
-
+        
         comment.likes.push(like._id)
         await comment.save();
-
+        
         // Добавление рейтинга пользователю
         const ratingUser = await User.findById(comment.creator);
         ratingUser.rating += 1;
         await ratingUser.save();
-  
+        
         // Добвления лайка к лайкнувшему юзеру 
         const user = await User.findById(creator);
         user.likes.push(like._id);
         await user.save();
-
+        
         io.to(data.id).emit("broadcast", like);
       }
     } catch (error) {
@@ -110,8 +115,6 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(process.env.PORT_SOCKET);
-console.log("listening on port ", process.env.PORT_SOCKET);
 
 // Запоминаем название куки для сессий
 app.set("session cookie name", "sid");
@@ -135,14 +138,17 @@ app.use(
       secure: false,
     },
   })
-);
+  );
+  
+  app.use(authRouter);
+  app.use('/debate', debateRouter);
+  app.use('/thread', threadRouter);
+  app.use('profile', profileRouter);
+  
+  const port = process.env.PORT ?? 3001;
+  
 
-app.use(authRouter);
-app.use('/debate', debateRouter);
-app.use('/thread', threadRouter);
-app.use('profile', profileRouter);
-
-const port = process.env.PORT ?? 3001;
-const httpServer = app.listen(port, () => {
-  logger.log("Сервер запущен. Порт:", port);
-});
+  const httpServer = server.listen(port, () => {
+    logger.log("Сервер запущен. Порт:", port);
+  });
+  
