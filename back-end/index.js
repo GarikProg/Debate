@@ -148,7 +148,7 @@ app.use(
   app.use('/thread', threadRouter);
   app.use('profile', profileRouter);
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve('../front-end/build/index.html'))
+    res.sendFile(path.resolve('../../front-end/build/index.html'))
   });
   
   const port = process.env.PORT ?? 3001;
