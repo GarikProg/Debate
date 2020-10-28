@@ -4,7 +4,7 @@
   "description": "Программа для создания споров (дебатов) между участниками.",
   "main": "index.js",
   "scripts": {    
-    "build": "cd front-end && npm install && npm build",
+    "build": "cd front-end && npm install && npm run-script build",
     "start": "cd back-end && npm install && npm start"
 
   },

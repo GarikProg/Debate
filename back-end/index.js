@@ -17,7 +17,6 @@ import Debates from './models/debate.js'
 import http from 'http'
 import path from 'path'
 
-
 const logger = console;
 const app = express();
 const MongoDBStore = MongoDB(session);
