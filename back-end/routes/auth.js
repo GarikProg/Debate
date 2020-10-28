@@ -14,7 +14,7 @@ function serializeUser(user) {
 }
 
 router.route('/').get((req, res) => {
-  res.sendFile(path.resolve('../front-end/build/index.html'))
+  res.sendFile(path.resolve('../../front-end/build/index.html'))
 });
 
 router.route('/loading').post(async (req, res) => {
