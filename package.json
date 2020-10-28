@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Программа для создания споров (дебатов) между участниками.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd front-end && yarn && yarn build",
-    "start": "cd back-end && yarn && yarn start"
+  "scripts": {    
+    "build": "cd front-end && npm && npm build",
+    "start": "cd back-end && npm && npm start"
 
   },
   "repository": {
